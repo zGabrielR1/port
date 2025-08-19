@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "deploy": "next build && touch out/.nojekyll && git add out/ && git commit -m 'Deploy to GitHub Pages' && git push origin HEAD:gh-pages --force"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
