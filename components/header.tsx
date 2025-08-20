@@ -2,11 +2,14 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Moon, Sun, Menu, X } from "lucide-react"
+import { Moon, Sun, Menu, X, Globe } from "lucide-react"
+import { useLanguage } from "@/components/language-provider"
 
 export function Header() {
   const [isDark, setIsDark] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false)
+  const { language, setLanguage, t } = useLanguage()
 
   const toggleTheme = () => {
     setIsDark(!isDark)
@@ -57,6 +60,50 @@ export function Header() {
             >
               Contact
             </button>
+            <div className="relative">
+              <Button
+                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                variant="ghost"
+                size="icon"
+                className="relative"
+              >
+                <Globe className="h-5 w-5" />
+                <span className="absolute -bottom-1 -right-1 text-xs font-bold">
+                  {language.toUpperCase()}
+                </span>
+              </Button>
+              {isLangMenuOpen && (
+                <div className="absolute right-0 mt-2 w-24 bg-background border border-border rounded-md shadow-lg z-50">
+                  <button
+                    onClick={() => {
+                      setLanguage('en')
+                      setIsLangMenuOpen(false)
+                    }}
+                    className="w-full px-3 py-2 text-left text-sm hover:bg-accent transition-colors"
+                  >
+                    EN
+                  </button>
+                  <button
+                    onClick={() => {
+                      setLanguage('es')
+                      setIsLangMenuOpen(false)
+                    }}
+                    className="w-full px-3 py-2 text-left text-sm hover:bg-accent transition-colors"
+                  >
+                    ES
+                  </button>
+                  <button
+                    onClick={() => {
+                      setLanguage('pt')
+                      setIsLangMenuOpen(false)
+                    }}
+                    className="w-full px-3 py-2 text-left text-sm hover:bg-accent transition-colors"
+                  >
+                    PT
+                  </button>
+                </div>
+              )}
+            </div>
             <Button onClick={toggleTheme} variant="ghost" size="icon">
               {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>

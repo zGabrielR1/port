@@ -1,7 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Code, Lightbulb, Users, Zap } from "lucide-react"
+import { useLanguage } from "@/components/language-provider"
 
 export function AboutSection() {
+  const { t } = useLanguage()
   return (
     <section id="about" className="py-24 bg-background relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
@@ -12,10 +14,9 @@ export function AboutSection() {
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
             👨‍💻 Get to know me
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">About Me</h2>
+          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">{t('about.title')}</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Passionate software developer with expertise in modern web technologies and a love for creating innovative
-            solutions that make a real impact.
+            {t('about.description1')}
           </p>
         </div>
 
