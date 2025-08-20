@@ -14,19 +14,26 @@ export function HeroSection() {
 
   return (
     <section className="min-h-[100vh] flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 relative overflow-hidden">
-      {/* Enhanced Background Elements */}
+      {/* Enhanced Background Elements with Shader Effects */}
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
-      <div className="absolute top-10 left-10 w-80 h-80 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-accent/10 to-accent/5 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-primary/5 via-transparent to-transparent rounded-full" />
+      <div className="absolute top-10 left-10 w-80 h-80 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent rounded-full blur-3xl animate-pulse shadow-2xl shadow-primary/20" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-accent/20 via-accent/10 to-transparent rounded-full blur-3xl animate-pulse shadow-2xl shadow-accent/20" />
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-primary/8 via-primary/3 to-transparent rounded-full shadow-2xl shadow-primary/10" />
 
-      {/* Floating Particles */}
+      {/* Interactive Floating Circles */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary/30 rounded-full animate-float" />
-        <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-accent/40 rounded-full animate-float-delayed" />
-        <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-primary/25 rounded-full animate-float" />
-        <div className="absolute bottom-1/4 right-1/3 w-1 h-1 bg-accent/35 rounded-full animate-float-delayed" />
+        <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-gradient-to-r from-primary to-primary/60 rounded-full animate-float shadow-lg shadow-primary/40 hover:scale-150 transition-all duration-500 cursor-pointer" />
+        <div className="absolute top-1/3 right-1/4 w-2 h-2 bg-gradient-to-r from-accent to-accent/60 rounded-full animate-float-delayed shadow-lg shadow-accent/40 hover:scale-150 transition-all duration-500 cursor-pointer" />
+        <div className="absolute bottom-1/3 left-1/3 w-4 h-4 bg-gradient-to-r from-primary/80 to-primary/40 rounded-full animate-float shadow-lg shadow-primary/30 hover:scale-150 transition-all duration-500 cursor-pointer" />
+        <div className="absolute bottom-1/4 right-1/3 w-2 h-2 bg-gradient-to-r from-accent/80 to-accent/40 rounded-full animate-float-delayed shadow-lg shadow-accent/30 hover:scale-150 transition-all duration-500 cursor-pointer" />
+
+        {/* Additional Interactive Circles */}
+        <div className="absolute top-1/6 right-1/6 w-2 h-2 bg-gradient-to-r from-primary/60 to-transparent rounded-full animate-pulse shadow-md shadow-primary/20 hover:scale-125 transition-all duration-300 cursor-pointer" />
+        <div className="absolute bottom-1/6 left-1/6 w-3 h-3 bg-gradient-to-r from-accent/60 to-transparent rounded-full animate-pulse shadow-md shadow-accent/20 hover:scale-125 transition-all duration-300 cursor-pointer" />
       </div>
+
+      {/* Shader Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-primary/5 pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <div className="space-y-16">

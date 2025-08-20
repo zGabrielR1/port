@@ -1,3 +1,5 @@
+"use client"
+
 import { Card, CardContent } from "@/components/ui/card"
 import { Code, Lightbulb, Users, Zap } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
@@ -11,10 +13,13 @@ export function AboutSection() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-20">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 text-primary text-sm font-medium mb-6 backdrop-blur-sm border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
             👨‍💻 Get to know me
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">{t('about.title')}</h2>
+          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6 relative">
+            {t('about.title')}
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-accent rounded-full opacity-60" />
+          </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             {t('about.description1')}
           </p>
@@ -55,46 +60,46 @@ export function AboutSection() {
           </div>
 
           <div className="grid grid-cols-2 gap-6">
-            <Card className="p-8 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-card/50 backdrop-blur-sm">
+            <Card className="p-8 text-center hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-2 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-md group cursor-pointer">
               <CardContent className="p-0">
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Code className="h-8 w-8 text-primary" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg shadow-primary/10">
+                  <Code className="h-8 w-8 text-primary group-hover:text-primary/90 transition-colors duration-300" />
                 </div>
-                <h3 className="font-semibold mb-3 text-lg">Clean Code</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <h3 className="font-semibold mb-3 text-lg group-hover:text-primary transition-colors duration-300">Clean Code</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                   Writing maintainable and scalable code that stands the test of time
                 </p>
               </CardContent>
             </Card>
-            <Card className="p-8 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-card/50 backdrop-blur-sm">
+            <Card className="p-8 text-center hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 hover:-translate-y-2 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-md group cursor-pointer">
               <CardContent className="p-0">
-                <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Lightbulb className="h-8 w-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-lg shadow-accent/10">
+                  <Lightbulb className="h-8 w-8 text-accent group-hover:text-accent/90 transition-colors duration-300" />
                 </div>
-                <h3 className="font-semibold mb-3 text-lg">Innovation</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <h3 className="font-semibold mb-3 text-lg group-hover:text-accent transition-colors duration-300">Innovation</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                   Creative solutions to complex problems using modern approaches
                 </p>
               </CardContent>
             </Card>
-            <Card className="p-8 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-card/50 backdrop-blur-sm">
+            <Card className="p-8 text-center hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-2 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-md group cursor-pointer">
               <CardContent className="p-0">
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Users className="h-8 w-8 text-primary" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg shadow-primary/10">
+                  <Users className="h-8 w-8 text-primary group-hover:text-primary/90 transition-colors duration-300" />
                 </div>
-                <h3 className="font-semibold mb-3 text-lg">Collaboration</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <h3 className="font-semibold mb-3 text-lg group-hover:text-primary transition-colors duration-300">Collaboration</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                   Working effectively in team environments and cross-functional projects
                 </p>
               </CardContent>
             </Card>
-            <Card className="p-8 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-card/50 backdrop-blur-sm">
+            <Card className="p-8 text-center hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 hover:-translate-y-2 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-md group cursor-pointer">
               <CardContent className="p-0">
-                <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Zap className="h-8 w-8 text-accent" />
+                <div className="w-16 h-16 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-lg shadow-accent/10">
+                  <Zap className="h-8 w-8 text-accent group-hover:text-accent/90 transition-colors duration-300" />
                 </div>
-                <h3 className="font-semibold mb-3 text-lg">Performance</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <h3 className="font-semibold mb-3 text-lg group-hover:text-accent transition-colors duration-300">Performance</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                   Optimizing for speed, efficiency, and exceptional user experiences
                 </p>
               </CardContent>
