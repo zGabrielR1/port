@@ -55,14 +55,14 @@ export function HeroSection() {
             <h1 className="text-6xl sm:text-7xl lg:text-9xl font-bold text-foreground leading-tight tracking-tight">
               {t('hero.greeting')}{" "}
               <span className="relative inline-block">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary animate-gradient-x hover:from-accent hover:via-primary hover:to-accent transition-all duration-1000">
+                <span className="text-gradient animate-gradient-x">
                   Gabriel Renostro
                 </span>
                 <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent rounded-full opacity-60 hover:opacity-100 hover:h-2 transition-all duration-300" />
                 <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 rounded-2xl opacity-0 hover:opacity-100 transition-all duration-500 -z-10" />
               </span>
             </h1>
-            <p className="text-2xl sm:text-3xl lg:text-4xl text-muted-foreground max-w-4xl mx-auto font-semibold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent hover:from-foreground hover:to-foreground transition-all duration-500">
+            <p className="text-2xl sm:text-3xl lg:text-4xl text-muted-foreground max-w-4xl mx-auto font-medium bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent hover:from-foreground hover:to-foreground transition-all duration-500">
               {t('hero.subtitle')}
             </p>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed hover:text-foreground/90 transition-all duration-300">

@@ -22,7 +22,7 @@ export function AboutSection() {
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-accent rounded-full opacity-60" />
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed hover:text-foreground/90 transition-colors duration-300">
-            {t('about.description1')}
+            With over 5 years of experience in software development, I specialize in building scalable web applications using cutting-edge technologies. My journey began with a Computer Science degree and has evolved through continuous learning and hands-on experience with diverse projects.
           </p>
         </div>
 
@@ -30,14 +30,10 @@ export function AboutSection() {
           <div className="space-y-8">
             <div className="space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed hover:text-foreground/90 transition-colors duration-300">
-                With over 5 years of experience in software development, I specialize in building scalable web
-                applications using cutting-edge technologies. My journey began with a Computer Science degree and has
-                evolved through continuous learning and hands-on experience with diverse projects.
+                With over 5 years of experience in software development, I specialize in building scalable web applications using cutting-edge technologies. My journey began with a Computer Science degree and has evolved through continuous learning and hands-on experience with diverse projects.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed hover:text-foreground/90 transition-colors duration-300">
-                I'm passionate about writing clean, maintainable code and staying up-to-date with the latest industry
-                trends. When I'm not coding, you'll find me contributing to open-source projects, mentoring junior
-                developers, or exploring new technologies.
+                I'm passionate about writing clean, maintainable code and staying up-to-date with the latest industry trends. When I'm not coding, you'll find me contributing to open-source projects, mentoring junior developers, or exploring new technologies.
               </p>
             </div>
 

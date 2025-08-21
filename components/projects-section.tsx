@@ -57,8 +57,8 @@ export function ProjectsSection() {
             Featured Projects
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-accent rounded-full opacity-60" />
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            A showcase of my recent work and personal projects that demonstrate my technical skills and creativity.
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed hover:text-foreground/90 transition-colors duration-300">
+            A showcase of my recent work and personal projects that demonstrate my technical skills, creativity, and passion for building innovative solutions.
           </p>
         </div>
 
@@ -89,11 +89,11 @@ export function ProjectsSection() {
                 </div>
 
                 <div className="flex gap-3 pt-2">
-                  <Button size="sm" className="flex-1 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 group/btn">
+                  <Button size="sm" className="flex-1 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 group/btn text-white font-medium">
                     <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:scale-110 transition-transform duration-300" />
                     Live Demo
                   </Button>
-                  <Button variant="outline" size="sm" className="flex-1 bg-transparent hover:bg-accent/10 hover:border-accent/30 hover:scale-105 transition-all duration-300 group/btn">
+                  <Button variant="outline" size="sm" className="flex-1 bg-transparent hover:bg-accent/10 hover:border-accent/30 hover:scale-105 transition-all duration-300 group/btn font-medium hover:text-accent">
                     <Github className="mr-2 h-4 w-4 group-hover/btn:scale-110 group-hover/btn:text-accent transition-all duration-300" />
                     Code
                   </Button>

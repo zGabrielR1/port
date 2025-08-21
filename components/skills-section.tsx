@@ -53,7 +53,7 @@ export function SkillsSection() {
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-accent to-primary rounded-full opacity-60" />
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed hover:text-foreground/90 transition-colors duration-300">
-            A comprehensive overview of my technical expertise and proficiency levels across different domains.
+            A comprehensive overview of my technical expertise and proficiency levels across different domains of software development.
           </p>
         </div>
 

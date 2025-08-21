@@ -64,9 +64,15 @@ export function ExperienceSection() {
     <section id="experience" className="py-20 bg-muted/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Experience & Education</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            My professional journey and continuous learning path in software development.
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 text-primary text-sm font-medium mb-6 backdrop-blur-sm border border-primary/20 hover:border-primary/40 hover:bg-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:scale-105">
+            💼 Professional Journey
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 relative">
+            Experience & Education
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-accent rounded-full opacity-60" />
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto hover:text-foreground/90 transition-colors duration-300">
+            My professional journey and continuous learning path in software development and technology leadership.
           </p>
         </div>
 
@@ -75,34 +81,37 @@ export function ExperienceSection() {
           <div className="lg:col-span-2 space-y-6">
             <h3 className="text-2xl font-bold text-foreground mb-6">Work Experience</h3>
             {experiences.map((exp, index) => (
-              <Card key={index} className="p-6">
-                <CardHeader className="p-0 mb-4">
-                  <CardTitle className="text-xl">{exp.title}</CardTitle>
+              <Card key={index} className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-sm">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg" />
+                <CardHeader className="p-0 mb-4 relative z-10">
+                  <CardTitle className="text-xl group-hover:text-primary transition-colors duration-300">{exp.title}</CardTitle>
                   <div className="space-y-2">
-                    <div className="flex items-center text-primary font-medium">{exp.company}</div>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <div className="flex items-center text-primary font-medium group-hover:text-primary/90 transition-colors duration-300">{exp.company}</div>
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground group-hover:text-foreground/70 transition-colors duration-300">
                       <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
+                        <Calendar className="h-4 w-4 group-hover:text-primary/70 transition-colors duration-300" />
                         {exp.period}
                       </div>
                       <div className="flex items-center gap-1">
-                        <MapPin className="h-4 w-4" />
+                        <MapPin className="h-4 w-4 group-hover:text-accent/70 transition-colors duration-300" />
                         {exp.location}
                       </div>
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="p-0 space-y-4">
-                  <p className="text-muted-foreground">{exp.description}</p>
+                <CardContent className="p-0 space-y-4 relative z-10">
+                  <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">{exp.description}</p>
                   <ul className="space-y-2">
                     {exp.achievements.map((achievement, achIndex) => (
-                      <li key={achIndex} className="flex items-start gap-2 text-sm">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+                      <li key={achIndex} className="flex items-start gap-2 text-sm group-hover:text-foreground/80 transition-colors duration-300">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:bg-accent transition-colors duration-300" />
                         {achievement}
                       </li>
                     ))}
                   </ul>
                 </CardContent>
+                <div className="absolute top-4 right-4 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
+                <div className="absolute bottom-4 left-4 w-1 h-1 bg-accent/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse" style={{ animationDelay: '0.2s' }} />
               </Card>
             ))}
           </div>
@@ -112,30 +121,34 @@ export function ExperienceSection() {
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-6">Education</h3>
               {education.map((edu, index) => (
-                <Card key={index} className="p-6">
-                  <CardContent className="p-0">
-                    <h4 className="font-semibold text-lg mb-2">{edu.degree}</h4>
-                    <p className="text-primary font-medium mb-2">{edu.school}</p>
-                    <p className="text-sm text-muted-foreground mb-3">{edu.period}</p>
-                    <p className="text-sm">{edu.details}</p>
+                <Card key={index} className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-sm">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg" />
+                  <CardContent className="p-0 relative z-10">
+                    <h4 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors duration-300">{edu.degree}</h4>
+                    <p className="text-primary font-medium mb-2 group-hover:text-primary/90 transition-colors duration-300">{edu.school}</p>
+                    <p className="text-sm text-muted-foreground mb-3 group-hover:text-foreground/70 transition-colors duration-300">{edu.period}</p>
+                    <p className="text-sm group-hover:text-foreground/80 transition-colors duration-300">{edu.details}</p>
                   </CardContent>
+                  <div className="absolute top-4 right-4 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
                 </Card>
               ))}
             </div>
 
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-6">Certifications</h3>
-              <Card className="p-6">
-                <CardContent className="p-0">
+              <Card className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-sm">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg" />
+                <CardContent className="p-0 relative z-10">
                   <ul className="space-y-3">
                     {certifications.map((cert, index) => (
-                      <li key={index} className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-accent rounded-full flex-shrink-0" />
+                      <li key={index} className="flex items-center gap-2 group-hover:text-foreground/80 transition-colors duration-300">
+                        <div className="w-2 h-2 bg-accent rounded-full flex-shrink-0 group-hover:bg-accent/80 transition-colors duration-300" />
                         <span className="text-sm">{cert}</span>
                       </li>
                     ))}
                   </ul>
                 </CardContent>
+                <div className="absolute top-4 right-4 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
               </Card>
             </div>
           </div>
