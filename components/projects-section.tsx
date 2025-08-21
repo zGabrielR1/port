@@ -43,66 +43,59 @@ export function ProjectsSection() {
   ]
 
   return (
-    <section id="projects" className="py-24 bg-muted/20 relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/3 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-accent/3 rounded-full blur-3xl" />
+    <section id="projects" className="py-20 bg-muted/10 relative">
+      <div className="absolute inset-0 bg-grid-white/[0.01] bg-[size:60px_60px]" />
+      <div className="absolute top-20 left-1/4 w-80 h-80 bg-primary/2 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-accent/2 rounded-full blur-3xl" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 text-primary text-sm font-medium mb-6 backdrop-blur-sm border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 border border-primary/20">
             🚀 Featured Projects
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6 relative">
+          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
             Featured Projects
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-accent rounded-full opacity-60" />
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed hover:text-foreground/90 transition-colors duration-300">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             A showcase of my recent work and personal projects that demonstrate my technical skills, creativity, and passion for building innovative solutions.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <Card key={index} className="group relative overflow-hidden hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-2 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-sm cursor-pointer">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <div className="aspect-video overflow-hidden relative">
+            <Card key={index} className="group overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card/50 border border-border/50 hover:border-primary/20">
+              <div className="aspect-video overflow-hidden relative bg-muted">
                 <img
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
               </div>
-              <CardHeader className="relative z-10">
-                <CardTitle className="text-xl group-hover:text-primary transition-colors duration-300">{project.title}</CardTitle>
+              <CardHeader>
+                <CardTitle className="text-xl">{project.title}</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4 relative z-10">
-                <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">{project.description}</p>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground text-sm leading-relaxed">{project.description}</p>
 
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, techIndex) => (
-                    <span key={techIndex} className="px-3 py-1.5 bg-gradient-to-r from-primary/10 to-primary/5 text-primary rounded-full text-sm font-medium hover:from-primary/20 hover:to-primary/10 hover:scale-105 transition-all duration-300 border border-primary/20 hover:border-primary/30">
+                    <span key={techIndex} className="px-3 py-1 bg-primary/10 text-primary rounded-md text-sm font-medium border border-primary/20">
                       {tech}
                     </span>
                   ))}
                 </div>
 
                 <div className="flex gap-3 pt-2">
-                  <Button size="sm" className="flex-1 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 group/btn text-white font-medium">
-                    <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:scale-110 transition-transform duration-300" />
+                  <Button size="sm" className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300">
+                    <ExternalLink className="mr-2 h-4 w-4" />
                     Live Demo
                   </Button>
-                  <Button variant="outline" size="sm" className="flex-1 bg-transparent hover:bg-accent/10 hover:border-accent/30 hover:scale-105 transition-all duration-300 group/btn font-medium hover:text-accent">
-                    <Github className="mr-2 h-4 w-4 group-hover/btn:scale-110 group-hover/btn:text-accent transition-all duration-300" />
+                  <Button variant="outline" size="sm" className="flex-1 hover:bg-accent/5 hover:text-accent hover:border-accent/50 transition-all duration-300">
+                    <Github className="mr-2 h-4 w-4" />
                     Code
                   </Button>
                 </div>
               </CardContent>
-
-              {/* Hover accent elements */}
-              <div className="absolute top-4 right-4 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
-              <div className="absolute bottom-4 left-4 w-1 h-1 bg-accent/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse" style={{ animationDelay: '0.2s' }} />
             </Card>
           ))}
         </div>

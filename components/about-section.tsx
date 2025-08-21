@@ -7,21 +7,20 @@ import { useLanguage } from "@/components/language-provider"
 export function AboutSection() {
   const { t } = useLanguage()
   return (
-    <section id="about" className="py-24 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/3 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-accent/3 rounded-full blur-3xl" />
+    <section id="about" className="py-20 bg-background relative">
+      <div className="absolute inset-0 bg-grid-white/[0.01] bg-[size:60px_60px]" />
+      <div className="absolute top-20 left-1/4 w-80 h-80 bg-primary/2 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-accent/2 rounded-full blur-3xl" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 text-primary text-sm font-medium mb-6 backdrop-blur-sm border border-primary/20 hover:border-primary/40 hover:bg-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:scale-105">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 border border-primary/20">
             👨‍💻 Get to know me
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6 relative">
-            {t('about.title')}
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-accent rounded-full opacity-60" />
+          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
+            About Me
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed hover:text-foreground/90 transition-colors duration-300">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             With over 5 years of experience in software development, I specialize in building scalable web applications using cutting-edge technologies. My journey began with a Computer Science degree and has evolved through continuous learning and hands-on experience with diverse projects.
           </p>
         </div>
