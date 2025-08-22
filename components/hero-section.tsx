@@ -18,8 +18,8 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-grid-white/[0.01] bg-[size:60px_60px]" />
 
       {/* Subtle Gradient Orbs */}
-      <div className="absolute top-20 left-20 w-72 h-72 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-32 right-32 w-80 h-80 bg-gradient-to-br from-accent/8 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-20 left-20 w-72 h-72 bg-gradient-to-br from-primary/8 to-transparent rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-32 right-32 w-80 h-80 bg-gradient-to-br from-accent/6 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
 
       {/* Minimal Floating Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

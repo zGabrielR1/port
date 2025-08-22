@@ -9,8 +9,8 @@ export function AboutSection() {
   return (
     <section id="about" className="py-20 bg-background relative">
       <div className="absolute inset-0 bg-grid-white/[0.01] bg-[size:60px_60px]" />
-      <div className="absolute top-20 left-1/4 w-80 h-80 bg-primary/2 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-accent/2 rounded-full blur-3xl" />
+      <div className="absolute top-20 left-1/4 w-80 h-80 bg-primary/3 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-accent/4 rounded-full blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
