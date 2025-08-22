@@ -50,7 +50,7 @@ export function ProjectsSection() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 border border-primary/20">
+          <div className="inline-flex items-center px-6 py-3 rounded-full glass-subtle text-primary text-sm font-medium mb-6 border-0 animate-glass-fade">
             🚀 Featured Projects
           </div>
           <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
@@ -63,7 +63,7 @@ export function ProjectsSection() {
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <Card key={index} className="group overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card/50 border border-border/50 hover:border-primary/20">
+            <Card key={index} className="group overflow-hidden hover:shadow-lg transition-all duration-500 hover:-translate-y-1 glass-subtle border-0 hover:glass-card animate-glass-scale" style={{ animationDelay: `${index * 0.1}s` }}>
               <div className="aspect-video overflow-hidden relative bg-muted">
                 <img
                   src={project.image || "/placeholder.svg"}
@@ -79,7 +79,7 @@ export function ProjectsSection() {
 
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, techIndex) => (
-                    <span key={techIndex} className="px-3 py-1 bg-primary/10 text-primary rounded-md text-sm font-medium border border-primary/20">
+                    <span key={techIndex} className="px-3 py-1 glass-subtle text-primary rounded-md text-sm font-medium border-0 hover:glass transition-all duration-300 animate-glass-scale" style={{ animationDelay: `${techIndex * 0.05}s` }}>
                       {tech}
                     </span>
                   ))}

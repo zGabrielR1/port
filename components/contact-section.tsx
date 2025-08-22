@@ -34,7 +34,7 @@ export function ContactSection() {
     <section id="contact" className="py-20 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 text-primary text-sm font-medium mb-6 backdrop-blur-sm border border-primary/20 hover:border-primary/40 hover:bg-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:scale-105">
+          <div className="inline-flex items-center px-6 py-3 rounded-full glass-subtle text-primary text-sm font-medium mb-6 border-0 hover:glass transition-all duration-500 animate-glass-fade">
             📬 Let's Connect
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 relative">
@@ -58,8 +58,8 @@ export function ContactSection() {
             </div>
 
             <div className="space-y-6">
-              <div className="group flex items-center gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-primary/5 hover:to-primary/10 transition-all duration-300 hover:scale-105 cursor-pointer">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-primary/10">
+              <div className="group flex items-center gap-4 p-4 rounded-xl glass-subtle hover:glass transition-all duration-500 hover:scale-105 cursor-pointer animate-glass-scale">
+                <div className="w-12 h-12 glass-subtle rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   <Mail className="h-6 w-6 text-primary group-hover:text-primary/90 transition-colors duration-300" />
                 </div>
                 <div>
@@ -68,8 +68,8 @@ export function ContactSection() {
                 </div>
               </div>
 
-              <div className="group flex items-center gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-accent/5 hover:to-accent/10 transition-all duration-300 hover:scale-105 cursor-pointer">
-                <div className="w-12 h-12 bg-gradient-to-br from-accent/20 to-accent/10 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 shadow-lg shadow-accent/10">
+              <div className="group flex items-center gap-4 p-4 rounded-xl glass-subtle hover:glass transition-all duration-500 hover:scale-105 cursor-pointer animate-glass-scale" style={{ animationDelay: '0.1s' }}>
+                <div className="w-12 h-12 glass-subtle rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                   <Phone className="h-6 w-6 text-accent group-hover:text-accent/90 transition-colors duration-300" />
                 </div>
                 <div>
@@ -78,8 +78,8 @@ export function ContactSection() {
                 </div>
               </div>
 
-              <div className="group flex items-center gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-primary/5 hover:to-primary/10 transition-all duration-300 hover:scale-105 cursor-pointer">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-primary/10">
+              <div className="group flex items-center gap-4 p-4 rounded-xl glass-subtle hover:glass transition-all duration-500 hover:scale-105 cursor-pointer animate-glass-scale" style={{ animationDelay: '0.2s' }}>
+                <div className="w-12 h-12 glass-subtle rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   <MapPin className="h-6 w-6 text-primary group-hover:text-primary/90 transition-colors duration-300" />
                 </div>
                 <div>
@@ -112,7 +112,7 @@ export function ContactSection() {
           </div>
 
           {/* Contact Form */}
-          <Card className="group p-6 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-2 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-sm">
+          <Card className="group p-6 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-2 border-0 glass-card animate-glass-scale" style={{ animationDelay: '0.3s' }}>
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg" />
             <CardHeader className="p-0 mb-6 relative z-10">
               <CardTitle className="text-2xl group-hover:text-primary transition-colors duration-300">Send Message</CardTitle>

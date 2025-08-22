@@ -14,7 +14,7 @@ export function AboutSection() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 border border-primary/20">
+          <div className="inline-flex items-center px-6 py-3 rounded-full glass-subtle text-primary text-sm font-medium mb-6 border-0 animate-glass-fade">
             👨‍💻 Get to know me
           </div>
           <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
@@ -39,16 +39,16 @@ export function AboutSection() {
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-foreground hover:text-primary transition-colors duration-300">What drives me:</h3>
               <div className="flex flex-wrap gap-3">
-                <span className="px-4 py-2 bg-gradient-to-r from-primary/10 to-primary/5 text-primary rounded-full text-sm font-medium hover:from-primary/20 hover:to-primary/10 hover:scale-105 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 border border-primary/20 hover:border-primary/30">
+                <span className="px-4 py-2 glass-subtle text-primary rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-glass-scale">
                   Problem Solver
                 </span>
-                <span className="px-4 py-2 bg-gradient-to-r from-accent/10 to-accent/5 text-accent rounded-full text-sm font-medium hover:from-accent/20 hover:to-accent/10 hover:scale-105 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 border border-accent/20 hover:border-accent/30">
+                <span className="px-4 py-2 glass-subtle text-accent rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-glass-scale" style={{ animationDelay: '0.1s' }}>
                   Team Player
                 </span>
-                <span className="px-4 py-2 bg-gradient-to-r from-primary/10 to-primary/5 text-primary rounded-full text-sm font-medium hover:from-primary/20 hover:to-primary/10 hover:scale-105 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 border border-primary/20 hover:border-primary/30">
+                <span className="px-4 py-2 glass-subtle text-primary rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-glass-scale" style={{ animationDelay: '0.2s' }}>
                   Continuous Learner
                 </span>
-                <span className="px-4 py-2 bg-gradient-to-r from-accent/10 to-accent/5 text-accent rounded-full text-sm font-medium hover:from-accent/20 hover:to-accent/10 hover:scale-105 hover:shadow-lg hover:shadow-accent/20 transition-all duration-300 border border-accent/20 hover:border-accent/30">
+                <span className="px-4 py-2 glass-subtle text-accent rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-glass-scale" style={{ animationDelay: '0.3s' }}>
                   Innovation Focused
                 </span>
               </div>
@@ -56,7 +56,7 @@ export function AboutSection() {
           </div>
 
           <div className="grid grid-cols-2 gap-6">
-            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-3 hover:rotate-2 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-md cursor-pointer overflow-hidden">
+            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-3 hover:rotate-2 border-0 glass-card cursor-pointer overflow-hidden animate-glass-scale">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
               <CardContent className="p-0 relative z-10">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-primary/10">
@@ -69,7 +69,7 @@ export function AboutSection() {
               </CardContent>
               <div className="absolute top-3 right-3 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
             </Card>
-            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 hover:-translate-y-3 hover:-rotate-2 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-md cursor-pointer overflow-hidden">
+            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 hover:-translate-y-3 hover:-rotate-2 border-0 glass-card cursor-pointer overflow-hidden animate-glass-scale" style={{ animationDelay: '0.1s' }}>
               <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
               <CardContent className="p-0 relative z-10">
                 <div className="w-16 h-16 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 shadow-lg shadow-accent/10">
@@ -82,10 +82,10 @@ export function AboutSection() {
               </CardContent>
               <div className="absolute top-3 right-3 w-2 h-2 bg-accent/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
             </Card>
-            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-3 hover:rotate-2 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-md cursor-pointer overflow-hidden">
+            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-3 hover:rotate-2 border-0 glass-card cursor-pointer overflow-hidden animate-glass-scale" style={{ animationDelay: '0.2s' }}>
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
               <CardContent className="p-0 relative z-10">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-primary/10">
+                <div className="w-16 h-16 glass-subtle rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   <Users className="h-8 w-8 text-primary group-hover:text-primary/90 transition-colors duration-300" />
                 </div>
                 <h3 className="font-semibold mb-3 text-lg group-hover:text-primary transition-colors duration-300">Collaboration</h3>
@@ -95,10 +95,10 @@ export function AboutSection() {
               </CardContent>
               <div className="absolute top-3 right-3 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
             </Card>
-            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 hover:-translate-y-3 hover:-rotate-2 border-0 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-md cursor-pointer overflow-hidden">
+            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 hover:-translate-y-3 hover:-rotate-2 border-0 glass-card cursor-pointer overflow-hidden animate-glass-scale" style={{ animationDelay: '0.3s' }}>
               <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
               <CardContent className="p-0 relative z-10">
-                <div className="w-16 h-16 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 shadow-lg shadow-accent/10">
+                <div className="w-16 h-16 glass-subtle rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                   <Zap className="h-8 w-8 text-accent group-hover:text-accent/90 transition-colors duration-300" />
                 </div>
                 <h3 className="font-semibold mb-3 text-lg group-hover:text-accent transition-colors duration-300">Performance</h3>

@@ -45,7 +45,7 @@ export function SkillsSection() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6 border border-accent/20">
+          <div className="inline-flex items-center px-6 py-3 rounded-full glass-subtle text-accent text-sm font-medium mb-6 border-0 animate-glass-fade">
             💻 Technical Expertise
           </div>
           <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
@@ -58,7 +58,7 @@ export function SkillsSection() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {skillCategories.map((category, index) => (
-            <Card key={index} className="p-6 bg-card/50 border border-border/50 hover:border-primary/20 hover:bg-card/80 transition-all duration-300 hover:shadow-lg">
+            <Card key={index} className="p-6 glass-subtle border-0 hover:glass-card transition-all duration-500 hover:shadow-lg hover:shadow-primary/10 animate-glass-scale" style={{ animationDelay: `${index * 0.1}s` }}>
               <CardHeader className="p-0 mb-6">
                 <div className="text-center">
                   <div className="text-3xl mb-3">{category.icon}</div>
