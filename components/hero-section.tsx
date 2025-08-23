@@ -78,16 +78,35 @@ const ShaderBackground = () => {
     gl.shaderSource(vertexShader!, vertexShaderSource);
     gl.compileShader(vertexShader!);
 
+    // Check vertex shader compilation
+    if (!gl.getShaderParameter(vertexShader!, gl.COMPILE_STATUS)) {
+      console.error("Vertex shader compilation failed:", gl.getShaderInfoLog(vertexShader!));
+      return;
+    }
+
     // Create and compile fragment shader
     const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
     gl.shaderSource(fragmentShader!, fragmentShaderSource);
     gl.compileShader(fragmentShader!);
+
+    // Check fragment shader compilation
+    if (!gl.getShaderParameter(fragmentShader!, gl.COMPILE_STATUS)) {
+      console.error("Fragment shader compilation failed:", gl.getShaderInfoLog(fragmentShader!));
+      return;
+    }
 
     // Create shader program
     const shaderProgram = gl.createProgram();
     gl.attachShader(shaderProgram!, vertexShader!);
     gl.attachShader(shaderProgram!, fragmentShader!);
     gl.linkProgram(shaderProgram!);
+
+    // Check program linking
+    if (!gl.getProgramParameter(shaderProgram!, gl.LINK_STATUS)) {
+      console.error("Shader program linking failed:", gl.getProgramInfoLog(shaderProgram!));
+      return;
+    }
+
     gl.useProgram(shaderProgram!);
 
     // Create a buffer for the positions
@@ -111,6 +130,16 @@ const ShaderBackground = () => {
     // Get uniform locations
     const timeUniformLocation = gl.getUniformLocation(shaderProgram!, "iTime");
     const resolutionUniformLocation = gl.getUniformLocation(shaderProgram!, "iResolution");
+
+    // Check if uniforms were found
+    if (timeUniformLocation === null) {
+      console.error("Uniform 'iTime' not found in shader program");
+      return;
+    }
+    if (resolutionUniformLocation === null) {
+      console.error("Uniform 'iResolution' not found in shader program");
+      return;
+    }
 
     // Animation loop
     let startTime = Date.now();
