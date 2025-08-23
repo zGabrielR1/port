@@ -5,118 +5,55 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Code, Lightbulb, Users, Zap } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 
-const AboutShaderBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+const AboutAnimatedBackground = () => {
+  return (
+    <div className="absolute inset-0 w-full h-full overflow-hidden" style={{ zIndex: 0 }}>
+      {/* Animated gradient background */}
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          background: `
+            radial-gradient(circle at 20% 30%, rgba(249, 115, 22, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+            linear-gradient(45deg,
+              rgba(249, 115, 22, 0.1) 0%,
+              rgba(251, 191, 36, 0.1) 25%,
+              rgba(59, 130, 246, 0.1) 50%,
+              rgba(139, 92, 246, 0.1) 75%,
+              rgba(249, 115, 22, 0.1) 100%)
+          `,
+          backgroundSize: '400% 400%',
+          animation: 'gradientShift 15s ease-in-out infinite'
+        }}
+      />
 
-  useEffect(() => {
-    if (!canvasRef.current) return;
+      {/* Floating geometric shapes */}
+      <div className="absolute top-20 left-10 w-32 h-32 opacity-20 animate-float-slow">
+        <div className="w-full h-full border-2 border-orange-400/30 rounded-full animate-spin-slow" />
+      </div>
+      <div className="absolute top-40 right-20 w-24 h-24 opacity-20 animate-float-reverse">
+        <div className="w-full h-full border-2 border-blue-400/30 rotate-45 animate-pulse-slow" />
+      </div>
+      <div className="absolute bottom-32 left-1/4 w-20 h-20 opacity-20 animate-float">
+        <div className="w-full h-full bg-gradient-to-br from-orange-400/20 to-blue-400/20 rounded-lg animate-bounce-slow" />
+      </div>
+      <div className="absolute bottom-20 right-10 w-28 h-28 opacity-20 animate-float-slow">
+        <div className="w-full h-full border-2 border-purple-400/30 rounded-full animate-spin-reverse" />
+      </div>
 
-    const canvas = canvasRef.current;
-    const gl = canvas.getContext("webgl");
-
-    if (!gl) return;
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    };
-
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    const vertexShaderSource = `
-      attribute vec4 aVertexPosition;
-      void main() {
-        gl_Position = aVertexPosition;
-      }
-    `;
-
-    const fragmentShaderSource = `
-      precision highp float;
-      uniform vec2 iResolution;
-      uniform float iTime;
-
-      vec3 warmSpectrum(float t) {
-        vec3 warm = vec3(0.9, 0.4, 0.1);  // Orange
-        vec3 hot = vec3(1.0, 0.8, 0.2);   // Gold
-        vec3 cool = vec3(0.3, 0.7, 0.9);  // Sky blue
-        float phase = fract(t);
-        if (phase < 0.5) {
-          return mix(warm, hot, phase * 2.0);
-        } else {
-          return mix(hot, cool, (phase - 0.5) * 2.0);
-        }
-      }
-
-      void main() {
-        vec2 uv = (2.0 * gl_FragCoord.xy - iResolution.xy) / min(iResolution.x, iResolution.y);
-        uv *= 1.2;
-
-        vec3 color = vec3(0.0);
-        for(int i = 0; i < 5; i++) {
-          float fi = float(i);
-          vec2 pos = uv + vec2(
-            sin(iTime * 0.5 + fi * 1.5) * 0.3,
-            cos(iTime * 0.3 + fi * 2.1) * 0.2
-          );
-          float dist = length(pos);
-          float wave = sin(dist * 8.0 - iTime * 2.0 + fi) * 0.5 + 0.5;
-          color += warmSpectrum(iTime * 0.1 + fi * 0.2) * wave * 0.1;
-        }
-
-        gl_FragColor = vec4(color, 1.0);
-      }
-    `;
-
-    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vertexShader!, vertexShaderSource);
-    gl.compileShader(vertexShader!);
-
-    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(fragmentShader!, fragmentShaderSource);
-    gl.compileShader(fragmentShader!);
-
-    const shaderProgram = gl.createProgram();
-    gl.attachShader(shaderProgram!, vertexShader!);
-    gl.attachShader(shaderProgram!, fragmentShader!);
-    gl.linkProgram(shaderProgram!);
-    gl.useProgram(shaderProgram!);
-
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-
-    const positions = [-1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-    const positionAttributeLocation = gl.getAttribLocation(shaderProgram!, "aVertexPosition");
-    gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
-
-    const timeUniformLocation = gl.getUniformLocation(shaderProgram!, "iTime");
-    const resolutionUniformLocation = gl.getUniformLocation(shaderProgram!, "iResolution");
-
-    let startTime = Date.now();
-    const render = () => {
-      const currentTime = (Date.now() - startTime) / 1000;
-      gl.uniform1f(timeUniformLocation, currentTime);
-      gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      gl.deleteProgram(shaderProgram!);
-      gl.deleteShader(vertexShader!);
-      gl.deleteShader(fragmentShader!);
-      gl.deleteBuffer(positionBuffer!);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }} />;
+      {/* Subtle grid pattern */}
+      <div
+        className="absolute inset-0 opacity-5"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(249, 115, 22, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px'
+        }}
+      />
+    </div>
+  );
 };
 
 const FloatingParticles = () => {
@@ -160,7 +97,7 @@ export function AboutSection() {
   const { t } = useLanguage()
   return (
     <section id="about" className="py-20 bg-background relative overflow-hidden">
-      <AboutShaderBackground />
+      <AboutAnimatedBackground />
       <FloatingParticles />
       <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-black/5" />
 

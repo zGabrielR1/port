@@ -3,162 +3,102 @@
 import { useState, useEffect, useRef } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-const SkillsShaderBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+const SkillsAnimatedBackground = () => {
+  return (
+    <div className="absolute inset-0 w-full h-full overflow-hidden" style={{ zIndex: 0 }}>
+      {/* Tech-inspired animated gradient background */}
+      <div
+        className="absolute inset-0 opacity-40"
+        style={{
+          background: `
+            radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 40%),
+            radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 40%),
+            radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 35%),
+            linear-gradient(135deg,
+              rgba(59, 130, 246, 0.1) 0%,
+              rgba(16, 185, 129, 0.1) 25%,
+              rgba(139, 92, 246, 0.1) 50%,
+              rgba(245, 101, 101, 0.1) 75%,
+              rgba(59, 130, 246, 0.1) 100%)
+          `,
+          backgroundSize: '300% 300%',
+          animation: 'techShift 20s ease-in-out infinite'
+        }}
+      />
 
-  useEffect(() => {
-    if (!canvasRef.current) return;
+      {/* Circuit-like patterns */}
+      <div className="absolute top-16 right-16 w-24 h-24 opacity-20">
+        <div className="w-full h-full border-2 border-cyan-400/40 rounded-sm animate-pulse-slow" style={{
+          backgroundImage: `
+            linear-gradient(45deg, transparent 40%, rgba(34, 211, 238, 0.1) 50%, transparent 60%),
+            linear-gradient(-45deg, transparent 40%, rgba(34, 211, 238, 0.1) 50%, transparent 60%)
+          `
+        }} />
+      </div>
+      <div className="absolute bottom-20 left-20 w-32 h-32 opacity-20 animate-spin-slow">
+        <div className="w-full h-full border border-purple-400/30 rounded-full" />
+        <div className="absolute inset-4 border border-cyan-400/30 rounded-full" />
+        <div className="absolute inset-8 border border-emerald-400/30 rounded-full" />
+      </div>
+      <div className="absolute top-1/2 left-10 w-20 h-20 opacity-20 animate-float-reverse">
+        <div className="w-full h-full bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-lg animate-bounce-slow" />
+      </div>
+      <div className="absolute bottom-32 right-32 w-28 h-28 opacity-20 animate-float">
+        <div className="w-full h-full border-2 border-emerald-400/30 rounded-full animate-spin-reverse" />
+      </div>
 
-    const canvas = canvasRef.current;
-    const gl = canvas.getContext("webgl");
+      {/* Hexagonal grid pattern */}
+      <div
+        className="absolute inset-0 opacity-8"
+        style={{
+          backgroundImage: `
+            linear-gradient(60deg, rgba(59, 130, 246, 0.05) 25%, transparent 25%),
+            linear-gradient(-60deg, rgba(59, 130, 246, 0.05) 25%, transparent 25%),
+            linear-gradient(60deg, transparent 75%, rgba(59, 130, 246, 0.05) 75%),
+            linear-gradient(-60deg, transparent 75%, rgba(59, 130, 246, 0.05) 75%)
+          `,
+          backgroundSize: '40px 70px',
+          backgroundPosition: '0 0, 0 0, 20px 35px, 20px 35px'
+        }}
+      />
 
-    if (!gl) return;
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    };
-
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    const vertexShaderSource = `
-      attribute vec4 aVertexPosition;
-      void main() {
-        gl_Position = aVertexPosition;
-      }
-    `;
-
-    const fragmentShaderSource = `
-      precision highp float;
-      uniform vec2 iResolution;
-      uniform float iTime;
-
-      vec3 techSpectrum(float t) {
-        vec3 blue = vec3(0.1, 0.4, 0.9);   // Deep blue
-        vec3 cyan = vec3(0.0, 0.8, 0.9);   // Cyan
-        vec3 teal = vec3(0.0, 0.7, 0.6);   // Teal
-        vec3 purple = vec3(0.5, 0.2, 0.9); // Purple accent
-        float phase = fract(t);
-        if (phase < 0.33) {
-          return mix(blue, cyan, phase * 3.0);
-        } else if (phase < 0.66) {
-          return mix(cyan, teal, (phase - 0.33) * 3.0);
-        } else {
-          return mix(teal, purple, (phase - 0.66) * 3.0);
-        }
-      }
-
-      void main() {
-        vec2 uv = (2.0 * gl_FragCoord.xy - iResolution.xy) / min(iResolution.x, iResolution.y);
-        uv *= 1.5;
-
-        vec3 color = vec3(0.0);
-        for(int i = 0; i < 6; i++) {
-          float fi = float(i);
-          vec2 pos = uv + vec2(
-            sin(iTime * 0.7 + fi * 1.8) * 0.4,
-            cos(iTime * 0.5 + fi * 2.3) * 0.3
-          );
-          float dist = length(pos);
-          float wave = sin(dist * 10.0 - iTime * 3.0 + fi) * 0.5 + 0.5;
-          color += techSpectrum(iTime * 0.15 + fi * 0.3) * wave * 0.08;
-        }
-
-        // Add some grid-like patterns
-        vec2 grid = fract(uv * 20.0);
-        float gridPattern = step(0.98, max(grid.x, grid.y));
-        color += techSpectrum(iTime * 0.1) * gridPattern * 0.05;
-
-        gl_FragColor = vec4(color, 1.0);
-      }
-    `;
-
-    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vertexShader!, vertexShaderSource);
-    gl.compileShader(vertexShader!);
-
-    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(fragmentShader!, fragmentShaderSource);
-    gl.compileShader(fragmentShader!);
-
-    const shaderProgram = gl.createProgram();
-    gl.attachShader(shaderProgram!, vertexShader!);
-    gl.attachShader(shaderProgram!, fragmentShader!);
-    gl.linkProgram(shaderProgram!);
-    gl.useProgram(shaderProgram!);
-
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-
-    const positions = [-1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-    const positionAttributeLocation = gl.getAttribLocation(shaderProgram!, "aVertexPosition");
-    gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
-
-    const timeUniformLocation = gl.getUniformLocation(shaderProgram!, "iTime");
-    const resolutionUniformLocation = gl.getUniformLocation(shaderProgram!, "iResolution");
-
-    let startTime = Date.now();
-    const render = () => {
-      const currentTime = (Date.now() - startTime) / 1000;
-      gl.uniform1f(timeUniformLocation, currentTime);
-      gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      gl.deleteProgram(shaderProgram!);
-      gl.deleteShader(vertexShader!);
-      gl.deleteShader(fragmentShader!);
-      gl.deleteBuffer(positionBuffer!);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }} />;
+      {/* Data flow lines */}
+      <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent animate-pulse-slow" />
+      <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-purple-400/20 to-transparent animate-pulse-slow" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-emerald-400/20 to-transparent animate-pulse-slow" style={{ animationDelay: '4s' }} />
+    </div>
+  );
 };
 
 const TechParticles = () => {
-  const [particles, setParticles] = useState<Array<{id: number, x: number, y: number, delay: number, color: string}>>([]);
-
-  useEffect(() => {
-    const particleCount = 15;
-    const colors = ['#00FFFF', '#0080FF', '#00FF80', '#8000FF', '#FF0080'];
-    const newParticles = [];
-
-    for (let i = 0; i < particleCount; i++) {
-      newParticles.push({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        delay: Math.random() * 4,
-        color: colors[Math.floor(Math.random() * colors.length)]
-      });
-    }
-
-    setParticles(newParticles);
-  }, []);
+  const particles = [
+    { id: 1, x: 10, y: 20, delay: 0, color: '#00FFFF' },
+    { id: 2, x: 85, y: 15, delay: 1, color: '#0080FF' },
+    { id: 3, x: 25, y: 70, delay: 2, color: '#00FF80' },
+    { id: 4, x: 75, y: 65, delay: 0.5, color: '#8000FF' },
+    { id: 5, x: 50, y: 40, delay: 1.5, color: '#FF0080' },
+    { id: 6, x: 15, y: 85, delay: 2.5, color: '#00FFFF' },
+    { id: 7, x: 90, y: 30, delay: 1.2, color: '#0080FF' },
+    { id: 8, x: 35, y: 10, delay: 0.8, color: '#00FF80' },
+    { id: 9, x: 60, y: 90, delay: 1.8, color: '#8000FF' },
+    { id: 10, x: 5, y: 50, delay: 2.2, color: '#FF0080' },
+    { id: 11, x: 80, y: 75, delay: 0.3, color: '#00FFFF' },
+    { id: 12, x: 45, y: 25, delay: 1.7, color: '#0080FF' },
+  ];
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
       {particles.map((particle) => (
         <div
           key={particle.id}
-          className="absolute w-1 h-1 rounded-full animate-float opacity-60"
+          className="absolute w-1.5 h-1.5 rounded-full animate-float opacity-70"
           style={{
             left: `${particle.x}%`,
             top: `${particle.y}%`,
             animationDelay: `${particle.delay}s`,
-            animationDuration: '10s',
+            animationDuration: '12s',
             backgroundColor: particle.color,
-            boxShadow: `0 0 10px ${particle.color}40`
+            boxShadow: `0 0 12px ${particle.color}50, 0 0 24px ${particle.color}20`
           }}
         />
       ))}
@@ -243,7 +183,7 @@ export function SkillsSection() {
 
   return (
     <section id="skills" className="py-20 bg-background relative overflow-hidden">
-      <SkillsShaderBackground />
+      <SkillsAnimatedBackground />
       <TechParticles />
       <div className="absolute inset-0 bg-gradient-to-br from-black/15 via-transparent to-black/10" />
 
