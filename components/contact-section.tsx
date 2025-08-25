@@ -157,12 +157,12 @@ export function ContactSection() {
           </div>
 
           {/* Contact Form */}
-          <Card className="group p-6 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 card-hover border-0 glass-card animate-glass-scale" style={{ animationDelay: '0.3s' }}>
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg" />
-            <CardHeader className="p-0 mb-6 relative z-10">
+          <Card className="group p-6 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 card-hover border-0 glass-card animate-glass-scale" style={{ animationDelay: '0.3s' }}>
+            <div className="gradient-overlay gradient-overlay-primary" />
+            <CardHeader className="p-0 mb-6 card-content">
               <CardTitle className="text-2xl group-hover:text-primary transition-colors duration-300">Send Message</CardTitle>
             </CardHeader>
-            <CardContent className="p-0 relative z-10">
+            <CardContent className="p-0 card-content">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>

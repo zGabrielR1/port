@@ -147,7 +147,7 @@ export function AboutSection() {
 
           <div className="grid grid-cols-2 gap-6 animate-slide-in-up animate-delay-200">
             <div className="group relative p-8 text-center glass-card border-0 card-hover cursor-pointer overflow-hidden animate-scale-in">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+              <div className="gradient-overlay gradient-overlay-primary" />
               <div className="relative z-10">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-primary/10">
                   <Code className="h-8 w-8 text-primary group-hover:text-primary/90 transition-colors duration-300" />
@@ -161,7 +161,7 @@ export function AboutSection() {
             </div>
             
             <div className="group relative p-8 text-center glass-card border-0 card-hover cursor-pointer overflow-hidden animate-scale-in animate-delay-100">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+              <div className="gradient-overlay gradient-overlay-accent" />
               <div className="relative z-10">
                 <div className="w-16 h-16 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 shadow-lg shadow-accent/10">
                   <Lightbulb className="h-8 w-8 text-accent group-hover:text-accent/90 transition-colors duration-300" />
@@ -175,7 +175,7 @@ export function AboutSection() {
             </div>
             
             <div className="group relative p-8 text-center glass-card border-0 card-hover cursor-pointer overflow-hidden animate-scale-in animate-delay-200">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+              <div className="gradient-overlay gradient-overlay-primary" />
               <div className="relative z-10">
                 <div className="w-16 h-16 glass-subtle rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   <Users className="h-8 w-8 text-primary group-hover:text-primary/90 transition-colors duration-300" />
@@ -189,7 +189,7 @@ export function AboutSection() {
             </div>
             
             <div className="group relative p-8 text-center glass-card border-0 card-hover cursor-pointer overflow-hidden animate-scale-in animate-delay-300">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+              <div className="gradient-overlay gradient-overlay-accent" />
               <div className="relative z-10">
                 <div className="w-16 h-16 glass-subtle rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                   <Zap className="h-8 w-8 text-accent group-hover:text-accent/90 transition-colors duration-300" />

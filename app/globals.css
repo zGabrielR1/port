@@ -380,6 +380,17 @@
     }
   }
 
+  @keyframes gradient-fade {
+    from {
+      opacity: 0;
+      transform: scale(1.05);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
   @keyframes slide-in-right {
     from {
       opacity: 0;
@@ -463,6 +474,10 @@
 
   .animate-glow-pulse {
     animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-gradient-fade {
+    animation: gradient-fade 0.4s ease-out;
   }
 
   .animate-slide-in-right {
@@ -657,29 +672,71 @@
     transform: translateY(-4px) scale(1.03) rotate(1deg);
   }
 
-  /* Combined hover effects for cards */
+  /* Enhanced card hover effects with optimized overlays */
   .card-hover {
-    @apply transition-all duration-500 ease-out;
+    @apply transition-all duration-300 ease-out;
     will-change: transform, box-shadow, backdrop-filter;
     transform-origin: center;
     transform: translate3d(0, 0, 0);
   }
 
   .card-hover:hover {
-    transform: translateY(-12px) scale(1.03) !important;
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(79, 156, 249, 0.15) !important;
+    transform: translateY(-8px) scale(1.02) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 30px rgba(79, 156, 249, 0.12) !important;
   }
 
   .card-hover-magnetic {
-    @apply transition-all duration-500 ease-out cursor-pointer;
+    @apply transition-all duration-300 ease-out cursor-pointer;
     will-change: transform, box-shadow, backdrop-filter;
     transform-origin: center;
     transform: translate3d(0, 0, 0);
   }
 
   .card-hover-magnetic:hover {
-    transform: translateY(-10px) scale(1.035) rotate(2deg) !important;
-    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.18), 0 8px 35px rgba(79, 156, 249, 0.12) !important;
+    transform: translateY(-6px) scale(1.025) rotate(1deg) !important;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.12), 0 6px 25px rgba(79, 156, 249, 0.1) !important;
+  }
+
+  /* Optimized gradient overlay animations */
+  .gradient-overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    will-change: opacity;
+    transition: opacity 0.25s ease-out;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .gradient-overlay-primary {
+    background: linear-gradient(135deg, 
+      rgba(79, 156, 249, 0.08) 0%, 
+      transparent 50%, 
+      rgba(245, 101, 101, 0.05) 100%);
+  }
+
+  .gradient-overlay-accent {
+    background: linear-gradient(135deg, 
+      rgba(245, 101, 101, 0.08) 0%, 
+      transparent 50%, 
+      rgba(79, 156, 249, 0.05) 100%);
+  }
+
+  .group:hover .gradient-overlay {
+    opacity: 1;
+  }
+
+  /* Smooth card content transitions */
+  .card-content {
+    position: relative;
+    z-index: 2;
+    transition: transform 0.2s ease-out;
+  }
+
+  .group:hover .card-content {
+    transform: translateZ(0);
   }
 
   .hover-shimmer {
