@@ -203,7 +203,7 @@ export function SkillsSection() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {skillCategories.map((category, index) => (
-            <div key={index} className="p-6 glass-card hover:glass-strong border-0 hover:shadow-lg hover:shadow-primary/10 hover-lift transition-all duration-500 animate-scale-in" style={{ animationDelay: `${index * 0.1}s` }}>
+            <div key={index} className="p-6 glass-card border-0 card-hover transition-all duration-500 animate-scale-in" style={{ animationDelay: `${index * 0.1}s` }}>
               <div className="text-center mb-6">
                 <div className="text-3xl mb-3 animate-bounce-gentle">{category.icon}</div>
                 <h3 className="text-xl font-semibold text-gradient">{category.title}</h3>

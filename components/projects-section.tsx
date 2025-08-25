@@ -7,7 +7,7 @@ import { ExternalLink, Github } from "lucide-react"
 
 const ProjectsShaderBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number>(0);
   const glRef = useRef<WebGLRenderingContext | null>(null);
   const programRef = useRef<WebGLProgram | null>(null);
 
@@ -316,18 +316,18 @@ export function ProjectsSection() {
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <div key={index} className="group overflow-hidden glass-card hover:glass-strong border-0 hover-lift transition-all duration-500 animate-scale-in" style={{ animationDelay: `${index * 0.1}s` }}>
+            <div key={index} className="group overflow-hidden glass-card border-0 card-hover transition-all duration-500 animate-scale-in" style={{ animationDelay: `${index * 0.1}s` }}>
               <div className="aspect-video overflow-hidden relative bg-muted">
                 <img
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
-              <div className="p-6">
+              <div className="p-6 relative z-10">
                 <h3 className="text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">{project.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">{project.description}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4 group-hover:text-foreground/90 transition-colors duration-300">{project.description}</p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.technologies.map((tech, techIndex) => (

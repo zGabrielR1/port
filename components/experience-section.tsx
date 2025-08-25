@@ -81,7 +81,7 @@ export function ExperienceSection() {
           <div className="lg:col-span-2 space-y-6">
             <h3 className="text-2xl font-bold text-foreground mb-6">Work Experience</h3>
             {experiences.map((exp, index) => (
-              <Card key={index} className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover-lift hover-glow border-0 glass-card animate-slide-in-left cursor-pointer hover-magnetic overflow-hidden" style={{ animationDelay: `${index * 0.1}s` }}>
+              <Card key={index} className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 card-hover-magnetic border-0 glass-card animate-slide-in-left cursor-pointer overflow-hidden" style={{ animationDelay: `${index * 0.1}s` }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg" />
                 <CardHeader className="p-0 mb-4 relative z-10">
                   <CardTitle className="text-xl group-hover:text-primary transition-colors duration-300">{exp.title}</CardTitle>
@@ -121,7 +121,7 @@ export function ExperienceSection() {
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-6">Education</h3>
               {education.map((edu, index) => (
-                <Card key={index} className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover-lift hover-glow border-0 glass-card animate-slide-in-right cursor-pointer hover-magnetic overflow-hidden">
+                <Card key={index} className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 card-hover-magnetic border-0 glass-card animate-slide-in-right cursor-pointer overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg" />
                   <CardContent className="p-0 relative z-10">
                     <h4 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors duration-300">{edu.degree}</h4>
@@ -136,7 +136,7 @@ export function ExperienceSection() {
 
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-6">Certifications</h3>
-              <Card className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover-lift hover-glow border-0 glass-card animate-slide-in-right cursor-pointer hover-magnetic overflow-hidden" style={{ animationDelay: '0.2s' }}>
+              <Card className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 card-hover-magnetic border-0 glass-card animate-slide-in-right cursor-pointer overflow-hidden" style={{ animationDelay: '0.2s' }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg" />
                 <CardContent className="p-0 relative z-10">
                   <ul className="space-y-3">

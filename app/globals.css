@@ -344,15 +344,30 @@
     }
   }
 
-  @keyframes magnetic {
+  @keyframes smoothScale {
     0% {
-      transform: scale(1) rotate(0deg);
-    }
-    50% {
-      transform: scale(1.05) rotate(2deg);
+      transform: scale(1) translateY(0);
     }
     100% {
-      transform: scale(1) rotate(0deg);
+      transform: scale(1.02) translateY(-8px);
+    }
+  }
+
+  @keyframes smoothMagnetic {
+    0% {
+      transform: scale(1) translateY(0) rotate(0deg);
+    }
+    100% {
+      transform: scale(1.025) translateY(-6px) rotate(1deg);
+    }
+  }
+
+  @keyframes glowPulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(79, 156, 249, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(79, 156, 249, 0.4);
     }
   }
 
@@ -458,6 +473,27 @@
     animation: slide-in-left 0.6s ease-out;
   }
 
+  .animate-smooth-scale {
+    animation: smoothScale 0.3s ease-out forwards;
+  }
+
+  .animate-smooth-magnetic {
+    animation: smoothMagnetic 0.3s ease-out forwards;
+  }
+
+  .animate-glow-pulse {
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+
+  /* Optimized transforms */
+  .transform-gpu {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
   /* Animation delays */
   .animate-delay-100 {
     animation-delay: 0.1s;
@@ -503,6 +539,14 @@
     background-color: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease-out;
+  }
+
+  .glass-card:hover {
+    backdrop-filter: blur(20px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
   }
 
   /* Dark mode glass effects */
@@ -525,6 +569,14 @@
     background-color: rgba(0, 0, 0, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s ease-out;
+  }
+
+  .dark .glass-card:hover {
+    background-color: rgba(0, 0, 0, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(20px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
   }
 
   /* Gradient utilities */
@@ -538,47 +590,96 @@
 
   /* Interactive hover effects */
   .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-lg;
+    @apply transition-all duration-300 ease-out;
+    will-change: transform, box-shadow;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1);
   }
 
   .hover-scale {
-    @apply transition-transform duration-300 hover:scale-105;
+    @apply transition-transform duration-300 ease-out;
+    will-change: transform;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
   }
 
   .hover-scale-110 {
-    @apply transition-transform duration-300 hover:scale-110;
+    @apply transition-transform duration-300 ease-out;
+    will-change: transform;
+  }
+
+  .hover-scale-110:hover {
+    transform: scale(1.1);
   }
 
   .hover-rotate {
-    @apply transition-transform duration-300 hover:rotate-6;
+    @apply transition-transform duration-300 ease-out;
+    will-change: transform;
+  }
+
+  .hover-rotate:hover {
+    transform: rotate(3deg);
   }
 
   .hover-tilt {
-    @apply transition-transform duration-300;
+    @apply transition-transform duration-300 ease-out;
+    will-change: transform;
   }
 
   .hover-tilt:hover {
-    transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.02);
   }
 
   .hover-glow {
-    @apply transition-all duration-300;
+    @apply transition-all duration-300 ease-out;
+    will-change: box-shadow;
   }
 
   .hover-glow:hover {
-    box-shadow: 0 0 20px rgba(79, 156, 249, 0.3);
+    box-shadow: 0 0 30px rgba(79, 156, 249, 0.4), 0 0 60px rgba(79, 156, 249, 0.1);
   }
 
   .hover-glow-accent:hover {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.4), 0 0 60px rgba(139, 92, 246, 0.1);
   }
 
   .hover-magnetic {
-    @apply transition-all duration-300 cursor-pointer;
+    @apply transition-all duration-300 ease-out cursor-pointer;
+    will-change: transform;
   }
 
   .hover-magnetic:hover {
-    transform: scale(1.05) rotate(2deg);
+    transform: translateY(-4px) scale(1.03) rotate(1deg);
+  }
+
+  /* Combined hover effects for cards */
+  .card-hover {
+    @apply transition-all duration-500 ease-out;
+    will-change: transform, box-shadow, backdrop-filter;
+    transform-origin: center;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .card-hover:hover {
+    transform: translateY(-12px) scale(1.03) !important;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2), 0 10px 40px rgba(79, 156, 249, 0.15) !important;
+  }
+
+  .card-hover-magnetic {
+    @apply transition-all duration-500 ease-out cursor-pointer;
+    will-change: transform, box-shadow, backdrop-filter;
+    transform-origin: center;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .card-hover-magnetic:hover {
+    transform: translateY(-10px) scale(1.035) rotate(2deg) !important;
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.18), 0 8px 35px rgba(79, 156, 249, 0.12) !important;
   }
 
   .hover-shimmer {
@@ -736,6 +837,21 @@
   /* Efficient hover states */
   .hover-efficient {
     transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+  }
+
+  /* Optimized card animations */
+  .card-animate {
+    will-change: transform, box-shadow, backdrop-filter;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Smooth glass transitions */
+  .glass-transition {
+    transition: backdrop-filter 0.3s ease-out, background-color 0.3s ease-out, border-color 0.3s ease-out;
+    will-change: backdrop-filter;
   }
 
   /* Container queries support */
