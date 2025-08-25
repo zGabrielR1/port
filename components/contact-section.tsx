@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -16,18 +16,63 @@ export function ContactSection() {
     subject: "",
     message: "",
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [formErrors, setFormErrors] = useState<{[key: string]: string}>({})
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = () => {
+    const errors: {[key: string]: string} = {}
+    
+    if (!formData.name.trim()) errors.name = "Name is required"
+    if (!formData.email.trim()) {
+      errors.email = "Email is required"
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      errors.email = "Please enter a valid email"
+    }
+    if (!formData.subject.trim()) errors.subject = "Subject is required"
+    if (!formData.message.trim()) errors.message = "Message is required"
+    
+    setFormErrors(errors)
+    return Object.keys(errors).length === 0
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log("Form submitted:", formData)
+    
+    if (!validateForm()) return
+    
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+    
+    try {
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      setSubmitStatus('success')
+      setFormData({ name: "", email: "", subject: "", message: "" })
+      setTimeout(() => setSubmitStatus('idle'), 3000)
+    } catch (error) {
+      setSubmitStatus('error')
+      setTimeout(() => setSubmitStatus('idle'), 3000)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     })
+    
+    // Clear error for this field when user starts typing
+    if (formErrors[name]) {
+      setFormErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
   }
 
   return (
@@ -124,7 +169,17 @@ export function ContactSection() {
                     <label htmlFor="name" className="block text-sm font-medium mb-2">
                       Name
                     </label>
-                    <Input id="name" name="name" value={formData.name} onChange={handleChange} required />
+                    <Input 
+                      id="name" 
+                      name="name" 
+                      value={formData.name} 
+                      onChange={handleChange} 
+                      className={`transition-all duration-300 ${formErrors.name ? 'border-red-500 focus:ring-red-500' : 'focus:ring-primary'}`}
+                      required 
+                    />
+                    {formErrors.name && (
+                      <p className="text-red-500 text-xs mt-1 animate-fade-in">{formErrors.name}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium mb-2">
@@ -136,8 +191,12 @@ export function ContactSection() {
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
+                      className={`transition-all duration-300 ${formErrors.email ? 'border-red-500 focus:ring-red-500' : 'focus:ring-primary'}`}
                       required
                     />
+                    {formErrors.email && (
+                      <p className="text-red-500 text-xs mt-1 animate-fade-in">{formErrors.email}</p>
+                    )}
                   </div>
                 </div>
 
@@ -145,7 +204,17 @@ export function ContactSection() {
                   <label htmlFor="subject" className="block text-sm font-medium mb-2">
                     Subject
                   </label>
-                  <Input id="subject" name="subject" value={formData.subject} onChange={handleChange} required />
+                  <Input 
+                    id="subject" 
+                    name="subject" 
+                    value={formData.subject} 
+                    onChange={handleChange} 
+                    className={`transition-all duration-300 ${formErrors.subject ? 'border-red-500 focus:ring-red-500' : 'focus:ring-primary'}`}
+                    required 
+                  />
+                  {formErrors.subject && (
+                    <p className="text-red-500 text-xs mt-1 animate-fade-in">{formErrors.subject}</p>
+                  )}
                 </div>
 
                 <div>
@@ -158,13 +227,50 @@ export function ContactSection() {
                     rows={5}
                     value={formData.message}
                     onChange={handleChange}
+                    className={`transition-all duration-300 ${formErrors.message ? 'border-red-500 focus:ring-red-500' : 'focus:ring-primary'}`}
                     required
                   />
+                  {formErrors.message && (
+                    <p className="text-red-500 text-xs mt-1 animate-fade-in">{formErrors.message}</p>
+                  )}
                 </div>
 
-                <Button type="submit" className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 font-medium text-white">
-                  <Send className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                  Send Message
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className={`w-full font-medium text-white transition-all duration-300 ${
+                    submitStatus === 'success' 
+                      ? 'bg-green-500 hover:bg-green-600' 
+                      : submitStatus === 'error'
+                      ? 'bg-red-500 hover:bg-red-600'
+                      : 'bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70'
+                  } hover:scale-105 hover:shadow-lg hover:shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      Sending...
+                    </>
+                  ) : submitStatus === 'success' ? (
+                    <>
+                      <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Message Sent!
+                    </>
+                  ) : submitStatus === 'error' ? (
+                    <>
+                      <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      Try Again
+                    </>
+                  ) : (
+                    <>
+                      <Send className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      Send Message
+                    </>
+                  )}
                 </Button>
               </form>
             </CardContent>

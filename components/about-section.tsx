@@ -96,18 +96,19 @@ const FloatingParticles = () => {
 export function AboutSection() {
   const { t } = useLanguage()
   return (
-    <section id="about" className="py-20 bg-background relative overflow-hidden">
+    <section id="about" className="section-padding bg-background relative overflow-hidden">
       <AboutAnimatedBackground />
       <FloatingParticles />
-      <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-black/5" />
+      <div className="absolute inset-0 bg-gradient-to-br from-background/50 via-transparent to-background/30" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto container-padding relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-6 py-3 rounded-full glass-subtle text-primary text-sm font-medium mb-6 border-0 animate-glass-fade">
-            👨‍💻 Get to know me
-          </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
+          <div className="inline-flex items-center px-6 py-3 rounded-full glass-subtle text-primary text-sm font-medium mb-6 border-0 animate-fade-in hover-glow">
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse mr-3" />
             About Me
+          </div>
+          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6 text-gradient">
+            Get to Know Me
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             With over 5 years of experience in software development, I specialize in building scalable web applications using cutting-edge technologies. My journey began with a Computer Science degree and has evolved through continuous learning and hands-on experience with diverse projects.
@@ -115,7 +116,7 @@ export function AboutSection() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8">
+          <div className="space-y-8 animate-slide-in-up">
             <div className="space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed hover:text-foreground/90 transition-colors duration-300">
                 With over 5 years of experience in software development, I specialize in building scalable web applications using cutting-edge technologies. My journey began with a Computer Science degree and has evolved through continuous learning and hands-on experience with diverse projects.
@@ -128,26 +129,26 @@ export function AboutSection() {
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-foreground hover:text-primary transition-colors duration-300">What drives me:</h3>
               <div className="flex flex-wrap gap-3">
-                <span className="px-4 py-2 glass-subtle text-primary rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-glass-scale">
+                <span className="px-4 py-2 glass-subtle text-primary rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-scale-in">
                   Problem Solver
                 </span>
-                <span className="px-4 py-2 glass-subtle text-accent rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-glass-scale" style={{ animationDelay: '0.1s' }}>
+                <span className="px-4 py-2 glass-subtle text-accent rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-scale-in animate-delay-100">
                   Team Player
                 </span>
-                <span className="px-4 py-2 glass-subtle text-primary rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-glass-scale" style={{ animationDelay: '0.2s' }}>
+                <span className="px-4 py-2 glass-subtle text-primary rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-scale-in animate-delay-200">
                   Continuous Learner
                 </span>
-                <span className="px-4 py-2 glass-subtle text-accent rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-glass-scale" style={{ animationDelay: '0.3s' }}>
+                <span className="px-4 py-2 glass-subtle text-accent rounded-full text-sm font-medium hover:glass hover:scale-105 transition-all duration-300 border-0 animate-scale-in animate-delay-300">
                   Innovation Focused
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
-            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-3 hover:rotate-2 border-0 glass-card cursor-pointer overflow-hidden animate-glass-scale">
+          <div className="grid grid-cols-2 gap-6 animate-slide-in-up animate-delay-200">
+            <div className="group relative p-8 text-center glass-card hover:glass-strong hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover-lift hover:rotate-2 border-0 cursor-pointer overflow-hidden animate-scale-in">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <CardContent className="p-0 relative z-10">
+              <div className="relative z-10">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-primary/10">
                   <Code className="h-8 w-8 text-primary group-hover:text-primary/90 transition-colors duration-300" />
                 </div>
@@ -155,12 +156,13 @@ export function AboutSection() {
                 <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                   Writing maintainable and scalable code that stands the test of time
                 </p>
-              </CardContent>
+              </div>
               <div className="absolute top-3 right-3 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
-            </Card>
-            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 hover:-translate-y-3 hover:-rotate-2 border-0 glass-card cursor-pointer overflow-hidden animate-glass-scale" style={{ animationDelay: '0.1s' }}>
+            </div>
+            
+            <div className="group relative p-8 text-center glass-card hover:glass-strong hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 hover-lift hover:-rotate-2 border-0 cursor-pointer overflow-hidden animate-scale-in animate-delay-100">
               <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <CardContent className="p-0 relative z-10">
+              <div className="relative z-10">
                 <div className="w-16 h-16 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 shadow-lg shadow-accent/10">
                   <Lightbulb className="h-8 w-8 text-accent group-hover:text-accent/90 transition-colors duration-300" />
                 </div>
@@ -168,12 +170,13 @@ export function AboutSection() {
                 <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                   Creative solutions to complex problems using modern approaches
                 </p>
-              </CardContent>
+              </div>
               <div className="absolute top-3 right-3 w-2 h-2 bg-accent/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
-            </Card>
-            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-3 hover:rotate-2 border-0 glass-card cursor-pointer overflow-hidden animate-glass-scale" style={{ animationDelay: '0.2s' }}>
+            </div>
+            
+            <div className="group relative p-8 text-center glass-card hover:glass-strong hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover-lift hover:rotate-2 border-0 cursor-pointer overflow-hidden animate-scale-in animate-delay-200">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <CardContent className="p-0 relative z-10">
+              <div className="relative z-10">
                 <div className="w-16 h-16 glass-subtle rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   <Users className="h-8 w-8 text-primary group-hover:text-primary/90 transition-colors duration-300" />
                 </div>
@@ -181,12 +184,13 @@ export function AboutSection() {
                 <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                   Working effectively in team environments and cross-functional projects
                 </p>
-              </CardContent>
+              </div>
               <div className="absolute top-3 right-3 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
-            </Card>
-            <Card className="group relative p-8 text-center hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 hover:-translate-y-3 hover:-rotate-2 border-0 glass-card cursor-pointer overflow-hidden animate-glass-scale" style={{ animationDelay: '0.3s' }}>
+            </div>
+            
+            <div className="group relative p-8 text-center glass-card hover:glass-strong hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 hover-lift hover:-rotate-2 border-0 cursor-pointer overflow-hidden animate-scale-in animate-delay-300">
               <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <CardContent className="p-0 relative z-10">
+              <div className="relative z-10">
                 <div className="w-16 h-16 glass-subtle rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                   <Zap className="h-8 w-8 text-accent group-hover:text-accent/90 transition-colors duration-300" />
                 </div>
@@ -194,9 +198,9 @@ export function AboutSection() {
                 <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                   Optimizing for speed, efficiency, and exceptional user experiences
                 </p>
-              </CardContent>
+              </div>
               <div className="absolute top-3 right-3 w-2 h-2 bg-accent/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
-            </Card>
+            </div>
           </div>
         </div>
       </div>

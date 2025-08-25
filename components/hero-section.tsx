@@ -176,7 +176,6 @@ const ShaderBackground = () => {
 
 export function HeroSection() {
   const { t } = useLanguage()
-  const [showInfo, setShowInfo] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
 
   // Fade in animation when component mounts
@@ -217,17 +216,17 @@ export function HeroSection() {
               <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold text-white leading-tight tracking-tight mb-4">
                 Hi, I'm{" "}
                 <span className="relative inline-block">
-                  <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
-                    Alex Johnson
+                  <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent animate-gradient-x">
+                    Gabriel Renostro
                   </span>
-                  <div className="absolute -bottom-2 left-0 w-full h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full" />
+                  <div className="absolute -bottom-2 left-0 w-full h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-shimmer" />
                 </span>
               </h1>
               <p className="text-xl sm:text-2xl lg:text-3xl text-white/90 max-w-3xl mx-auto font-medium leading-relaxed mb-4">
                 Full-Stack Developer & Software Engineer
               </p>
               <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
-                I create exceptional digital experiences with modern technologies, focusing on clean code and user-centered design.
+                I create exceptional digital experiences with modern technologies, focusing on clean code and user-centered design that makes a difference.
               </p>
             </div>
           </div>
@@ -237,31 +236,31 @@ export function HeroSection() {
               <Button
                 onClick={scrollToAbout}
                 size="lg"
-                className="backdrop-blur-md bg-black/30 hover:bg-black/40 text-white px-8 py-6 text-lg font-medium rounded-xl border border-white/20 hover:border-white/30 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 group"
+                className="backdrop-blur-md bg-primary/90 hover:bg-primary text-white px-8 py-6 text-lg font-medium rounded-xl border border-primary/30 hover:border-primary shadow-lg hover:shadow-xl hover:shadow-primary/25 transition-all duration-500 hover:scale-105 group"
               >
-                <span>View My Work</span>
+                <span>Explore My Work</span>
                 <ArrowDown className="ml-2 h-5 w-5 group-hover:translate-y-1 transition-transform duration-300" />
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="backdrop-blur-md bg-black/30 hover:bg-black/40 text-white px-8 py-6 text-lg font-medium rounded-xl border border-white/20 hover:border-white/30 transition-all duration-500 hover:scale-105 group"
+                className="backdrop-blur-md bg-white/10 hover:bg-white/20 text-white px-8 py-6 text-lg font-medium rounded-xl border border-white/20 hover:border-white/40 transition-all duration-500 hover:scale-105 group"
               >
                 <Download className="mr-2 h-5 w-5 group-hover:animate-bounce transition-transform duration-300" />
-                <span>Download CV</span>
+                <span>Download Resume</span>
               </Button>
             </div>
 
-            <div className="flex items-center gap-2 p-4 rounded-xl backdrop-blur-md bg-black/30 border border-white/20 animate-glass-scale">
-              <span className="text-sm text-white/80 font-medium mr-3">Connect:</span>
+            <div className="flex items-center gap-2 p-4 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 animate-glass-scale hover:bg-white/20 transition-all duration-300">
+              <span className="text-sm text-white/80 font-medium mr-3">Connect with me:</span>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" size="sm" className="h-10 w-10 rounded-lg backdrop-blur-md bg-black/30 hover:bg-black/40 text-white/70 hover:text-white transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/30">
+                <Button variant="ghost" size="sm" className="h-10 w-10 rounded-lg backdrop-blur-md bg-white/10 hover:bg-primary/90 text-white/70 hover:text-white transition-all duration-300 hover:scale-110 border border-white/20 hover:border-primary/30" aria-label="GitHub Profile">
                   <Github className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm" className="h-10 w-10 rounded-lg backdrop-blur-md bg-black/30 hover:bg-black/40 text-white/70 hover:text-white transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/30">
+                <Button variant="ghost" size="sm" className="h-10 w-10 rounded-lg backdrop-blur-md bg-white/10 hover:bg-primary/90 text-white/70 hover:text-white transition-all duration-300 hover:scale-110 border border-white/20 hover:border-primary/30" aria-label="LinkedIn Profile">
                   <Linkedin className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm" className="h-10 w-10 rounded-lg backdrop-blur-md bg-black/30 hover:bg-black/40 text-white/70 hover:text-white transition-all duration-300 hover:scale-110 border border-white/20 hover:border-white/30">
+                <Button variant="ghost" size="sm" className="h-10 w-10 rounded-lg backdrop-blur-md bg-white/10 hover:bg-primary/90 text-white/70 hover:text-white transition-all duration-300 hover:scale-110 border border-white/20 hover:border-primary/30" aria-label="Email Contact">
                   <Mail className="h-4 w-4" />
                 </Button>
               </div>
@@ -269,49 +268,29 @@ export function HeroSection() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8">
-            <div className="text-center p-4 rounded-xl backdrop-blur-md bg-black/30 border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-black/40 hover:border-white/30 animate-glass-scale">
-              <div className="text-3xl font-bold text-white mb-1">5+</div>
+            <div className="text-center p-6 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:border-primary/30 animate-glass-scale group cursor-pointer">
+              <div className="text-3xl font-bold text-white mb-2 group-hover:text-primary transition-colors duration-300">5+</div>
               <div className="text-xs text-white/70 font-medium">Years Experience</div>
+              <div className="w-8 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full mx-auto mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
-            <div className="text-center p-4 rounded-xl backdrop-blur-md bg-black/30 border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-black/40 hover:border-white/30 animate-glass-scale" style={{ animationDelay: '0.1s' }}>
-              <div className="text-3xl font-bold text-white mb-1">50+</div>
+            <div className="text-center p-6 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:border-primary/30 animate-glass-scale group cursor-pointer" style={{ animationDelay: '0.1s' }}>
+              <div className="text-3xl font-bold text-white mb-2 group-hover:text-primary transition-colors duration-300">50+</div>
               <div className="text-xs text-white/70 font-medium">Projects Completed</div>
+              <div className="w-8 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full mx-auto mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
-            <div className="text-center p-4 rounded-xl backdrop-blur-md bg-black/30 border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-black/40 hover:border-white/30 animate-glass-scale" style={{ animationDelay: '0.2s' }}>
-              <div className="text-3xl font-bold text-white mb-1">20+</div>
+            <div className="text-center p-6 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:border-primary/30 animate-glass-scale group cursor-pointer" style={{ animationDelay: '0.2s' }}>
+              <div className="text-3xl font-bold text-white mb-2 group-hover:text-primary transition-colors duration-300">20+</div>
               <div className="text-xs text-white/70 font-medium">Technologies</div>
+              <div className="w-8 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full mx-auto mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
-            <div className="text-center p-4 rounded-xl backdrop-blur-md bg-black/30 border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-black/40 hover:border-white/30 animate-glass-scale" style={{ animationDelay: '0.3s' }}>
-              <div className="text-3xl font-bold text-white mb-1">100%</div>
+            <div className="text-center p-6 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:border-primary/30 animate-glass-scale group cursor-pointer" style={{ animationDelay: '0.3s' }}>
+              <div className="text-3xl font-bold text-white mb-2 group-hover:text-primary transition-colors duration-300">100%</div>
               <div className="text-xs text-white/70 font-medium">Client Satisfaction</div>
+              <div className="w-8 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full mx-auto mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           </div>
         </div>
       </div>
-
-      {/* Info button like Shader Clock */}
-      <button
-        onClick={() => setShowInfo((prev) => !prev)}
-        className={`absolute bottom-6 right-6 w-10 h-10 flex items-center justify-center rounded-full backdrop-blur-md text-white/70 hover:text-white/100 transition-all duration-300 ${
-          showInfo ? "bg-black/40 rotate-180" : "bg-black/30"
-        }`}
-        aria-label={
-          showInfo ? "Close information" : "Show information"
-        }
-      >
-        {showInfo ? "×" : "i"}
-      </button>
-
-      {/* Info Panel */}
-      {showInfo && (
-        <div className="absolute bottom-20 right-6 bg-black/40 backdrop-blur-md px-6 py-4 rounded-lg shadow-lg text-white/80 text-sm transition-all duration-300 animate-fadeIn">
-          <p>Click on the city name to edit your location.</p>
-          <p className="mt-1">
-            Click on the temperature to toggle between °C and
-            °F.
-          </p>
-        </div>
-      )}
     </section>
   )
 }

@@ -182,51 +182,48 @@ export function SkillsSection() {
   ]
 
   return (
-    <section id="skills" className="py-20 bg-background relative overflow-hidden">
+    <section id="skills" className="section-padding bg-muted/5 relative overflow-hidden">
       <SkillsAnimatedBackground />
       <TechParticles />
-      <div className="absolute inset-0 bg-gradient-to-br from-black/15 via-transparent to-black/10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-background/30 via-transparent to-background/20" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto container-padding relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-6 py-3 rounded-full glass-subtle text-accent text-sm font-medium mb-6 border-0 animate-glass-fade">
-            💻 Technical Expertise
+          <div className="inline-flex items-center px-6 py-3 rounded-full glass-subtle text-accent text-sm font-medium mb-6 border-0 animate-fade-in hover-glow">
+            <div className="w-2 h-2 bg-accent rounded-full animate-pulse mr-3" />
+            Technical Expertise
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6 text-gradient">
             Skills & Technologies
           </h2>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             A comprehensive overview of my technical expertise and proficiency levels across different domains of software development.
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
           {skillCategories.map((category, index) => (
-            <Card key={index} className="p-6 glass-subtle border-0 hover:glass-card transition-all duration-500 hover:shadow-lg hover:shadow-primary/10 animate-glass-scale" style={{ animationDelay: `${index * 0.1}s` }}>
-              <CardHeader className="p-0 mb-6">
-                <div className="text-center">
-                  <div className="text-3xl mb-3">{category.icon}</div>
-                  <CardTitle className="text-xl">{category.title}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="space-y-4">
-                  {category.skills.map((skill, skillIndex) => {
-                    const colors = ['#00FFFF', '#0080FF', '#00FF80', '#8000FF', '#FF0080'];
-                    const color = colors[(skillIndex + (category.title === 'Frontend' ? 0 : category.title === 'Backend' ? 1 : 2)) % colors.length];
-                    return (
-                      <div key={skillIndex} className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="font-medium text-white">{skill.name}</span>
-                          <span className="text-sm text-white/70 font-medium">{skill.level}%</span>
-                        </div>
-                        <AnimatedProgressBar level={skill.level} color={color} />
+            <div key={index} className="p-6 glass-card hover:glass-strong border-0 hover:shadow-lg hover:shadow-primary/10 hover-lift transition-all duration-500 animate-scale-in" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div className="text-center mb-6">
+                <div className="text-3xl mb-3 animate-bounce-gentle">{category.icon}</div>
+                <h3 className="text-xl font-semibold text-gradient">{category.title}</h3>
+              </div>
+              <div className="space-y-4">
+                {category.skills.map((skill, skillIndex) => {
+                  const colors = ['#4f9cf9', '#f56565', '#48bb78', '#9f7aea', '#ed8936'];
+                  const color = colors[(skillIndex + (category.title === 'Frontend' ? 0 : category.title === 'Backend' ? 1 : 2)) % colors.length];
+                  return (
+                    <div key={skillIndex} className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="font-medium text-foreground">{skill.name}</span>
+                        <span className="text-sm text-muted-foreground font-medium">{skill.level}%</span>
                       </div>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
+                      <AnimatedProgressBar level={skill.level} color={color} />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           ))}
         </div>
       </div>
