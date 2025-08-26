@@ -1,9 +1,17 @@
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import { Inter } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '@/components/language-provider'
 import { ThemeProvider } from '@/components/theme-provider'
+
+// Configure Inter font with multiple weights
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
 
 export const metadata: Metadata = {
   title: 'Gabriel Renostro - Portfolio',
@@ -73,13 +81,12 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <style>{`
 html {
-  font-family: ${GeistSans.style.fontFamily};
+  font-family: ${inter.style.fontFamily}, ${GeistSans.style.fontFamily}, system-ui, sans-serif;
   --font-sans: ${GeistSans.variable};
   --font-mono: ${GeistMono.variable};
+  --font-inter: ${inter.variable};
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -162,7 +169,7 @@ img {
 }
         `}</style>
       </head>
-      <body className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}>
+      <body className={`${inter.variable} ${GeistSans.variable} ${GeistMono.variable} antialiased font-sans`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

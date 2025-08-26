@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Calendar, MapPin } from "lucide-react"
+import { Calendar, MapPin, Award } from "lucide-react"
 
 export function ExperienceSection() {
   const experiences = [
@@ -64,14 +64,13 @@ export function ExperienceSection() {
     <section id="experience" className="py-20 bg-muted/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-6 py-3 rounded-full glass-subtle text-primary text-sm font-medium mb-6 border-0 hover:glass transition-all duration-500 animate-glass-fade">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
             💼 Professional Journey
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 relative">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Experience & Education
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-accent rounded-full opacity-60" />
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto hover:text-foreground/90 transition-colors duration-300">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             My professional journey and continuous learning path in software development and technology leadership.
           </p>
         </div>
@@ -81,38 +80,33 @@ export function ExperienceSection() {
           <div className="lg:col-span-2 space-y-6">
             <h3 className="text-2xl font-bold text-foreground mb-6">Work Experience</h3>
             {experiences.map((exp, index) => (
-              <Card key={index} className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 card-hover-magnetic border-0 glass-card animate-slide-in-left cursor-pointer overflow-hidden" style={{ animationDelay: `${index * 0.1}s` }}>
-                <div className="gradient-overlay gradient-overlay-primary" />
-                <CardHeader className="p-0 mb-4 card-content">
-                  <CardTitle className="text-xl group-hover:text-primary transition-colors duration-300">{exp.title}</CardTitle>
-                  <div className="space-y-2">
-                    <div className="flex items-center text-primary font-medium group-hover:text-primary/90 transition-colors duration-300">{exp.company}</div>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground group-hover:text-foreground/70 transition-colors duration-300">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4 group-hover:text-primary/70 transition-colors duration-300" />
-                        {exp.period}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <MapPin className="h-4 w-4 group-hover:text-accent/70 transition-colors duration-300" />
-                        {exp.location}
-                      </div>
+              <div key={index} className="modern-card p-6">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
+                  <div>
+                    <h4 className="text-xl font-semibold text-foreground">{exp.title}</h4>
+                    <p className="text-primary font-medium">{exp.company}</p>
+                  </div>
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground shrink-0">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-4 w-4" />
+                      {exp.period}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <MapPin className="h-4 w-4" />
+                      {exp.location}
                     </div>
                   </div>
-                </CardHeader>
-                <CardContent className="p-0 space-y-4 card-content">
-                  <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">{exp.description}</p>
-                  <ul className="space-y-2">
-                    {exp.achievements.map((achievement, achIndex) => (
-                      <li key={achIndex} className="flex items-start gap-2 text-sm group-hover:text-foreground/80 transition-colors duration-300 hover:translate-x-2 hover:text-primary cursor-default">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0 group-hover:bg-accent transition-colors duration-300 hover:scale-150" />
-                        {achievement}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-                <div className="absolute top-4 right-4 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
-                <div className="absolute bottom-4 left-4 w-1 h-1 bg-accent/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse" style={{ animationDelay: '0.2s' }} />
-              </Card>
+                </div>
+                <p className="text-muted-foreground mb-4">{exp.description}</p>
+                <ul className="space-y-2">
+                  {exp.achievements.map((achievement, achIndex) => (
+                    <li key={achIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+                      {achievement}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
 
@@ -121,35 +115,27 @@ export function ExperienceSection() {
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-6">Education</h3>
               {education.map((edu, index) => (
-                <Card key={index} className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 card-hover-magnetic border-0 glass-card animate-slide-in-right cursor-pointer overflow-hidden">
-                  <div className="gradient-overlay gradient-overlay-accent" />
-                  <CardContent className="p-0 card-content">
-                    <h4 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors duration-300">{edu.degree}</h4>
-                    <p className="text-primary font-medium mb-2 group-hover:text-primary/90 transition-colors duration-300">{edu.school}</p>
-                    <p className="text-sm text-muted-foreground mb-3 group-hover:text-foreground/70 transition-colors duration-300">{edu.period}</p>
-                    <p className="text-sm group-hover:text-foreground/80 transition-colors duration-300">{edu.details}</p>
-                  </CardContent>
-                  <div className="absolute top-4 right-4 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
-                </Card>
+                <div key={index} className="modern-card p-6">
+                  <h4 className="font-semibold text-lg mb-2 text-foreground">{edu.degree}</h4>
+                  <p className="text-primary font-medium mb-2">{edu.school}</p>
+                  <p className="text-sm text-muted-foreground mb-3">{edu.period}</p>
+                  <p className="text-sm text-muted-foreground">{edu.details}</p>
+                </div>
               ))}
             </div>
 
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-6">Certifications</h3>
-              <Card className="group p-6 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 card-hover-magnetic border-0 glass-card animate-slide-in-right cursor-pointer overflow-hidden" style={{ animationDelay: '0.2s' }}>
-                <div className="gradient-overlay gradient-overlay-primary" />
-                <CardContent className="p-0 card-content">
-                  <ul className="space-y-3">
-                    {certifications.map((cert, index) => (
-                      <li key={index} className="flex items-center gap-2 group-hover:text-foreground/80 transition-all duration-300 hover:translate-x-2 hover:text-accent cursor-default p-2 rounded-md hover:bg-accent/5">
-                        <div className="w-2 h-2 bg-accent rounded-full flex-shrink-0 group-hover:bg-accent/80 transition-all duration-300 hover:scale-150 hover:animate-pulse" />
-                        <span className="text-sm">{cert}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-                <div className="absolute top-4 right-4 w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
-              </Card>
+              <div className="modern-card p-6">
+                <ul className="space-y-4">
+                  {certifications.map((cert, index) => (
+                    <li key={index} className="flex items-center gap-3 text-muted-foreground">
+                      <Award className="h-4 w-4 text-primary flex-shrink-0" />
+                      <span className="text-sm">{cert}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>

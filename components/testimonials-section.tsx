@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Star, Quote } from "lucide-react"
 
@@ -15,19 +14,8 @@ interface Testimonial {
   rating: number
 }
 
-const TestimonialsBackground = () => {
-  return (
-    <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float" />
-      <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent/4 rounded-full blur-3xl animate-float-reverse" />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-primary/3 to-accent/3 rounded-full blur-3xl animate-pulse-gentle" />
-    </div>
-  )
-}
-
 export function TestimonialsSection() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
 
   const testimonials: Testimonial[] = [
     {
@@ -79,25 +67,11 @@ export function TestimonialsSection() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIsAnimating(true)
-      setTimeout(() => {
-        setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-        setIsAnimating(false)
-      }, 300)
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
     }, 5000)
 
     return () => clearInterval(interval)
   }, [testimonials.length])
-
-  const handleTestimonialChange = (index: number) => {
-    if (index !== currentTestimonial && !isAnimating) {
-      setIsAnimating(true)
-      setTimeout(() => {
-        setCurrentTestimonial(index)
-        setIsAnimating(false)
-      }, 300)
-    }
-  }
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }).map((_, index) => (
@@ -111,146 +85,93 @@ export function TestimonialsSection() {
   }
 
   return (
-    <section id="testimonials" className="section-padding bg-muted/5 relative overflow-hidden">
-      <TestimonialsBackground />
-      
-      <div className="max-w-6xl mx-auto container-padding relative z-10">
+    <section id="testimonials" className="section-padding bg-muted/5">
+      <div className="max-w-6xl mx-auto container-padding">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-6 py-3 rounded-full glass-subtle text-primary text-sm font-medium mb-6 border-0 animate-fade-in hover-glow">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
             <Quote className="mr-2 h-4 w-4" />
             Client Testimonials
           </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6 text-gradient">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             What Clients Say
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Don't just take my word for it. Here's what some of my amazing clients have to say about our collaboration.
           </p>
         </div>
 
         <div className="max-w-4xl mx-auto">
           {/* Main Testimonial Display */}
-          <div className="relative mb-12">
-            <Card className={`glass-card border-0 p-8 transition-all duration-500 ${
-              isAnimating ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
-            }`}>
-              <CardContent className="p-0">
-                <div className="flex flex-col items-center text-center">
-                  <div className="mb-6">
-                    <Quote className="h-12 w-12 text-primary/30 mx-auto mb-4" />
-                    <blockquote className="text-lg text-foreground leading-relaxed mb-6 max-w-2xl">
-                      "{testimonials[currentTestimonial].content}"
-                    </blockquote>
-                    <div className="flex justify-center mb-4">
-                      {renderStars(testimonials[currentTestimonial].rating)}
-                    </div>
+          <div className="modern-card p-8 mb-8">
+            <div className="flex flex-col items-center text-center">
+              <Quote className="h-10 w-10 text-primary/30 mb-4" />
+              <blockquote className="text-lg text-foreground mb-6 max-w-2xl">
+                "{testimonials[currentTestimonial].content}"
+              </blockquote>
+              <div className="flex justify-center mb-4">
+                {renderStars(testimonials[currentTestimonial].rating)}
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <Avatar className="h-14 w-14 border-2 border-primary/20">
+                  <AvatarImage 
+                    src={testimonials[currentTestimonial].avatar} 
+                    alt={testimonials[currentTestimonial].name}
+                  />
+                  <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                    {testimonials[currentTestimonial].name.split(' ').map(n => n[0]).join('')}
+                  </AvatarFallback>
+                </Avatar>
+                
+                <div className="text-left">
+                  <div className="font-semibold text-foreground">
+                    {testimonials[currentTestimonial].name}
                   </div>
-                  
-                  <div className="flex items-center gap-4">
-                    <Avatar className="h-16 w-16 border-2 border-primary/20">
-                      <AvatarImage 
-                        src={testimonials[currentTestimonial].avatar} 
-                        alt={testimonials[currentTestimonial].name}
-                      />
-                      <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                        {testimonials[currentTestimonial].name.split(' ').map(n => n[0]).join('')}
-                      </AvatarFallback>
-                    </Avatar>
-                    
-                    <div className="text-left">
-                      <div className="font-semibold text-foreground">
-                        {testimonials[currentTestimonial].name}
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {testimonials[currentTestimonial].role}
-                      </div>
-                      <div className="text-sm text-primary font-medium">
-                        {testimonials[currentTestimonial].company}
-                      </div>
-                    </div>
+                  <div className="text-sm text-muted-foreground">
+                    {testimonials[currentTestimonial].role}
+                  </div>
+                  <div className="text-sm text-primary font-medium">
+                    {testimonials[currentTestimonial].company}
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
           {/* Testimonial Navigation Dots */}
-          <div className="flex justify-center gap-3 mb-8">
+          <div className="flex justify-center gap-2 mb-8">
             {testimonials.map((_, index) => (
               <button
                 key={index}
-                onClick={() => handleTestimonialChange(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                onClick={() => setCurrentTestimonial(index)}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                   index === currentTestimonial
-                    ? 'bg-primary scale-125 shadow-lg shadow-primary/50'
-                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50 hover:scale-110'
+                    ? 'bg-primary scale-125'
+                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
                 }`}
                 aria-label={`View testimonial ${index + 1}`}
               />
             ))}
           </div>
-
-          {/* Testimonial Avatars Row */}
-          <div className="flex justify-center gap-4 flex-wrap">
-            {testimonials.map((testimonial, index) => (
-              <button
-                key={testimonial.id}
-                onClick={() => handleTestimonialChange(index)}
-                className={`group transition-all duration-300 ${
-                  index === currentTestimonial 
-                    ? 'scale-110' 
-                    : 'scale-100 hover:scale-105 opacity-70 hover:opacity-100'
-                }`}
-              >
-                <Avatar className={`h-12 w-12 border-2 transition-all duration-300 ${
-                  index === currentTestimonial 
-                    ? 'border-primary shadow-lg shadow-primary/30' 
-                    : 'border-muted-foreground/20 group-hover:border-primary/50'
-                }`}>
-                  <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
-                  <AvatarFallback className="bg-primary/10 text-primary font-semibold text-xs">
-                    {testimonial.name.split(' ').map(n => n[0]).join('')}
-                  </AvatarFallback>
-                </Avatar>
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Statistics Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-muted-foreground/10">
-          <div className="text-center group">
-            <div className="text-3xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">
-              50+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-8 border-t border-muted-foreground/10">
+          {[
+            { value: "50+", label: "Projects Completed", color: "primary" },
+            { value: "30+", label: "Happy Clients", color: "accent" },
+            { value: "5⭐", label: "Average Rating", color: "primary" },
+            { value: "3+", label: "Years Experience", color: "accent" }
+          ].map((stat, index) => (
+            <div key={index} className="text-center">
+              <div className={`text-2xl font-bold text-${stat.color} mb-1`}>
+                {stat.value}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                {stat.label}
+              </div>
             </div>
-            <div className="text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300">
-              Projects Completed
-            </div>
-          </div>
-          <div className="text-center group">
-            <div className="text-3xl font-bold text-accent mb-2 group-hover:scale-110 transition-transform duration-300">
-              30+
-            </div>
-            <div className="text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300">
-              Happy Clients
-            </div>
-          </div>
-          <div className="text-center group">
-            <div className="text-3xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">
-              5⭐
-            </div>
-            <div className="text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300">
-              Average Rating
-            </div>
-          </div>
-          <div className="text-center group">
-            <div className="text-3xl font-bold text-accent mb-2 group-hover:scale-110 transition-transform duration-300">
-              3+
-            </div>
-            <div className="text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300">
-              Years Experience
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
