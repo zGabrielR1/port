@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { ExternalLink, Github } from "lucide-react"
+import { GlassmorphismButton } from "@/components/ui/glassmorphism-button"
 
 export function ProjectsSection() {
   const projects = [
@@ -62,23 +62,24 @@ export function ProjectsSection() {
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <div key={index} className="modern-card overflow-hidden transition-all duration-300 hover:shadow-lg">
-              <div className="aspect-video overflow-hidden relative bg-muted">
+            <div key={index} className="glassmorphism-button overflow-hidden transition-all duration-300 hover:shadow-lg group">
+              <div className="aspect-video overflow-hidden relative bg-black/20">
                 <img
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 ease-out hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-foreground mb-2">{project.title}</h3>
-                <p className="text-muted-foreground text-sm mb-4">{project.description}</p>
+                <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
+                <p className="text-white/80 text-sm mb-4">{project.description}</p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.technologies.map((tech, techIndex) => (
                     <span 
                       key={techIndex} 
-                      className="px-2 py-1 bg-muted rounded text-xs font-medium text-foreground"
+                      className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs font-medium text-white border border-white/20"
                     >
                       {tech}
                     </span>
@@ -86,14 +87,26 @@ export function ProjectsSection() {
                 </div>
 
                 <div className="flex gap-3">
-                  <Button size="sm" className="flex-1">
+                  <GlassmorphismButton 
+                    variant="primary" 
+                    size="sm" 
+                    className="flex-1"
+                    showShine={true}
+                    showRipple={false}
+                  >
                     <ExternalLink className="mr-2 h-4 w-4" />
                     Live Demo
-                  </Button>
-                  <Button variant="outline" size="sm" className="flex-1">
+                  </GlassmorphismButton>
+                  <GlassmorphismButton 
+                    variant="default" 
+                    size="sm" 
+                    className="flex-1"
+                    showShine={true}
+                    showRipple={false}
+                  >
                     <Github className="mr-2 h-4 w-4" />
                     Code
-                  </Button>
+                  </GlassmorphismButton>
                 </div>
               </div>
             </div>
