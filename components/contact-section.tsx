@@ -2,11 +2,12 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone, MapPin, Send } from "lucide-react"
 import { GlassmorphismButton } from "@/components/ui/glassmorphism-button"
+import { ShaderBackground } from "@/components/ui/shader-background"
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,15 @@ export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [formErrors, setFormErrors] = useState<{[key: string]: string}>({})
+  const [visible, setVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setVisible(true);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const validateForm = () => {
     const errors: {[key: string]: string} = {}
@@ -75,16 +85,41 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-background">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="section-padding bg-black relative overflow-hidden">
+      {/* Shader Background */}
+      <ShaderBackground 
+        intensity={0.06} 
+        speed={0.4} 
+        complexity={6}
+        className="opacity-35"
+      />
+      
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/70 to-black/90" />
+      
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+          <div 
+            className={`inline-flex items-center px-6 py-3 rounded-full glassmorphism text-white text-sm font-medium mb-6 transition-all duration-700 ${
+              visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+            }`}
+          >
             📬 Let's Connect
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Get In Touch
+          <h2 
+            className={`text-3xl sm:text-4xl font-bold text-white mb-6 transition-all duration-700 delay-200 ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent animate-gradient-x">
+              Get In Touch
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p 
+            className={`text-lg text-white/80 max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-300 ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
             Ready to start your next project? Let's discuss how we can work together to bring your ideas to life and create something amazing.
           </p>
         </div>
@@ -241,7 +276,7 @@ export function ContactSection() {
                 disabled={isSubmitting}
                 variant="primary"
                 size="lg"
-                className="w-full"
+                className="w-full group"
                 showShine={true}
                 showRipple={true}
               >
@@ -252,21 +287,21 @@ export function ContactSection() {
                   </>
                 ) : submitStatus === 'success' ? (
                   <>
-                    <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Message Sent!
                   </>
                 ) : submitStatus === 'error' ? (
                   <>
-                    <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                     Try Again
                   </>
                 ) : (
                   <>
-                    <Send className="mr-2 h-4 w-4" />
+                    <Send className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
                     Send Message
                   </>
                 )}
