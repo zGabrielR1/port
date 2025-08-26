@@ -36,7 +36,7 @@
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-blur: 16px;
   
-  /* Animation timing */
+  /* Import design system variables */
   --animation-fast: 0.15s;
   --animation-normal: 0.3s;
   --animation-slow: 0.5s;
@@ -55,8 +55,8 @@
   --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
   --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
   --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  
-  /* Spacing scale */
+
+  /* Design system spacing scale */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
@@ -64,6 +64,12 @@
   --space-xl: 2rem;
   --space-2xl: 3rem;
   --space-3xl: 4rem;
+
+  /* Consistent container and layout */
+  --container-padding: 1rem;
+  --section-padding: 4rem;
+  --max-width: 80rem;
+  --border-radius: 0.75rem;
 }
 
 .dark {

@@ -1,6 +1,8 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { VariantProps, cva } from 'class-variance-authority';
+import { ButtonProps, SizeVariant } from '@/lib/types';
+import { GLASSMORPHISM_VARIANTS } from '@/lib/design-system';
 
 const glassmorphismButtonVariants = cva(
   [
@@ -170,7 +172,7 @@ const glassmorphismCardVariants = cva(
 
 export interface GlassmorphismButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof glassmorphismButtonVariants> {
+     VariantProps<typeof glassmorphismButtonVariants> {
   children: React.ReactNode;
   showShine?: boolean;
   showRipple?: boolean;
