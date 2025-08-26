@@ -249,10 +249,17 @@ function PortfolioHero() {
           ))}
         </motion.div>
 
-        {/* Content with Gabriel's information - EVEN BIGGER */}
+        {/* Content with Gabriel's information - SHARPER TEXT */}
         <div className="flex flex-col font-['Inter',_sans-serif] font-normal justify-center leading-[0] not-italic relative shrink-0 text-center z-10">
           <motion.p
-            className="block leading-[1.1] text-[48px] font-bold text-white mb-3 drop-shadow-2xl tracking-[-1.5px]"
+            className="block leading-[1.1] text-[48px] font-bold mb-3 tracking-[-1.5px]"
+            style={{
+              color: '#ffffff',
+              textShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.6), 0 0 60px rgba(255,255,255,0.4), 2px 2px 4px rgba(0,0,0,0.8)',
+              fontFeatureSettings: '"kern" 1',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
@@ -260,7 +267,14 @@ function PortfolioHero() {
             Hi, I'm Gabriel
           </motion.p>
           <motion.p
-            className="block leading-[1.2] text-[28px] font-semibold text-white/95 mb-4 drop-shadow-xl tracking-[-0.8px]"
+            className="block leading-[1.2] text-[28px] font-semibold mb-4 tracking-[-0.8px]"
+            style={{
+              color: 'rgba(255,255,255,0.95)',
+              textShadow: '0 0 15px rgba(255,255,255,0.9), 0 0 30px rgba(255,255,255,0.7), 1px 1px 3px rgba(0,0,0,0.7)',
+              fontFeatureSettings: '"kern" 1',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
@@ -268,7 +282,14 @@ function PortfolioHero() {
             Full-Stack Developer
           </motion.p>
           <motion.p
-            className="block leading-[1.3] text-[20px] text-white/90 max-w-[400px] drop-shadow-lg font-light"
+            className="block leading-[1.3] text-[20px] max-w-[400px] font-light"
+            style={{
+              color: 'rgba(255,255,255,0.9)',
+              textShadow: '0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.6), 1px 1px 2px rgba(0,0,0,0.6)',
+              fontFeatureSettings: '"kern" 1',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.8 }}
@@ -331,20 +352,31 @@ function PortfolioSection({ title, children, delay = 0 }: { title: string; child
   );
 }
 
-function AnimatedBackground() {
+function AnimatedBackground({ variant = "default" }: { variant?: "default" | "hero" }) {
   return (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0 -z-10">
       <div className="absolute bg-center bg-cover bg-no-repeat inset-0" style={{
         backgroundImage: `url('/555c0dbdf8e4d07301d5ff5c75b2888e8dd02850.png')`,
       }} />
-      {/* Moving shader overlay */}
+      {/* Moving shader overlay with different opacity for sections */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20"
+        className="absolute inset-0"
+        style={{
+          background: variant === "hero"
+            ? "linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1))"
+            : "linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2))"
+        }}
         animate={{
           background: [
-            "linear-gradient(45deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.15))",
-            "linear-gradient(225deg, rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.15), rgba(59, 130, 246, 0.15))",
-            "linear-gradient(45deg, rgba(236, 72, 153, 0.15), rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15))",
+            variant === "hero"
+              ? "linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1))"
+              : "linear-gradient(45deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.15))",
+            variant === "hero"
+              ? "linear-gradient(225deg, rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1), rgba(59, 130, 246, 0.1))"
+              : "linear-gradient(225deg, rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2), rgba(59, 130, 246, 0.2))",
+            variant === "hero"
+              ? "linear-gradient(45deg, rgba(236, 72, 153, 0.1), rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1))"
+              : "linear-gradient(45deg, rgba(236, 72, 153, 0.15), rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15))",
           ]
         }}
         transition={{
@@ -353,24 +385,24 @@ function AnimatedBackground() {
           ease: "easeInOut"
         }}
       />
-      {/* Floating particles */}
-      {[...Array(15)].map((_, i) => (
+      {/* Floating particles with different density */}
+      {[...Array(variant === "hero" ? 20 : 12)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 bg-white/40 rounded-full"
+          className="absolute w-1 h-1 bg-white/50 rounded-full"
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
           }}
           animate={{
-            y: [-15, 15, -15],
-            x: [-8, 8, -8],
-            opacity: [0.4, 0.9, 0.4],
+            y: [-20, 20, -20],
+            x: [-10, 10, -10],
+            opacity: [0.3, 0.8, 0.3],
           }}
           transition={{
-            duration: 3 + Math.random() * 2,
+            duration: 4 + Math.random() * 2,
             repeat: Infinity,
-            delay: Math.random() * 2,
+            delay: Math.random() * 3,
             ease: "easeInOut",
           }}
         />
@@ -507,22 +539,33 @@ function ContactButton() {
 export default function Home() {
   return (
     <div className="min-h-screen relative">
-      {/* Animated background for entire site */}
-      <AnimatedBackground />
+      {/* Single animated background spanning entire site */}
+      <div className="fixed inset-0 z-0">
+        <AnimatedBackground variant="hero" />
+      </div>
 
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="relative z-20">
           <PortfolioHero />
         </div>
       </section>
 
-      {/* Projects Section with same background */}
+      {/* Projects Section with seamless background transition */}
       <section className="relative py-20 px-8 min-h-screen flex items-center">
-        <AnimatedBackground />
+        <div className="absolute inset-0 z-0">
+          <AnimatedBackground variant="default" />
+        </div>
         <div className="relative z-10 max-w-6xl mx-auto w-full">
           <motion.h2
-            className="text-4xl md:text-5xl font-bold text-white text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px] drop-shadow-2xl"
+            className="text-4xl md:text-5xl font-bold text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px]"
+            style={{
+              color: '#ffffff',
+              textShadow: '0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.6), 2px 2px 4px rgba(0,0,0,0.8)',
+              fontFeatureSettings: '"kern" 1',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
@@ -536,8 +579,12 @@ export default function Home() {
                 <div className="aspect-video bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-2xl mb-4 flex items-center justify-center border border-white/20">
                   <Code className="w-12 h-12 text-white/80" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">Project {i}</h3>
-                <p className="text-white/80 text-sm leading-relaxed mb-4">
+                <h3 className="text-xl font-semibold text-white mb-2" style={{
+                  textShadow: '0 0 10px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,0.7)'
+                }}>Project {i}</h3>
+                <p className="text-white/80 text-sm leading-relaxed mb-4" style={{
+                  textShadow: '0 0 8px rgba(255,255,255,0.6), 1px 1px 1px rgba(0,0,0,0.5)'
+                }}>
                   A modern web application built with React and TypeScript, featuring responsive design and smooth animations.
                 </p>
                 <InteractiveButton className="w-full justify-center bg-white/10 hover:bg-white/20">
@@ -549,12 +596,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills Section with same background */}
+      {/* Skills Section with seamless background transition */}
       <section className="relative py-20 px-8 min-h-screen flex items-center">
-        <AnimatedBackground />
+        <div className="absolute inset-0 z-0">
+          <AnimatedBackground variant="default" />
+        </div>
         <div className="relative z-10 max-w-6xl mx-auto w-full">
           <motion.h2
-            className="text-4xl md:text-5xl font-bold text-white text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px] drop-shadow-2xl"
+            className="text-4xl md:text-5xl font-bold text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px]"
+            style={{
+              color: '#ffffff',
+              textShadow: '0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.6), 2px 2px 4px rgba(0,0,0,0.8)',
+              fontFeatureSettings: '"kern" 1',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
@@ -575,19 +631,31 @@ export default function Home() {
             ].map((skill, i) => (
               <GlassmorphismCard key={skill.name} delay={0.1 * i} className="text-center hover:scale-105">
                 <div className="text-4xl mb-3">{skill.icon}</div>
-                <h4 className="font-semibold text-white text-lg">{skill.name}</h4>
+                <h4 className="font-semibold text-lg" style={{
+                  color: '#ffffff',
+                  textShadow: '0 0 10px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,0.7)'
+                }}>{skill.name}</h4>
               </GlassmorphismCard>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Experience Section with same background */}
+      {/* Experience Section with seamless background transition */}
       <section className="relative py-20 px-8 min-h-screen flex items-center">
-        <AnimatedBackground />
+        <div className="absolute inset-0 z-0">
+          <AnimatedBackground variant="default" />
+        </div>
         <div className="relative z-10 max-w-6xl mx-auto w-full">
           <motion.h2
-            className="text-4xl md:text-5xl font-bold text-white text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px] drop-shadow-2xl"
+            className="text-4xl md:text-5xl font-bold text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px]"
+            style={{
+              color: '#ffffff',
+              textShadow: '0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.6), 2px 2px 4px rgba(0,0,0,0.8)',
+              fontFeatureSettings: '"kern" 1',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale'
+            }}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
@@ -602,9 +670,18 @@ export default function Home() {
                   <Briefcase className="w-8 h-8 text-white/80" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl font-semibold text-white mb-1">Software Developer</h3>
-                  <p className="text-white/80 mb-2 text-lg">Company Name • 2023 - Present</p>
-                  <p className="text-white/70 text-base leading-relaxed">
+                  <h3 className="text-2xl font-semibold mb-1" style={{
+                    color: '#ffffff',
+                    textShadow: '0 0 15px rgba(255,255,255,0.8), 1px 1px 3px rgba(0,0,0,0.7)'
+                  }}>Software Developer</h3>
+                  <p className="mb-2 text-lg" style={{
+                    color: 'rgba(255,255,255,0.8)',
+                    textShadow: '0 0 10px rgba(255,255,255,0.6), 1px 1px 2px rgba(0,0,0,0.5)'
+                  }}>Company Name • 2023 - Present</p>
+                  <p className="text-base leading-relaxed" style={{
+                    color: 'rgba(255,255,255,0.7)',
+                    textShadow: '0 0 8px rgba(255,255,255,0.5), 1px 1px 1px rgba(0,0,0,0.4)'
+                  }}>
                     Developed and maintained web applications using modern technologies, collaborating with cross-functional teams to deliver high-quality solutions.
                   </p>
                 </div>
@@ -620,7 +697,10 @@ export default function Home() {
             transition={{ delay: 0.8, duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-3xl font-bold text-white mb-8 drop-shadow-2xl">Let's Work Together</h3>
+            <h3 className="text-3xl font-bold mb-8" style={{
+              color: '#ffffff',
+              textShadow: '0 0 20px rgba(255,255,255,0.8), 2px 2px 4px rgba(0,0,0,0.8)'
+            }}>Let's Work Together</h3>
             <div className="flex justify-center">
               <ContactButton />
             </div>
@@ -628,9 +708,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer with same background */}
+      {/* Footer with seamless background transition */}
       <footer className="relative py-12 px-8">
-        <AnimatedBackground />
+        <div className="absolute inset-0 z-0">
+          <AnimatedBackground variant="default" />
+        </div>
         <div className="relative z-10 max-w-6xl mx-auto text-center">
           <div className="flex items-center justify-center gap-6 mb-6">
             <InteractiveButton className="h-12 w-12 p-0 bg-white/8 hover:bg-white/12">
@@ -643,7 +725,10 @@ export default function Home() {
               <Mail className="w-5 h-5" />
             </InteractiveButton>
           </div>
-          <p className="text-white/80 font-['Inter',_sans-serif] tracking-[-0.7px] text-lg">
+          <p className="font-['Inter',_sans-serif] tracking-[-0.7px] text-lg" style={{
+            color: 'rgba(255,255,255,0.8)',
+            textShadow: '0 0 10px rgba(255,255,255,0.6), 1px 1px 2px rgba(0,0,0,0.5)'
+          }}>
             © 2024 Gabriel Renostro. Built with React & Motion.
           </p>
         </div>
