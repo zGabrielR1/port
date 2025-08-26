@@ -128,43 +128,37 @@
     overflow-x: hidden;
   }
 
-  /* Enhanced typography hierarchy */
+  /* Enhanced typography hierarchy with improved font stack */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight text-foreground;
+    @apply font-bold tracking-tight text-foreground;
     line-height: 1.2;
-    font-weight: 600;
     letter-spacing: -0.025em;
   }
 
   h1 {
     @apply text-4xl sm:text-5xl lg:text-7xl;
-    font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.05em;
   }
 
   h2 {
-    @apply text-3xl sm:text-4xl lg:text-6xl;
-    font-weight: 600;
+    @apply text-3xl sm:text-4xl lg:text-5xl;
     line-height: 1.15;
     letter-spacing: -0.04em;
   }
 
   h3 {
     @apply text-2xl sm:text-3xl lg:text-4xl;
-    font-weight: 600;
     line-height: 1.25;
     letter-spacing: -0.02em;
   }
 
   h4 {
     @apply text-xl sm:text-2xl lg:text-3xl;
-    font-weight: 600;
   }
 
   p {
     @apply leading-relaxed text-muted-foreground;
-    font-weight: 400;
   }
 
   /* Enhanced focus styles */
@@ -564,6 +558,26 @@
     border: 1px solid rgba(255, 255, 255, 0.25) !important;
   }
 
+  /* Modern card design without glass effect */
+  .modern-card {
+    @apply bg-card border border-border rounded-xl overflow-hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-out;
+  }
+
+  .modern-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+  }
+
+  .modern-card-primary {
+    @apply bg-primary/5 border-primary/20;
+  }
+
+  .modern-card-accent {
+    @apply bg-accent/5 border-accent/20;
+  }
+
   /* Dark mode glass effects */
   .dark .glass {
     background-color: rgba(0, 0, 0, 0.1);
@@ -592,6 +606,14 @@
     border: 1px solid rgba(255, 255, 255, 0.25) !important;
     backdrop-filter: blur(20px) saturate(200%) !important;
     -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
+  }
+
+  .dark .modern-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .dark .modern-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   }
 
   /* Gradient utilities */
