@@ -58,11 +58,8 @@ export function ProjectsSection() {
   return (
     <section id="projects" className="section-padding bg-black relative overflow-hidden">
       {/* Shader Background */}
-      <ShaderBackground 
-        intensity={0.08} 
-        speed={0.5} 
-        complexity={7}
-        className="opacity-45"
+      <ShaderBackground
+        variant="section"
       />
       
       {/* Gradient Overlay */}

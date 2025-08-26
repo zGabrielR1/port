@@ -97,11 +97,8 @@ export function TestimonialsSection() {
   return (
     <section id="testimonials" className="section-padding bg-black relative overflow-hidden">
       {/* Shader Background */}
-      <ShaderBackground 
-        intensity={0.07} 
-        speed={0.3} 
-        complexity={6}
-        className="opacity-40"
+      <ShaderBackground
+        variant="section"
       />
       
       {/* Gradient Overlay */}

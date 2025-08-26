@@ -89,6 +89,85 @@ const glassmorphismButtonVariants = cva(
   }
 );
 
+// Create a unified Glassmorphism component system
+const glassmorphismCardVariants = cva(
+  [
+    "backdrop-blur-md",
+    "border",
+    "shadow-lg",
+    "transition-all",
+    "duration-300",
+    "ease-out",
+    "transform-gpu",
+  ],
+  {
+    variants: {
+      variant: {
+        default: [
+          "bg-white/10",
+          "border-white/20",
+          "shadow-black/10",
+          "hover:bg-white/15",
+          "hover:border-white/30",
+          "hover:shadow-xl",
+          "hover:shadow-black/20",
+        ],
+        strong: [
+          "bg-white/15",
+          "border-white/25",
+          "shadow-black/15",
+          "hover:bg-white/20",
+          "hover:border-white/35",
+          "hover:shadow-2xl",
+          "hover:shadow-black/25",
+        ],
+        subtle: [
+          "bg-white/5",
+          "border-white/10",
+          "shadow-black/5",
+          "hover:bg-white/10",
+          "hover:border-white/20",
+          "hover:shadow-lg",
+          "hover:shadow-black/15",
+        ],
+        primary: [
+          "bg-primary/10",
+          "border-primary/20",
+          "shadow-primary/10",
+          "hover:bg-primary/15",
+          "hover:border-primary/30",
+          "hover:shadow-xl",
+          "hover:shadow-primary/20",
+        ],
+        accent: [
+          "bg-accent/10",
+          "border-accent/20",
+          "shadow-accent/10",
+          "hover:bg-accent/15",
+          "hover:border-accent/30",
+          "hover:shadow-xl",
+          "hover:shadow-accent/20",
+        ],
+      },
+      size: {
+        sm: ["p-4", "rounded-lg"],
+        md: ["p-6", "rounded-xl"],
+        lg: ["p-8", "rounded-2xl"],
+        xl: ["p-10", "rounded-3xl"],
+      },
+      interactive: {
+        true: ["hover:scale-105", "cursor-pointer", "group"],
+        false: [],
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md",
+      interactive: false,
+    },
+  }
+);
+
 export interface GlassmorphismButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof glassmorphismButtonVariants> {
@@ -182,4 +261,58 @@ const GlassmorphismButton = React.forwardRef<
 
 GlassmorphismButton.displayName = 'GlassmorphismButton';
 
-export { GlassmorphismButton, glassmorphismButtonVariants };
+// Glassmorphism Card Component for consistent glass effects
+interface GlassmorphismCardProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof glassmorphismCardVariants> {
+  children: React.ReactNode;
+  showGlow?: boolean;
+  glowColor?: string;
+}
+
+const GlassmorphismCard = React.forwardRef<
+  HTMLDivElement,
+  GlassmorphismCardProps
+>(
+  (
+    {
+      className,
+      variant,
+      size,
+      interactive,
+      children,
+      showGlow = false,
+      glowColor = "rgba(79, 156, 249, 0.3)",
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          glassmorphismCardVariants({ variant, size, interactive }),
+          showGlow && "animate-glassmorphism-glow",
+          className
+        )}
+        style={{
+          ...(showGlow && {
+            boxShadow: `0 0 30px ${glowColor}, inset 0 1px 0 rgba(255, 255, 255, 0.2)`
+          })
+        }}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+
+GlassmorphismCard.displayName = 'GlassmorphismCard';
+
+export {
+  GlassmorphismButton,
+  glassmorphismButtonVariants,
+  GlassmorphismCard,
+  glassmorphismCardVariants
+};

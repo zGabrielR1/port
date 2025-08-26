@@ -41,11 +41,8 @@ export function HeroSection() {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Enhanced Shader Background */}
-      <ShaderBackground 
-        intensity={0.2} 
-        speed={0.8} 
-        complexity={10}
-        className="opacity-90"
+      <ShaderBackground
+        variant="hero"
       />
 
       {/* Enhanced glassmorphism overlay with gradient */}

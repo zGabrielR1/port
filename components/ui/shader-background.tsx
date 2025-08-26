@@ -1,19 +1,36 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface ShaderBackgroundProps {
   className?: string;
   intensity?: number;
   speed?: number;
   complexity?: number;
+  variant?: 'hero' | 'section' | 'subtle' | 'ambient';
 }
 
-export const ShaderBackground = ({ 
-  className = "", 
-  intensity = 0.15, 
-  speed = 1, 
-  complexity = 8 
+// Standardized shader configurations for consistent visual experience
+const SHADER_VARIANTS = {
+  hero: { intensity: 0.15, speed: 0.8, complexity: 12, opacity: 0.9 },
+  section: { intensity: 0.08, speed: 0.6, complexity: 8, opacity: 0.5 },
+  subtle: { intensity: 0.05, speed: 0.4, complexity: 6, opacity: 0.3 },
+  ambient: { intensity: 0.03, speed: 0.3, complexity: 4, opacity: 0.2 }
+};
+
+export const ShaderBackground = ({
+  className = "",
+  intensity,
+  speed,
+  complexity,
+  variant = 'section'
 }: ShaderBackgroundProps) => {
+  // Use variant defaults if specific props not provided
+  const config = SHADER_VARIANTS[variant];
+  const finalIntensity = intensity ?? config.intensity;
+  const finalSpeed = speed ?? config.speed;
+  const finalComplexity = complexity ?? config.complexity;
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [webglSupported, setWebglSupported] = useState<boolean>(true);
+  const [fallbackActive, setFallbackActive] = useState<boolean>(false);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -22,7 +39,9 @@ export const ShaderBackground = ({
     const gl = canvas.getContext("webgl");
 
     if (!gl) {
-      console.error("WebGL not supported");
+      console.warn("WebGL not supported, falling back to CSS animation");
+      setWebglSupported(false);
+      setFallbackActive(true);
       return;
     }
 
@@ -170,19 +189,29 @@ export const ShaderBackground = ({
     const speedUniformLocation = gl.getUniformLocation(shaderProgram, "uSpeed");
     const complexityUniformLocation = gl.getUniformLocation(shaderProgram, "uComplexity");
 
-    // Animation loop
+    // Animation loop with performance optimizations
     let startTime = Date.now();
     let animationFrameId: number;
+    let lastFrameTime = 0;
+    const targetFPS = 60;
+    const frameInterval = 1000 / targetFPS;
 
-    const render = () => {
-      const currentTime = (Date.now() - startTime) / 1000;
+    const render = (currentTime: number) => {
+      // Limit frame rate for better performance
+      if (currentTime - lastFrameTime < frameInterval) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+      lastFrameTime = currentTime;
+
+      const elapsedTime = (currentTime - startTime) / 1000;
 
       // Set uniforms
-      gl.uniform1f(timeUniformLocation, currentTime);
+      gl.uniform1f(timeUniformLocation, elapsedTime);
       gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-      gl.uniform1f(intensityUniformLocation, intensity);
-      gl.uniform1f(speedUniformLocation, speed);
-      gl.uniform1f(complexityUniformLocation, complexity);
+      gl.uniform1f(intensityUniformLocation, finalIntensity);
+      gl.uniform1f(speedUniformLocation, finalSpeed);
+      gl.uniform1f(complexityUniformLocation, finalComplexity);
 
       // Clear and draw
       gl.clear(gl.COLOR_BUFFER_BIT);
@@ -191,7 +220,7 @@ export const ShaderBackground = ({
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
     // Cleanup function
     return () => {
@@ -204,13 +233,30 @@ export const ShaderBackground = ({
       gl.deleteShader(fragmentShader);
       gl.deleteBuffer(positionBuffer);
     };
-  }, [intensity, speed, complexity]);
+  }, [finalIntensity, finalSpeed, finalComplexity, webglSupported]);
 
   return (
-    <canvas 
-      ref={canvasRef} 
-      className={`absolute inset-0 w-full h-full ${className}`}
-      style={{ zIndex: 0 }}
-    />
+    <>
+      {/* WebGL Canvas */}
+      {webglSupported && (
+        <canvas
+          ref={canvasRef}
+          className={`absolute inset-0 w-full h-full ${className}`}
+          style={{ zIndex: 0 }}
+        />
+      )}
+
+      {/* CSS Fallback Animation */}
+      {fallbackActive && (
+        <div
+          className={`absolute inset-0 w-full h-full ${className} bg-gradient-subtle`}
+          style={{
+            background: 'radial-gradient(circle at 20% 80%, rgba(79, 156, 249, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(245, 101, 101, 0.1) 0%, transparent 50%)',
+            animation: 'shader-fallback 8s ease-in-out infinite alternate',
+            zIndex: 0
+          }}
+        />
+      )}
+    </>
   );
 };

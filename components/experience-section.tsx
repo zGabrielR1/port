@@ -76,11 +76,8 @@ export function ExperienceSection() {
   return (
     <section id="experience" className="py-20 bg-black relative overflow-hidden">
       {/* Subtle Shader Background */}
-      <ShaderBackground 
-        intensity={0.06} 
-        speed={0.4} 
-        complexity={5}
-        className="opacity-30"
+      <ShaderBackground
+        variant="section"
       />
       
       {/* Gradient Overlay */}

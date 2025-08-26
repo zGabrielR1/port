@@ -20,11 +20,8 @@ export function AboutSection() {
   return (
     <section id="about" className="section-padding bg-black relative overflow-hidden">
       {/* Subtle Shader Background */}
-      <ShaderBackground 
-        intensity={0.08} 
-        speed={0.5} 
-        complexity={6}
-        className="opacity-40"
+      <ShaderBackground
+        variant="section"
       />
       
       {/* Gradient Overlay */}

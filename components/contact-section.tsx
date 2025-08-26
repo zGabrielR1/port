@@ -87,11 +87,8 @@ export function ContactSection() {
   return (
     <section id="contact" className="section-padding bg-black relative overflow-hidden">
       {/* Shader Background */}
-      <ShaderBackground 
-        intensity={0.06} 
-        speed={0.4} 
-        complexity={6}
-        className="opacity-35"
+      <ShaderBackground
+        variant="subtle"
       />
       
       {/* Gradient Overlay */}

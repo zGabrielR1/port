@@ -33,11 +33,8 @@ export function Footer() {
   return (
     <footer className="bg-black border-t border-white/10 py-12 relative overflow-hidden">
       {/* Subtle Shader Background */}
-      <ShaderBackground 
-        intensity={0.05} 
-        speed={0.2} 
-        complexity={4}
-        className="opacity-30"
+      <ShaderBackground
+        variant="ambient"
       />
       
       {/* Gradient Overlay */}

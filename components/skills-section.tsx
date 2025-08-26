@@ -92,11 +92,8 @@ export function SkillsSection() {
   return (
     <section id="skills" className="section-padding bg-black relative overflow-hidden">
       {/* Shader Background */}
-      <ShaderBackground 
-        intensity={0.1} 
-        speed={0.6} 
-        complexity={8}
-        className="opacity-50"
+      <ShaderBackground
+        variant="section"
       />
       
       {/* Gradient Overlay */}
