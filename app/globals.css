@@ -35,26 +35,6 @@
   --glass-bg: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-blur: 16px;
-
-  /* Standardized gradient definitions */
-  --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)));
-  --gradient-secondary: linear-gradient(135deg, hsl(var(--primary)), transparent, hsl(var(--accent)));
-  --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)), hsl(var(--accent)));
-  --gradient-subtle: linear-gradient(135deg, rgba(79, 156, 249, 0.1), transparent, rgba(245, 101, 101, 0.05));
-
-  /* Color variations for consistency */
-  --color-primary-light: rgba(79, 156, 249, 0.1);
-  --color-primary-medium: rgba(79, 156, 249, 0.2);
-  --color-primary-strong: rgba(79, 156, 249, 0.3);
-
-  --color-accent-light: rgba(245, 101, 101, 0.1);
-  --color-accent-medium: rgba(245, 101, 101, 0.2);
-  --color-accent-strong: rgba(245, 101, 101, 0.3);
-
-  /* Consistent shadow colors */
-  --shadow-primary: rgba(79, 156, 249, 0.25);
-  --shadow-accent: rgba(245, 101, 101, 0.25);
-  --shadow-glass: rgba(0, 0, 0, 0.15);
   
   /* Animation timing */
   --animation-fast: 0.15s;
@@ -443,22 +423,6 @@
     }
     to {
       box-shadow: 0 0 0 10px rgba(79, 156, 249, 0);
-    }
-  }
-
-  /* Shader fallback animation */
-  @keyframes shader-fallback {
-    0% {
-      opacity: 0.3;
-      transform: scale(1) rotate(0deg);
-    }
-    50% {
-      opacity: 0.6;
-      transform: scale(1.05) rotate(1deg);
-    }
-    100% {
-      opacity: 0.3;
-      transform: scale(1) rotate(0deg);
     }
   }
 
@@ -964,76 +928,6 @@
 
   .bg-gradient-conic {
     background: conic-gradient(var(--tw-gradient-stops));
-  }
-
-  /* Standardized gradient classes */
-  .bg-gradient-primary {
-    background: var(--gradient-primary);
-  }
-
-  .bg-gradient-secondary {
-    background: var(--gradient-secondary);
-  }
-
-  .bg-gradient-accent {
-    background: var(--gradient-accent);
-  }
-
-  .bg-gradient-subtle {
-    background: var(--gradient-subtle);
-  }
-
-  /* Standardized color utility classes */
-  .bg-primary-light {
-    background-color: var(--color-primary-light);
-  }
-
-  .bg-primary-medium {
-    background-color: var(--color-primary-medium);
-  }
-
-  .bg-primary-strong {
-    background-color: var(--color-primary-strong);
-  }
-
-  .bg-accent-light {
-    background-color: var(--color-accent-light);
-  }
-
-  .bg-accent-medium {
-    background-color: var(--color-accent-medium);
-  }
-
-  .bg-accent-strong {
-    background-color: var(--color-accent-strong);
-  }
-
-  /* Standardized shadow utilities */
-  .shadow-primary {
-    box-shadow: 0 4px 20px var(--shadow-primary);
-  }
-
-  .shadow-accent {
-    box-shadow: 0 4px 20px var(--shadow-accent);
-  }
-
-  .shadow-glass {
-    box-shadow: 0 8px 32px var(--shadow-glass);
-  }
-
-  /* Consistent text gradient utilities */
-  .text-gradient-primary {
-    background: var(--gradient-primary);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-  }
-
-  .text-gradient-secondary {
-    background: var(--gradient-secondary);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
   }
 
   /* Interactive hover effects */

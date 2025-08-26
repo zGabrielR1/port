@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface ShaderBackgroundProps {
   className?: string;
@@ -29,8 +29,6 @@ export const ShaderBackground = ({
   const finalSpeed = speed ?? config.speed;
   const finalComplexity = complexity ?? config.complexity;
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [webglSupported, setWebglSupported] = useState<boolean>(true);
-  const [fallbackActive, setFallbackActive] = useState<boolean>(false);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -39,9 +37,7 @@ export const ShaderBackground = ({
     const gl = canvas.getContext("webgl");
 
     if (!gl) {
-      console.warn("WebGL not supported, falling back to CSS animation");
-      setWebglSupported(false);
-      setFallbackActive(true);
+      console.error("WebGL not supported");
       return;
     }
 
@@ -189,25 +185,15 @@ export const ShaderBackground = ({
     const speedUniformLocation = gl.getUniformLocation(shaderProgram, "uSpeed");
     const complexityUniformLocation = gl.getUniformLocation(shaderProgram, "uComplexity");
 
-    // Animation loop with performance optimizations
+    // Animation loop
     let startTime = Date.now();
     let animationFrameId: number;
-    let lastFrameTime = 0;
-    const targetFPS = 60;
-    const frameInterval = 1000 / targetFPS;
 
-    const render = (currentTime: number) => {
-      // Limit frame rate for better performance
-      if (currentTime - lastFrameTime < frameInterval) {
-        animationFrameId = requestAnimationFrame(render);
-        return;
-      }
-      lastFrameTime = currentTime;
-
-      const elapsedTime = (currentTime - startTime) / 1000;
+    const render = () => {
+      const currentTime = (Date.now() - startTime) / 1000;
 
       // Set uniforms
-      gl.uniform1f(timeUniformLocation, elapsedTime);
+      gl.uniform1f(timeUniformLocation, currentTime);
       gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
       gl.uniform1f(intensityUniformLocation, finalIntensity);
       gl.uniform1f(speedUniformLocation, finalSpeed);
@@ -220,7 +206,7 @@ export const ShaderBackground = ({
       animationFrameId = requestAnimationFrame(render);
     };
 
-    animationFrameId = requestAnimationFrame(render);
+    render();
 
     // Cleanup function
     return () => {
@@ -233,30 +219,13 @@ export const ShaderBackground = ({
       gl.deleteShader(fragmentShader);
       gl.deleteBuffer(positionBuffer);
     };
-  }, [finalIntensity, finalSpeed, finalComplexity, webglSupported]);
+  }, [finalIntensity, finalSpeed, finalComplexity]);
 
   return (
-    <>
-      {/* WebGL Canvas */}
-      {webglSupported && (
-        <canvas
-          ref={canvasRef}
-          className={`absolute inset-0 w-full h-full ${className}`}
-          style={{ zIndex: 0 }}
-        />
-      )}
-
-      {/* CSS Fallback Animation */}
-      {fallbackActive && (
-        <div
-          className={`absolute inset-0 w-full h-full ${className} bg-gradient-subtle`}
-          style={{
-            background: 'radial-gradient(circle at 20% 80%, rgba(79, 156, 249, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(245, 101, 101, 0.1) 0%, transparent 50%)',
-            animation: 'shader-fallback 8s ease-in-out infinite alternate',
-            zIndex: 0
-          }}
-        />
-      )}
-    </>
+    <canvas 
+      ref={canvasRef} 
+      className={`absolute inset-0 w-full h-full ${className}`}
+      style={{ zIndex: 0 }}
+    />
   );
 };
