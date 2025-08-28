@@ -5,11 +5,14 @@ import { MousePointer, Code, Briefcase, Mail, Github, Linkedin, ArrowRight } fro
 import { useState, useMemo, useEffect } from "react";
 import dynamic from 'next/dynamic'
 import { useSiteVariant } from '@/components/ui/use-site-variant'
+import { useThemeColors } from '@/components/ui/use-theme-colors'
 
 function GlassmorphismCard({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const { glass, border, transitionClasses } = useThemeColors();
+
   return (
     <motion.div
-      className={`backdrop-blur-md bg-white/20 border border-white/30 shadow-xl shadow-black/20 rounded-[38px] p-6 hover:bg-white/30 hover:border-white/50 hover:shadow-2xl hover:shadow-black/30 transition-all duration-300 group ${className}`}
+      className={`backdrop-blur-md ${glass.background} ${border} shadow-xl shadow-black/20 rounded-[38px] p-6 ${glass.hover} hover:shadow-2xl hover:shadow-black/30 ${transitionClasses} group ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.6, ease: "easeOut" }}
@@ -23,9 +26,11 @@ function GlassmorphismCard({ children, className = "", delay = 0 }: { children: 
 }
 
 function InteractiveButton({ children, onClick, className = "" }: { children: React.ReactNode; onClick?: () => void; className?: string }) {
+  const { glass, border, text, transitionClasses } = useThemeColors();
+
   return (
     <motion.button
-      className={`backdrop-blur-md bg-white/20 border border-white/30 px-6 py-3 rounded-[24px] text-sm font-medium text-black/80 hover:bg-white/30 hover:border-white/50 transition-all duration-300 font-['Inter',_sans-serif] tracking-[-0.7px] ${className}`}
+      className={`backdrop-blur-md ${glass.background} ${border} px-6 py-3 rounded-[24px] text-sm font-medium ${text.primary} ${glass.hover} ${transitionClasses} font-['Inter',_sans-serif] tracking-[-0.7px] ${className}`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
@@ -347,11 +352,13 @@ function PortfolioHero() {
 }
 
 function PortfolioSection({ title, children, delay = 0 }: { title: string; children: React.ReactNode; delay?: number }) {
+  const { text, transitionClasses } = useThemeColors();
+
   return (
     <section className="py-20 px-8">
       <div className="max-w-6xl mx-auto">
         <motion.h2
-          className="text-3xl md:text-4xl font-bold text-black/90 text-center mb-12 font-['Inter',_sans-serif] tracking-[-0.7px]"
+          className={`text-3xl md:text-4xl font-bold ${text.primary} text-center mb-12 font-['Inter',_sans-serif] tracking-[-0.7px] ${transitionClasses}`}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay, duration: 0.6 }}
@@ -588,6 +595,7 @@ function ContactButton() {
 
 export default function Home() {
   const { variant, mounted } = useSiteVariant()
+  const { background, text, glass, border, transitionClasses } = useThemeColors()
 
   const DarkHero = dynamic(() => import('@/components/variants/dark/hero-section').then(m => m.HeroSection), { ssr: false })
   const DarkProjects = dynamic(() => import('@/components/variants/dark/projects-section').then(m => m.ProjectsSection), { ssr: false })
@@ -708,9 +716,9 @@ export default function Home() {
       ) : (
         <section id="about" className="relative py-20 overflow-hidden">
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="rounded-2xl p-10 glassmorphism">
-              <h2 className="text-3xl font-bold mb-4">About me</h2>
-              <p className="text-black/70">I build delightful web experiences focused on performance, accessibility, and maintainability.</p>
+            <div className={`rounded-2xl p-10 ${glass.background} ${border} ${transitionClasses}`}>
+              <h2 className={`text-3xl font-bold mb-4 ${text.primary} ${transitionClasses}`}>About me</h2>
+              <p className={`${text.secondary} ${transitionClasses}`}>I build delightful web experiences focused on performance, accessibility, and maintainability.</p>
             </div>
           </div>
         </section>
