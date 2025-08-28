@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from 'next-themes'
 
 interface ShaderBackgroundProps {
@@ -44,6 +44,7 @@ export const ShaderBackground = ({
   const finalComplexity = complexity ?? config.complexity ?? 8;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme()
+  const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -219,12 +220,12 @@ export const ShaderBackground = ({
     const render = () => {
       const currentTime = (Date.now() - startTime) / 1000;
 
-      // Set uniforms
-      gl.uniform1f(timeUniformLocation, currentTime);
-      gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-  gl.uniform1f(intensityUniformLocation, finalIntensity);
-  gl.uniform1f(speedUniformLocation, finalSpeed);
-  gl.uniform1f(complexityUniformLocation, finalComplexity);
+      // Set uniforms with null checks to prevent runtime warnings
+      if (timeUniformLocation) gl.uniform1f(timeUniformLocation, currentTime);
+      if (resolutionUniformLocation) gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
+      if (intensityUniformLocation) gl.uniform1f(intensityUniformLocation, finalIntensity);
+      if (speedUniformLocation) gl.uniform1f(speedUniformLocation, finalSpeed);
+      if (complexityUniformLocation) gl.uniform1f(complexityUniformLocation, finalComplexity);
       // Determine dark flag from explicit site variant (document.dataset.variant) if present,
       // otherwise fall back to next-themes' theme value.
       let isDarkFlag = 0.0;
@@ -237,7 +238,7 @@ export const ShaderBackground = ({
         if (typeof theme === 'string' && theme === 'dark') isDarkFlag = 1.0
       }
 
-      gl.uniform1f(isDarkUniformLocation, isDarkFlag);
+      if (isDarkUniformLocation) gl.uniform1f(isDarkUniformLocation, isDarkFlag);
 
       // Clear and draw
       gl.clear(gl.COLOR_BUFFER_BIT);
@@ -247,6 +248,9 @@ export const ShaderBackground = ({
     };
 
     render();
+
+    // Fade in the background
+    setOpacity(1);
 
     // Cleanup function
     return () => {
@@ -261,11 +265,22 @@ export const ShaderBackground = ({
     };
   }, [finalIntensity, finalSpeed, finalComplexity, theme]);
 
+  // Handle fade transition on mount/unmount and prop changes
+  useEffect(() => {
+    setOpacity(0);
+    const timer = setTimeout(() => setOpacity(1), 50);
+    return () => clearTimeout(timer);
+  }, [variant, intensity, speed, complexity]);
+
   return (
-    <canvas 
-      ref={canvasRef} 
+    <canvas
+      ref={canvasRef}
       className={`absolute inset-0 w-full h-full ${className}`}
-      style={{ zIndex: 0 }}
+      style={{
+        zIndex: 0,
+        opacity: opacity,
+        transition: 'opacity 0.5s ease-in-out'
+      }}
     />
   );
 };
