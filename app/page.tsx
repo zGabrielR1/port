@@ -5,6 +5,7 @@ import { MousePointer, Code, Briefcase, Mail, Github, Linkedin, ArrowRight } fro
 import { useState, useMemo, useEffect } from "react";
 import dynamic from 'next/dynamic'
 import { useSiteVariant } from '@/components/ui/use-site-variant'
+import { ShaderBackground } from '@/components/ui/shader-background'
 
 function GlassmorphismCard({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   return (
@@ -593,6 +594,130 @@ export default function Home() {
   const DarkProjects = dynamic(() => import('@/components/variants/dark/projects-section').then(m => m.ProjectsSection), { ssr: false })
   const DarkFooter = dynamic(() => import('@/components/variants/dark/footer').then(m => m.Footer), { ssr: false })
   const DarkAbout = dynamic(() => import('@/components/variants/dark/about-section').then(m => m.AboutSection), { ssr: false })
+  // Dark components for experience and skills sections
+  const DarkSkills = () => {
+    const skillsData = [
+      { name: "React", icon: "⚛️" },
+      { name: "TypeScript", icon: "🔷" },
+      { name: "Node.js", icon: "🟢" },
+      { name: "Python", icon: "🐍" },
+      { name: "Next.js", icon: "▲" },
+      { name: "Tailwind", icon: "🎨" },
+      { name: "PostgreSQL", icon: "🐘" },
+      { name: "AWS", icon: "☁️" }
+    ];
+
+    return (
+      <section className="relative py-20 px-8 min-h-screen flex items-center">
+        <ShaderBackground variant="section" />
+        <div className="relative z-10 max-w-6xl mx-auto w-full">
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px] text-white"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            Skills & Technologies
+          </motion.h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {skillsData.map((skill, i) => (
+              <motion.div
+                key={skill.name}
+                className="backdrop-blur-md bg-slate-800/60 border border-slate-700/50 rounded-[38px] p-6 text-center hover:scale-105 transition-all duration-300 group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * i, duration: 0.6 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <div className="text-4xl mb-3">{skill.icon}</div>
+                <h4 className="font-semibold text-lg text-white group-hover:text-purple-300 transition-colors duration-300">{skill.name}</h4>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+  const DarkExperience = () => {
+    const experienceData = [
+      {
+        title: "Software Developer",
+        company: "Company Name",
+        period: "2023 - Present",
+        description: "Developed and maintained web applications using modern technologies, collaborating with cross-functional teams to deliver high-quality solutions.",
+        icon: Briefcase
+      },
+      {
+        title: "Frontend Developer",
+        company: "Tech Corp",
+        period: "2021 - 2023",
+        description: "Built responsive and interactive user interfaces with modern frameworks and design principles.",
+        icon: Briefcase
+      },
+      {
+        title: "Junior Developer",
+        company: "Web Agency",
+        period: "2020 - 2021",
+        description: "Learned and applied new technologies while working on client projects and expanding technical skills.",
+        icon: Briefcase
+      }
+    ];
+
+    return (
+      <section className="relative py-20 px-8 min-h-screen flex items-center">
+        <ShaderBackground variant="section" />
+        <div className="relative z-10 max-w-6xl mx-auto w-full">
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px] text-white"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            Experience
+          </motion.h2>
+          <div className="space-y-8">
+            {experienceData.map((exp, i) => (
+              <motion.div
+                key={i}
+                className="backdrop-blur-md bg-slate-800/60 border border-slate-700/50 rounded-[38px] p-6 flex items-center gap-6 hover:scale-105 transition-all duration-300 group"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 * i, duration: 0.6 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-slate-600/50">
+                  <Briefcase className="w-8 h-8 text-purple-300" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-semibold mb-1 text-white group-hover:text-purple-300 transition-colors duration-300">{exp.title}</h3>
+                  <p className="mb-2 text-lg text-slate-300">{exp.company} • {exp.period}</p>
+                  <p className="text-base leading-relaxed text-slate-400">{exp.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            className="text-center mt-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-3xl font-bold mb-8 text-white">Let's Work Together</h3>
+            <div className="flex justify-center">
+              <ContactButton />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    );
+  };
 
   return (
     <div className="min-h-screen relative">
@@ -658,49 +783,53 @@ export default function Home() {
       )}
 
       {/* Skills Section with seamless background transition */}
-      <section className="relative py-20 px-8 min-h-screen flex items-center">
-        <div className="absolute inset-0 z-0" key={variant}>
-          <AnimatedBackground variant="default" isDark={variant === 'dark'} />
-        </div>
-        <div className="relative z-10 max-w-6xl mx-auto w-full">
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px]"
-            style={{
-              color: '#ffffff',
-              textShadow: '0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.6), 2px 2px 4px rgba(0,0,0,0.8)',
-              fontFeatureSettings: '"kern" 1',
-              WebkitFontSmoothing: 'antialiased',
-              MozOsxFontSmoothing: 'grayscale'
-            }}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            Skills & Technologies
-          </motion.h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[ 
-              { name: "React", icon: "⚛️" },
-              { name: "TypeScript", icon: "🔷" },
-              { name: "Node.js", icon: "🟢" },
-              { name: "Python", icon: "🐍" },
-              { name: "Next.js", icon: "▲" },
-              { name: "Tailwind", icon: "🎨" },
-              { name: "PostgreSQL", icon: "🐘" },
-              { name: "AWS", icon: "☁️" }
-            ].map((skill, i) => (
-              <GlassmorphismCard key={skill.name} delay={0.1 * i} className="text-center hover:scale-105">
-                <div className="text-4xl mb-3">{skill.icon}</div>
-                <h4 className="font-semibold text-lg" style={{
-                  color: '#ffffff',
-                  textShadow: '0 0 10px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,0.7)'
-                }}>{skill.name}</h4>
-              </GlassmorphismCard>
-            ))}
+      {mounted && variant === 'dark' ? (
+        <DarkSkills />
+      ) : (
+        <section className="relative py-20 px-8 min-h-screen flex items-center">
+          <div className="absolute inset-0 z-0" key={variant}>
+            <AnimatedBackground variant="default" isDark={variant === 'dark'} />
           </div>
-        </div>
-      </section>
+          <div className="relative z-10 max-w-6xl mx-auto w-full">
+            <motion.h2
+              className="text-4xl md:text-5xl font-bold text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px]"
+              style={{
+                color: '#ffffff',
+                textShadow: '0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.6), 2px 2px 4px rgba(0,0,0,0.8)',
+                fontFeatureSettings: '"kern" 1',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale'
+              }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              Skills & Technologies
+            </motion.h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                { name: "React", icon: "⚛️" },
+                { name: "TypeScript", icon: "🔷" },
+                { name: "Node.js", icon: "🟢" },
+                { name: "Python", icon: "🐍" },
+                { name: "Next.js", icon: "▲" },
+                { name: "Tailwind", icon: "🎨" },
+                { name: "PostgreSQL", icon: "🐘" },
+                { name: "AWS", icon: "☁️" }
+              ].map((skill, i) => (
+                <GlassmorphismCard key={skill.name} delay={0.1 * i} className="text-center hover:scale-105">
+                  <div className="text-4xl mb-3">{skill.icon}</div>
+                  <h4 className="font-semibold text-lg" style={{
+                    color: '#ffffff',
+                    textShadow: '0 0 10px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,0.7)'
+                  }}>{skill.name}</h4>
+                </GlassmorphismCard>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* About Section - swap to dark variant when selected */}
       {mounted && variant === 'dark' ? (
@@ -717,71 +846,75 @@ export default function Home() {
       )}
 
       {/* Experience Section with seamless background transition */}
-      <section className="relative py-20 px-8 min-h-screen flex items-center">
-        <div className="absolute inset-0 z-0" key={variant}>
-          <AnimatedBackground variant="default" isDark={variant === 'dark'} />
-        </div>
-        <div className="relative z-10 max-w-6xl mx-auto w-full">
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px]"
-            style={{
-              color: '#ffffff',
-              textShadow: '0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.6), 2px 2px 4px rgba(0,0,0,0.8)',
-              fontFeatureSettings: '"kern" 1',
-              WebkitFontSmoothing: 'antialiased',
-              MozOsxFontSmoothing: 'grayscale'
-            }}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            Experience
-          </motion.h2>
-          <div className="space-y-8">
-            {[1, 2, 3].map((i) => (
-              <GlassmorphismCard key={i} className="flex items-center gap-6 hover:scale-105">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-white/20">
-                  <Briefcase className="w-8 h-8 text-white/80" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-semibold mb-1" style={{
-                    color: '#ffffff',
-                    textShadow: '0 0 15px rgba(255,255,255,0.8), 1px 1px 3px rgba(0,0,0,0.7)'
-                  }}>Software Developer</h3>
-                  <p className="mb-2 text-lg" style={{
-                    color: 'rgba(255,255,255,0.8)',
-                    textShadow: '0 0 10px rgba(255,255,255,0.6), 1px 1px 2px rgba(0,0,0,0.5)'
-                  }}>Company Name • 2023 - Present</p>
-                  <p className="text-base leading-relaxed" style={{
-                    color: 'rgba(255,255,255,0.7)',
-                    textShadow: '0 0 8px rgba(255,255,255,0.5), 1px 1px 1px rgba(0,0,0,0.4)'
-                  }}>
-                    Developed and maintained web applications using modern technologies, collaborating with cross-functional teams to deliver high-quality solutions.
-                  </p>
-                </div>
-              </GlassmorphismCard>
-            ))}
+      {mounted && variant === 'dark' ? (
+        <DarkExperience />
+      ) : (
+        <section className="relative py-20 px-8 min-h-screen flex items-center">
+          <div className="absolute inset-0 z-0" key={variant}>
+            <AnimatedBackground variant="default" isDark={variant === 'dark'} />
           </div>
-
-          {/* Contact Section */}
-          <motion.div
-            className="text-center mt-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-3xl font-bold mb-8" style={{
-              color: '#ffffff',
-              textShadow: '0 0 20px rgba(255,255,255,0.8), 2px 2px 4px rgba(0,0,0,0.8)'
-            }}>Let's Work Together</h3>
-            <div className="flex justify-center">
-              <ContactButton />
+          <div className="relative z-10 max-w-6xl mx-auto w-full">
+            <motion.h2
+              className="text-4xl md:text-5xl font-bold text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px]"
+              style={{
+                color: '#ffffff',
+                textShadow: '0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.6), 2px 2px 4px rgba(0,0,0,0.8)',
+                fontFeatureSettings: '"kern" 1',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale'
+              }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              Experience
+            </motion.h2>
+            <div className="space-y-8">
+              {[1, 2, 3].map((i) => (
+                <GlassmorphismCard key={i} className="flex items-center gap-6 hover:scale-105">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-white/20">
+                    <Briefcase className="w-8 h-8 text-white/80" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-semibold mb-1" style={{
+                      color: '#ffffff',
+                      textShadow: '0 0 15px rgba(255,255,255,0.8), 1px 1px 3px rgba(0,0,0,0.7)'
+                    }}>Software Developer</h3>
+                    <p className="mb-2 text-lg" style={{
+                      color: 'rgba(255,255,255,0.8)',
+                      textShadow: '0 0 10px rgba(255,255,255,0.6), 1px 1px 2px rgba(0,0,0,0.5)'
+                    }}>Company Name • 2023 - Present</p>
+                    <p className="text-base leading-relaxed" style={{
+                      color: 'rgba(255,255,255,0.7)',
+                      textShadow: '0 0 8px rgba(255,255,255,0.5), 1px 1px 1px rgba(0,0,0,0.4)'
+                    }}>
+                      Developed and maintained web applications using modern technologies, collaborating with cross-functional teams to deliver high-quality solutions.
+                    </p>
+                  </div>
+                </GlassmorphismCard>
+              ))}
             </div>
-          </motion.div>
-        </div>
-      </section>
+
+            {/* Contact Section */}
+            <motion.div
+              className="text-center mt-16"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-3xl font-bold mb-8" style={{
+                color: '#ffffff',
+                textShadow: '0 0 20px rgba(255,255,255,0.8), 2px 2px 4px rgba(0,0,0,0.8)'
+              }}>Let's Work Together</h3>
+              <div className="flex justify-center">
+                <ContactButton />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* Footer with seamless background transition */}
       {mounted && variant === 'dark' ? (
