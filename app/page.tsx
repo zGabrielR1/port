@@ -23,6 +23,33 @@ function GlassmorphismCard({ children, className = "", delay = 0 }: { children: 
   );
 }
 
+function DarkGlassmorphismCard({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  return (
+    <motion.div
+      className={`backdrop-blur-md bg-slate-900/20 border border-slate-700/30 shadow-xl shadow-black/40 rounded-[38px] p-6 hover:bg-slate-800/30 hover:border-slate-600/50 hover:shadow-2xl hover:shadow-black/50 transition-all duration-300 group ${className}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.6, ease: "easeOut" }}
+      whileHover={{ scale: 1.02 }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-800/10 via-slate-900/5 to-transparent rounded-[38px]" />
+      <div className="absolute inset-0 rounded-[38px] shadow-inner shadow-slate-700/20" />
+      <div className="relative z-10">{children}</div>
+    </motion.div>
+  );
+}
+
+function DarkIconCard({ icon, label, className = "", delay = 0 }: { icon: React.ReactNode; label: string; className?: string; delay?: number }) {
+  return (
+    <DarkGlassmorphismCard className={`text-center hover:scale-105 cursor-pointer ${className}`} delay={delay}>
+      <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-2xl flex items-center justify-center border border-slate-600/50 group-hover:border-purple-500/50 transition-colors duration-300">
+        {icon}
+      </div>
+      <h4 className="font-semibold text-lg text-white group-hover:text-purple-300 transition-colors duration-300">{label}</h4>
+    </DarkGlassmorphismCard>
+  );
+}
+
 function InteractiveButton({ children, onClick, className = "" }: { children: React.ReactNode; onClick?: () => void; className?: string }) {
   return (
     <motion.button
@@ -621,20 +648,16 @@ export default function Home() {
             Skills & Technologies
           </motion.h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {skillsData.map((skill, i) => (
-              <motion.div
-                key={skill.name}
-                className="backdrop-blur-md bg-slate-800/60 border border-slate-700/50 rounded-[38px] p-6 text-center hover:scale-105 transition-all duration-300 group"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * i, duration: 0.6 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="text-4xl mb-3">{skill.icon}</div>
-                <h4 className="font-semibold text-lg text-white group-hover:text-purple-300 transition-colors duration-300">{skill.name}</h4>
-              </motion.div>
-            ))}
+           {skillsData.map((skill, i) => (
+             <DarkGlassmorphismCard
+               key={skill.name}
+               className="text-center hover:scale-105"
+               delay={0.1 * i}
+             >
+               <div className="text-4xl mb-3">{skill.icon}</div>
+               <h4 className="font-semibold text-lg text-white group-hover:text-purple-300 transition-colors duration-300">{skill.name}</h4>
+             </DarkGlassmorphismCard>
+           ))}
           </div>
         </div>
       </section>
@@ -681,14 +704,10 @@ export default function Home() {
           </motion.h2>
           <div className="space-y-8">
             {experienceData.map((exp, i) => (
-              <motion.div
+              <DarkGlassmorphismCard
                 key={i}
-                className="backdrop-blur-md bg-slate-800/60 border border-slate-700/50 rounded-[38px] p-6 flex items-center gap-6 hover:scale-105 transition-all duration-300 group"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 * i, duration: 0.6 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
+                className="flex items-center gap-6 hover:scale-105 group"
+                delay={0.2 * i}
               >
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-slate-600/50">
                   <Briefcase className="w-8 h-8 text-purple-300" />
@@ -698,7 +717,7 @@ export default function Home() {
                   <p className="mb-2 text-lg text-slate-300">{exp.company} • {exp.period}</p>
                   <p className="text-base leading-relaxed text-slate-400">{exp.description}</p>
                 </div>
-              </motion.div>
+              </DarkGlassmorphismCard>
             ))}
           </div>
 
