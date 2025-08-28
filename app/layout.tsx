@@ -5,6 +5,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '@/components/language-provider'
 import { ThemeProvider } from '@/components/theme-provider'
+// Header removed to keep layout minimal - using compact ThemeToggle instead
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 // Configure Inter font with multiple weights
 const inter = Inter({
@@ -178,6 +180,7 @@ img {
         >
           <LanguageProvider>
             <div className="relative min-h-screen">
+              <ThemeToggle />
               {children}
             </div>
           </LanguageProvider>

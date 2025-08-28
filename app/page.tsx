@@ -2,7 +2,9 @@
 
 import { motion } from "motion/react";
 import { MousePointer, Code, Briefcase, Mail, Github, Linkedin, ArrowRight } from "lucide-react";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import dynamic from 'next/dynamic'
+import { useSiteVariant } from '@/components/ui/use-site-variant'
 
 function GlassmorphismCard({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   return (
@@ -117,28 +119,39 @@ function PortfolioHero() {
             ease: "easeInOut"
           }}
         />
-        {/* Floating particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [-20, 20, -20],
-              x: [-10, 10, -10],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            transition={{
-              duration: 4 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
+        {/* Floating particles (deterministic) */}
+        {(() => {
+          const count = 20
+          // small seeded PRNG (mulberry32) so server and client markup match
+          const mulberry32 = (a: number) => () => {
+            let t = a >>> 0
+            t += 0x6D2B79F5
+            t = Math.imul(t ^ (t >>> 15), t | 1)
+            t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+          }
+
+          const parts = Array.from({ length: count }).map((_, i) => {
+            const r1 = mulberry32(111111 + i)()
+            const r2 = mulberry32(222222 + i)()
+            return {
+              left: `${(r1 * 100).toFixed(12)}%`,
+              top: `${(r2 * 100).toFixed(12)}%`,
+              duration: 4 + Math.floor(((r1 + r2) % 1) * 2),
+              delay: Number(((r2 * 3).toFixed(6)))
+            }
+          })
+
+          return parts.map((p, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white/30 rounded-full"
+              style={{ left: p.left, top: p.top }}
+              animate={{ y: [-20, 20, -20], x: [-10, 10, -10], opacity: [0.3, 0.8, 0.3] }}
+              transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }}
+            />
+          ))
+        })()}
       </div>
 
       {/* Main portfolio button - EVEN LARGER */}
@@ -352,31 +365,46 @@ function PortfolioSection({ title, children, delay = 0 }: { title: string; child
   );
 }
 
-function AnimatedBackground({ variant = "default" }: { variant?: "default" | "hero" }) {
+function AnimatedBackground({ variant = "default", isDark = false }: { variant?: "default" | "hero", isDark?: boolean }) {
   return (
     <div className="absolute inset-0 -z-10">
       <div className="absolute bg-center bg-cover bg-no-repeat inset-0" style={{
         backgroundImage: `url('/555c0dbdf8e4d07301d5ff5c75b2888e8dd02850.png')`,
+        filter: isDark ? 'brightness(0.6) contrast(1.05)' : undefined
       }} />
       {/* Moving shader overlay with different opacity for sections */}
       <motion.div
         className="absolute inset-0"
         style={{
-          background: variant === "hero"
-            ? "linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1))"
-            : "linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2))"
+          background: isDark
+            ? (variant === "hero"
+                ? "linear-gradient(45deg, rgba(0,0,0,0.6), rgba(12,12,20,0.6), rgba(20,8,10,0.6))"
+                : "linear-gradient(45deg, rgba(0,0,0,0.5), rgba(12,12,20,0.5), rgba(20,8,10,0.5))")
+            : (variant === "hero"
+                ? "linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1))"
+                : "linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2))")
         }}
         animate={{
-          background: [
-            variant === "hero"
+          background: isDark ? [
+            (variant === "hero"
+              ? "linear-gradient(45deg, rgba(0,0,0,0.6), rgba(12,12,20,0.6), rgba(20,8,10,0.6))"
+              : "linear-gradient(45deg, rgba(0,0,0,0.5), rgba(12,12,20,0.5), rgba(20,8,10,0.5))"),
+            (variant === "hero"
+              ? "linear-gradient(225deg, rgba(12,12,20,0.6), rgba(20,8,10,0.6), rgba(0,0,0,0.6))"
+              : "linear-gradient(225deg, rgba(12,12,20,0.5), rgba(20,8,10,0.5), rgba(0,0,0,0.5))"),
+            (variant === "hero"
+              ? "linear-gradient(45deg, rgba(20,8,10,0.6), rgba(0,0,0,0.6), rgba(12,12,20,0.6))"
+              : "linear-gradient(45deg, rgba(20,8,10,0.5), rgba(0,0,0,0.5), rgba(12,12,20,0.5))")
+          ] : [
+            (variant === "hero"
               ? "linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1))"
-              : "linear-gradient(45deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.15))",
-            variant === "hero"
+              : "linear-gradient(45deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.15))"),
+            (variant === "hero"
               ? "linear-gradient(225deg, rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1), rgba(59, 130, 246, 0.1))"
-              : "linear-gradient(225deg, rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2), rgba(59, 130, 246, 0.2))",
-            variant === "hero"
+              : "linear-gradient(225deg, rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2), rgba(59, 130, 246, 0.2))"),
+            (variant === "hero"
               ? "linear-gradient(45deg, rgba(236, 72, 153, 0.1), rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1))"
-              : "linear-gradient(45deg, rgba(236, 72, 153, 0.15), rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15))",
+              : "linear-gradient(45deg, rgba(236, 72, 153, 0.15), rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15))")
           ]
         }}
         transition={{
@@ -385,28 +413,50 @@ function AnimatedBackground({ variant = "default" }: { variant?: "default" | "he
           ease: "easeInOut"
         }}
       />
-      {/* Floating particles with different density */}
-      {[...Array(variant === "hero" ? 20 : 12)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-white/50 rounded-full"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [-20, 20, -20],
-            x: [-10, 10, -10],
-            opacity: [0.3, 0.8, 0.3],
-          }}
-          transition={{
-            duration: 4 + Math.random() * 2,
-            repeat: Infinity,
-            delay: Math.random() * 3,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
+      {/* Floating particles with deterministic positions to avoid SSR/client hydration mismatch */}
+      {(() => {
+        const count = variant === "hero" ? 20 : 12
+
+        // Small seeded PRNG (mulberry32) to produce deterministic values across server and client
+        const mulberry32 = (a: number) => () => {
+          let t = a >>> 0
+          t += 0x6D2B79F5
+          t = Math.imul(t ^ (t >>> 15), t | 1)
+          t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+        }
+
+        const particles = Array.from({ length: count }).map((_, i) => {
+          const rnd1 = mulberry32(123456 + i)()
+          const rnd2 = mulberry32(654321 + i)()
+          // Pre-format strings so server/client share identical markup
+          return {
+            left: `${(rnd1 * 100).toFixed(12)}%`,
+            top: `${(rnd2 * 100).toFixed(12)}%`,
+            duration: 4 + Math.floor(((rnd1 + rnd2) % 1) * 2),
+            delay: Number(((rnd2 * 3).toFixed(6)))
+          }
+        })
+
+        return particles.map((p, i) => (
+          <motion.div
+            key={i}
+            className={`absolute w-1 h-1 rounded-full ${isDark ? 'bg-white/20' : 'bg-white/50'}`}
+            style={{ left: p.left, top: p.top }}
+            animate={{
+              y: [-20, 20, -20],
+              x: [-10, 10, -10],
+              opacity: [0.3, 0.8, 0.3],
+            }}
+            transition={{
+              duration: p.duration,
+              repeat: Infinity,
+              delay: p.delay,
+              ease: "easeInOut",
+            }}
+          />
+        ))
+      })()}
     </div>
   );
 }
@@ -537,69 +587,80 @@ function ContactButton() {
 }
 
 export default function Home() {
+  const { variant, mounted } = useSiteVariant()
+
+  const DarkHero = dynamic(() => import('@/components/variants/dark/hero-section').then(m => m.HeroSection), { ssr: false })
+  const DarkProjects = dynamic(() => import('@/components/variants/dark/projects-section').then(m => m.ProjectsSection), { ssr: false })
+  const DarkFooter = dynamic(() => import('@/components/variants/dark/footer').then(m => m.Footer), { ssr: false })
+  const DarkAbout = dynamic(() => import('@/components/variants/dark/about-section').then(m => m.AboutSection), { ssr: false })
+
   return (
     <div className="min-h-screen relative">
       {/* Single animated background spanning entire site */}
-      <div className="fixed inset-0 z-0">
-        <AnimatedBackground variant="hero" />
+      <div className="fixed inset-0 z-0" key={variant}>
+        <AnimatedBackground variant="hero" isDark={variant === 'dark'} />
       </div>
 
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
         <div className="relative z-20">
-          <PortfolioHero />
+          {!mounted ? null : variant === 'dark' ? <DarkHero /> : <PortfolioHero />}
         </div>
       </section>
 
       {/* Projects Section with seamless background transition */}
-      <section className="relative py-20 px-8 min-h-screen flex items-center">
-        <div className="absolute inset-0 z-0">
-          <AnimatedBackground variant="default" />
-        </div>
-        <div className="relative z-10 max-w-6xl mx-auto w-full">
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px]"
-            style={{
-              color: '#ffffff',
-              textShadow: '0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.6), 2px 2px 4px rgba(0,0,0,0.8)',
-              fontFeatureSettings: '"kern" 1',
-              WebkitFontSmoothing: 'antialiased',
-              MozOsxFontSmoothing: 'grayscale'
-            }}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            Featured Projects
-          </motion.h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <GlassmorphismCard key={i} delay={0.1 * i} className="hover:scale-105">
-                <div className="aspect-video bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-2xl mb-4 flex items-center justify-center border border-white/20">
-                  <Code className="w-12 h-12 text-white/80" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-2" style={{
-                  textShadow: '0 0 10px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,0.7)'
-                }}>Project {i}</h3>
-                <p className="text-white/80 text-sm leading-relaxed mb-4" style={{
-                  textShadow: '0 0 8px rgba(255,255,255,0.6), 1px 1px 1px rgba(0,0,0,0.5)'
-                }}>
-                  A modern web application built with React and TypeScript, featuring responsive design and smooth animations.
-                </p>
-                <InteractiveButton className="w-full justify-center bg-white/10 hover:bg-white/20">
-                  View Project <ArrowRight className="w-4 h-4 ml-2" />
-                </InteractiveButton>
-              </GlassmorphismCard>
-            ))}
+      {mounted && variant === 'dark' ? (
+        <DarkProjects />
+      ) : (
+        <section className="relative py-20 px-8 min-h-screen flex items-center">
+          <div className="absolute inset-0 z-0" key={variant}>
+            <AnimatedBackground variant="default" isDark={variant === 'dark'} />
           </div>
-        </div>
-      </section>
+          <div className="relative z-10 max-w-6xl mx-auto w-full">
+            <motion.h2
+              className="text-4xl md:text-5xl font-bold text-center mb-12 font-['Inter',_sans-serif] tracking-[-1px]"
+              style={{
+                color: '#ffffff',
+                textShadow: '0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.6), 2px 2px 4px rgba(0,0,0,0.8)',
+                fontFeatureSettings: '"kern" 1',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale'
+              }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              Featured Projects
+            </motion.h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((i) => (
+                <GlassmorphismCard key={i} delay={0.1 * i} className="hover:scale-105">
+                  <div className="aspect-video bg-gradient-to-br from-blue-100/20 to-purple-100/20 rounded-2xl mb-4 flex items-center justify-center border border-white/20">
+                    <Code className="w-12 h-12 text-white/80" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-2" style={{
+                    textShadow: '0 0 10px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,0.7)'
+                  }}>Project {i}</h3>
+                  <p className="text-white/80 text-sm leading-relaxed mb-4" style={{
+                    textShadow: '0 0 8px rgba(255,255,255,0.6), 1px 1px 1px rgba(0,0,0,0.5)'
+                  }}>
+                    A modern web application built with React and TypeScript, featuring responsive design and smooth animations.
+                  </p>
+                  <InteractiveButton className="w-full justify-center bg-white/10 hover:bg-white/20">
+                    View Project <ArrowRight className="w-4 h-4 ml-2" />
+                  </InteractiveButton>
+                </GlassmorphismCard>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Skills Section with seamless background transition */}
       <section className="relative py-20 px-8 min-h-screen flex items-center">
-        <div className="absolute inset-0 z-0">
-          <AnimatedBackground variant="default" />
+        <div className="absolute inset-0 z-0" key={variant}>
+          <AnimatedBackground variant="default" isDark={variant === 'dark'} />
         </div>
         <div className="relative z-10 max-w-6xl mx-auto w-full">
           <motion.h2
@@ -619,7 +680,7 @@ export default function Home() {
             Skills & Technologies
           </motion.h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
+            {[ 
               { name: "React", icon: "⚛️" },
               { name: "TypeScript", icon: "🔷" },
               { name: "Node.js", icon: "🟢" },
@@ -641,10 +702,24 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Section - swap to dark variant when selected */}
+      {mounted && variant === 'dark' ? (
+        <DarkAbout />
+      ) : (
+        <section id="about" className="relative py-20 overflow-hidden">
+          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="rounded-2xl p-10 glassmorphism">
+              <h2 className="text-3xl font-bold mb-4">About me</h2>
+              <p className="text-black/70">I build delightful web experiences focused on performance, accessibility, and maintainability.</p>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Experience Section with seamless background transition */}
       <section className="relative py-20 px-8 min-h-screen flex items-center">
-        <div className="absolute inset-0 z-0">
-          <AnimatedBackground variant="default" />
+        <div className="absolute inset-0 z-0" key={variant}>
+          <AnimatedBackground variant="default" isDark={variant === 'dark'} />
         </div>
         <div className="relative z-10 max-w-6xl mx-auto w-full">
           <motion.h2
@@ -709,30 +784,34 @@ export default function Home() {
       </section>
 
       {/* Footer with seamless background transition */}
-      <footer className="relative py-12 px-8">
-        <div className="absolute inset-0 z-0">
-          <AnimatedBackground variant="default" />
-        </div>
-        <div className="relative z-10 max-w-6xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-6 mb-6">
-            <InteractiveButton className="h-12 w-12 p-0 bg-white/8 hover:bg-white/12">
-              <Github className="w-5 h-5" />
-            </InteractiveButton>
-            <InteractiveButton className="h-12 w-12 p-0 bg-white/8 hover:bg-white/12">
-              <Linkedin className="w-5 h-5" />
-            </InteractiveButton>
-            <InteractiveButton className="h-12 w-12 p-0 bg-white/8 hover:bg-white/12">
-              <Mail className="w-5 h-5" />
-            </InteractiveButton>
+      {mounted && variant === 'dark' ? (
+        <DarkFooter />
+      ) : (
+        <footer className="relative py-12 px-8">
+          <div className="absolute inset-0 z-0">
+            <AnimatedBackground variant="default" />
           </div>
-          <p className="font-['Inter',_sans-serif] tracking-[-0.7px] text-lg" style={{
-            color: 'rgba(255,255,255,0.8)',
-            textShadow: '0 0 10px rgba(255,255,255,0.6), 1px 1px 2px rgba(0,0,0,0.5)'
-          }}>
-            © 2024 Gabriel Renostro. Built with React & Motion.
-          </p>
-        </div>
-      </footer>
+          <div className="relative z-10 max-w-6xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-6 mb-6">
+              <InteractiveButton className="h-12 w-12 p-0 bg-white/8 hover:bg-white/12">
+                <Github className="w-5 h-5" />
+              </InteractiveButton>
+              <InteractiveButton className="h-12 w-12 p-0 bg-white/8 hover:bg-white/12">
+                <Linkedin className="w-5 h-5" />
+              </InteractiveButton>
+              <InteractiveButton className="h-12 w-12 p-0 bg-white/8 hover:bg-white/12">
+                <Mail className="w-5 h-5" />
+              </InteractiveButton>
+            </div>
+            <p className="font-['Inter',_sans-serif] tracking-[-0.7px] text-lg" style={{
+              color: 'rgba(255,255,255,0.8)',
+              textShadow: '0 0 10px rgba(255,255,255,0.6), 1px 1px 2px rgba(0,0,0,0.5)'
+            }}>
+              © 2024 Gabriel Renostro. Built with React & Motion.
+            </p>
+          </div>
+        </footer>
+      )}
     </div>
   );
 }

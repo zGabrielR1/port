@@ -1,4 +1,7 @@
+"use client"
+
 import { useEffect, useRef } from "react";
+import { useTheme } from 'next-themes'
 
 interface ShaderBackgroundProps {
   className?: string;
@@ -8,8 +11,17 @@ interface ShaderBackgroundProps {
   variant?: 'hero' | 'section' | 'subtle' | 'ambient';
 }
 
+type Variant = 'hero' | 'section' | 'subtle' | 'ambient';
+
+interface ShaderConfig {
+  intensity: number;
+  speed: number;
+  complexity: number;
+  opacity: number;
+}
+
 // Standardized shader configurations for consistent visual experience
-const SHADER_VARIANTS = {
+const SHADER_VARIANTS: Record<Variant, ShaderConfig> = {
   hero: { intensity: 0.15, speed: 0.8, complexity: 12, opacity: 0.9 },
   section: { intensity: 0.08, speed: 0.6, complexity: 8, opacity: 0.5 },
   subtle: { intensity: 0.05, speed: 0.4, complexity: 6, opacity: 0.3 },
@@ -24,11 +36,14 @@ export const ShaderBackground = ({
   variant = 'section'
 }: ShaderBackgroundProps) => {
   // Use variant defaults if specific props not provided
-  const config = SHADER_VARIANTS[variant];
-  const finalIntensity = intensity ?? config.intensity;
-  const finalSpeed = speed ?? config.speed;
-  const finalComplexity = complexity ?? config.complexity;
+  // Guard against callers passing unknown variant strings by falling back to 'section'
+  const safeVariant: Variant = (variant && (variant in SHADER_VARIANTS)) ? (variant as Variant) : 'section';
+  const config = SHADER_VARIANTS[safeVariant] ?? SHADER_VARIANTS.section;
+  const finalIntensity = intensity ?? config.intensity ?? 0.08;
+  const finalSpeed = speed ?? config.speed ?? 0.6;
+  const finalComplexity = complexity ?? config.complexity ?? 8;
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { theme } = useTheme()
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -68,7 +83,8 @@ export const ShaderBackground = ({
       }
     `;
 
-    // Enhanced fragment shader with better spectral effects
+    // Fragment shader adapts slightly depending on active theme.
+    // We pass a uniform uIsDark (0 or 1) so the shader can choose colorization strategy.
     const fragmentShaderSource = `
       precision highp float;
       uniform vec2 iResolution;
@@ -76,6 +92,7 @@ export const ShaderBackground = ({
       uniform float uIntensity;
       uniform float uSpeed;
       uniform float uComplexity;
+      uniform float uIsDark;
 
       vec3 spectral_colour(float l) {
         float r=0.0,g=0.0,b=0.0;
@@ -107,15 +124,24 @@ export const ShaderBackground = ({
           p = newp;
         }
         
-        // Enhanced color calculation with more dynamic range
-        float colorIndex = p.y * 50.0 + 500.0 + sin(iTime * uSpeed * 0.6);
-        vec3 color = spectral_colour(colorIndex);
-        
-        // Add subtle gradient overlay for depth
-        float gradient = 1.0 - distance(gl_FragCoord.xy / iResolution.xy, vec2(0.5, 0.5));
-        color *= (0.8 + 0.2 * gradient);
-        
-        gl_FragColor = vec4(color * uIntensity, 1.0);
+  // Enhanced color calculation with more dynamic range
+  float colorIndex = p.y * mix(20.0, 60.0, uIsDark) + 500.0 + sin(iTime * uSpeed * 0.6);
+  vec3 color = spectral_colour(colorIndex);
+
+  // Light theme: desaturate and bias toward soft pastels.
+  // Dark theme: keep saturated colorful output.
+  float darkMix = uIsDark;
+  vec3 lightTone = mix(vec3(0.85,0.9,1.0), color, 0.35);
+  vec3 finalColor = mix(lightTone, color, darkMix);
+
+  // Add subtle gradient overlay for depth
+  float gradient = 1.0 - distance(gl_FragCoord.xy / iResolution.xy, vec2(0.5, 0.5));
+  finalColor *= (0.8 + 0.25 * gradient);
+
+  // Slightly reduce intensity on light theme to keep background subtle
+  float outIntensity = mix(uIntensity * 0.6, uIntensity, uIsDark);
+
+  gl_FragColor = vec4(finalColor * outIntensity, 1.0);
       }
     `;
 
@@ -181,9 +207,10 @@ export const ShaderBackground = ({
 
     const timeUniformLocation = gl.getUniformLocation(shaderProgram, "iTime");
     const resolutionUniformLocation = gl.getUniformLocation(shaderProgram, "iResolution");
-    const intensityUniformLocation = gl.getUniformLocation(shaderProgram, "uIntensity");
-    const speedUniformLocation = gl.getUniformLocation(shaderProgram, "uSpeed");
-    const complexityUniformLocation = gl.getUniformLocation(shaderProgram, "uComplexity");
+  const intensityUniformLocation = gl.getUniformLocation(shaderProgram, "uIntensity");
+  const speedUniformLocation = gl.getUniformLocation(shaderProgram, "uSpeed");
+  const complexityUniformLocation = gl.getUniformLocation(shaderProgram, "uComplexity");
+  const isDarkUniformLocation = gl.getUniformLocation(shaderProgram, "uIsDark");
 
     // Animation loop
     let startTime = Date.now();
@@ -195,9 +222,22 @@ export const ShaderBackground = ({
       // Set uniforms
       gl.uniform1f(timeUniformLocation, currentTime);
       gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-      gl.uniform1f(intensityUniformLocation, finalIntensity);
-      gl.uniform1f(speedUniformLocation, finalSpeed);
-      gl.uniform1f(complexityUniformLocation, finalComplexity);
+  gl.uniform1f(intensityUniformLocation, finalIntensity);
+  gl.uniform1f(speedUniformLocation, finalSpeed);
+  gl.uniform1f(complexityUniformLocation, finalComplexity);
+      // Determine dark flag from explicit site variant (document.dataset.variant) if present,
+      // otherwise fall back to next-themes' theme value.
+      let isDarkFlag = 0.0;
+      try {
+        const variant = (document.documentElement.dataset.variant as string) || ''
+        if (variant === 'dark') isDarkFlag = 1.0
+        else if (variant === 'port') isDarkFlag = 0.0
+        else if (typeof theme === 'string' && theme === 'dark') isDarkFlag = 1.0
+      } catch (e) {
+        if (typeof theme === 'string' && theme === 'dark') isDarkFlag = 1.0
+      }
+
+      gl.uniform1f(isDarkUniformLocation, isDarkFlag);
 
       // Clear and draw
       gl.clear(gl.COLOR_BUFFER_BIT);
@@ -219,7 +259,7 @@ export const ShaderBackground = ({
       gl.deleteShader(fragmentShader);
       gl.deleteBuffer(positionBuffer);
     };
-  }, [finalIntensity, finalSpeed, finalComplexity]);
+  }, [finalIntensity, finalSpeed, finalComplexity, theme]);
 
   return (
     <canvas 
