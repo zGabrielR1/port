@@ -1244,17 +1244,6 @@
     will-change: backdrop-filter;
   }
 
-  /* Theme transition effects for seamless mode switching */
-  .theme-transition {
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out, opacity 0.5s ease-in-out;
-    will-change: background-color, color, border-color, opacity;
-  }
-
-  .theme-transition-fast {
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    will-change: background-color, color, border-color, opacity;
-  }
-
   /* Container queries support */
   @supports (container-type: inline-size) {
     .container-responsive {

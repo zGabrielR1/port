@@ -8,10 +8,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone, MapPin, Send } from "lucide-react"
 import { GlassmorphismButton } from "@/components/ui/glassmorphism-button"
 import { ShaderBackground } from "@/components/ui/shader-background"
-import { useThemeColors } from "@/components/ui/use-theme-colors"
 
 export function ContactSection() {
-  const { background, text, glass, border, transitionClasses } = useThemeColors()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -87,7 +85,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className={`section-padding ${background} relative overflow-hidden ${transitionClasses}`}>
+    <section id="contact" className="section-padding bg-black relative overflow-hidden">
       {/* Shader Background */}
       <ShaderBackground
         variant="subtle"
@@ -98,15 +96,15 @@ export function ContactSection() {
       
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <div
-            className={`inline-flex items-center px-6 py-3 rounded-full ${glass.background} ${border} ${text.primary} text-sm font-medium mb-6 transition-all duration-700 ${transitionClasses} ${
+          <div 
+            className={`inline-flex items-center px-6 py-3 rounded-full glassmorphism text-white text-sm font-medium mb-6 transition-all duration-700 ${
               visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
             }`}
           >
             📬 Let's Connect
           </div>
-          <h2
-            className={`text-3xl sm:text-4xl font-bold ${text.primary} mb-6 transition-all duration-700 delay-200 ${transitionClasses} ${
+          <h2 
+            className={`text-3xl sm:text-4xl font-bold text-white mb-6 transition-all duration-700 delay-200 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
@@ -114,8 +112,8 @@ export function ContactSection() {
               Get In Touch
             </span>
           </h2>
-          <p
-            className={`text-lg ${text.secondary} max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-300 ${transitionClasses} ${
+          <p 
+            className={`text-lg text-white/80 max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-300 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
@@ -127,8 +125,8 @@ export function ContactSection() {
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h3 className={`text-2xl font-bold ${text.primary} mb-6 ${transitionClasses}`}>Let's Connect</h3>
-              <p className={`${text.secondary} mb-8 ${transitionClasses}`}>
+              <h3 className="text-2xl font-bold text-foreground mb-6">Let's Connect</h3>
+              <p className="text-muted-foreground mb-8">
                 I'm always interested in new opportunities and exciting projects. Whether you have a question or just
                 want to say hi, feel free to reach out!
               </p>
@@ -142,13 +140,13 @@ export function ContactSection() {
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
-                  <div key={index} className={`flex items-center gap-4 p-4 ${glass.background} ${border} rounded-xl ${transitionClasses}`}>
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${glass.background} backdrop-blur-sm ${transitionClasses}`}>
-                      <Icon className={`h-6 w-6 ${text.primary} ${transitionClasses}`} />
+                  <div key={index} className="flex items-center gap-4 p-4 glassmorphism rounded-xl">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center bg-white/10 backdrop-blur-sm`}>
+                      <Icon className={`h-6 w-6 text-white`} />
                     </div>
                     <div>
-                      <h4 className={`font-semibold ${text.primary} ${transitionClasses}`}>{item.title}</h4>
-                      <p className={`${text.secondary} ${transitionClasses}`}>{item.content}</p>
+                      <h4 className="font-semibold text-white">{item.title}</h4>
+                      <p className="text-white/80">{item.content}</p>
                     </div>
                   </div>
                 );
@@ -156,7 +154,7 @@ export function ContactSection() {
             </div>
 
             <div className="pt-6">
-              <h4 className={`font-semibold mb-4 ${text.primary} ${transitionClasses}`}>Follow Me</h4>
+              <h4 className="font-semibold mb-4 text-white">Follow Me</h4>
               <div className="flex gap-4">
                 <GlassmorphismButton 
                   variant="default" 
@@ -196,24 +194,24 @@ export function ContactSection() {
           </div>
 
           {/* Contact Form */}
-          <div className={`${glass.background} ${border} p-6 rounded-xl ${transitionClasses}`}>
-            <h3 className={`text-2xl font-bold ${text.primary} mb-6 ${transitionClasses}`}>Send Message</h3>
+          <div className="glassmorphism p-6 rounded-xl">
+            <h3 className="text-2xl font-bold text-white mb-6">Send Message</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className={`block text-sm font-medium mb-2 ${text.primary} ${transitionClasses}`}>
+                  <label htmlFor="name" className="block text-sm font-medium mb-2 text-white">
                     Name
                   </label>
-                  <Input
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className={`bg-white/10 border-white/20 text-white placeholder-white/60 focus:border-white/40 ${transitionClasses} ${formErrors.name ? 'border-red-400' : ''}`}
-                    required
+                  <Input 
+                    id="name" 
+                    name="name" 
+                    value={formData.name} 
+                    onChange={handleChange} 
+                    className={`bg-white/10 border-white/20 text-white placeholder-white/60 focus:border-white/40 ${formErrors.name ? 'border-red-400' : ''}`}
+                    required 
                   />
                   {formErrors.name && (
-                    <p className={`text-red-400 text-xs mt-1 ${transitionClasses}`}>{formErrors.name}</p>
+                    <p className="text-red-400 text-xs mt-1">{formErrors.name}</p>
                   )}
                 </div>
                 <div>

@@ -220,12 +220,12 @@ export const ShaderBackground = ({
     const render = () => {
       const currentTime = (Date.now() - startTime) / 1000;
 
-      // Set uniforms with null checks to prevent runtime warnings
+      // Set uniforms (only if locations are valid)
       if (timeUniformLocation) gl.uniform1f(timeUniformLocation, currentTime);
       if (resolutionUniformLocation) gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-      if (intensityUniformLocation) gl.uniform1f(intensityUniformLocation, finalIntensity);
-      if (speedUniformLocation) gl.uniform1f(speedUniformLocation, finalSpeed);
-      if (complexityUniformLocation) gl.uniform1f(complexityUniformLocation, finalComplexity);
+  if (intensityUniformLocation) gl.uniform1f(intensityUniformLocation, finalIntensity);
+  if (speedUniformLocation) gl.uniform1f(speedUniformLocation, finalSpeed);
+  if (complexityUniformLocation) gl.uniform1f(complexityUniformLocation, finalComplexity);
       // Determine dark flag from explicit site variant (document.dataset.variant) if present,
       // otherwise fall back to next-themes' theme value.
       let isDarkFlag = 0.0;
@@ -249,9 +249,6 @@ export const ShaderBackground = ({
 
     render();
 
-    // Fade in the background
-    setOpacity(1);
-
     // Cleanup function
     return () => {
       if (animationFrameId) {
@@ -265,21 +262,23 @@ export const ShaderBackground = ({
     };
   }, [finalIntensity, finalSpeed, finalComplexity, theme]);
 
-  // Handle fade transition on mount/unmount and prop changes
+  // Handle fade-in animation on mount
   useEffect(() => {
-    setOpacity(0);
-    const timer = setTimeout(() => setOpacity(1), 50);
+    // Small delay to ensure canvas is ready, then fade in smoothly
+    const timer = setTimeout(() => {
+      setOpacity(1);
+    }, 50);
+
     return () => clearTimeout(timer);
-  }, [variant, intensity, speed, complexity]);
+  }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className={`absolute inset-0 w-full h-full ${className}`}
+      className={`absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out ${className}`}
       style={{
         zIndex: 0,
-        opacity: opacity,
-        transition: 'opacity 0.5s ease-in-out'
+        opacity: opacity
       }}
     />
   );

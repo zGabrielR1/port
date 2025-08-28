@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react"
 import { ShaderBackground } from "@/components/ui/shader-background"
 import { Code2, Database, Settings } from "lucide-react"
-import { useThemeColors } from "@/components/ui/use-theme-colors"
 
 const AnimatedProgressBar = ({ level, color, delay = 0 }: { level: number; color: string; delay?: number }) => {
   const [animatedLevel, setAnimatedLevel] = useState(0);
@@ -44,7 +43,6 @@ const AnimatedProgressBar = ({ level, color, delay = 0 }: { level: number; color
 };
 
 export function SkillsSection() {
-  const { background, text, glass, border, transitionClasses } = useThemeColors()
   const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -92,7 +90,7 @@ export function SkillsSection() {
   ]
 
   return (
-    <section id="skills" className={`section-padding ${background} relative overflow-hidden ${transitionClasses}`}>
+    <section id="skills" className="section-padding bg-black relative overflow-hidden">
       {/* Shader Background */}
       <ShaderBackground
         variant="section"
@@ -103,16 +101,16 @@ export function SkillsSection() {
 
       <div className="max-w-7xl mx-auto container-padding relative z-10">
         <div className="text-center mb-16">
-          <div
-            className={`inline-flex items-center px-6 py-3 rounded-full ${glass.background} ${border} ${text.primary} text-sm font-medium mb-6 transition-all duration-700 ${transitionClasses} ${
+          <div 
+            className={`inline-flex items-center px-6 py-3 rounded-full glassmorphism text-white text-sm font-medium mb-6 transition-all duration-700 ${
               visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
             }`}
           >
             <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse mr-3" />
             Technical Expertise
           </div>
-          <h2
-            className={`text-4xl sm:text-5xl font-bold ${text.primary} mb-6 transition-all duration-700 delay-200 ${transitionClasses} ${
+          <h2 
+            className={`text-4xl sm:text-5xl font-bold text-white mb-6 transition-all duration-700 delay-200 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
@@ -120,8 +118,8 @@ export function SkillsSection() {
               Skills & Technologies
             </span>
           </h2>
-          <p
-            className={`text-lg ${text.secondary} max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-300 ${transitionClasses} ${
+          <p 
+            className={`text-lg text-white/80 max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-300 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
