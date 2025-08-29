@@ -10,13 +10,13 @@ import { ShaderBackground } from '@/components/ui/shader-background'
 function GlassmorphismCard({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   return (
     <motion.div
-      className={`backdrop-blur-md bg-white/20 border border-white/30 shadow-xl shadow-black/20 rounded-[38px] p-6 hover:bg-white/30 hover:border-white/50 hover:shadow-2xl hover:shadow-black/30 transition-all duration-300 group ${className}`}
+      className={`backdrop-blur-md bg-card/20 border border-border/30 shadow-xl shadow-black/20 rounded-[38px] p-6 hover:bg-card/30 hover:border-border/50 hover:shadow-2xl hover:shadow-black/30 transition-all duration-300 group ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.6, ease: "easeOut" }}
       whileHover={{ scale: 1.02 }}
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/5 to-transparent rounded-[38px]" />
+  <div className="absolute inset-0 bg-gradient-to-r from-card/10 via-card/5 to-transparent rounded-[38px]" />
       <div className="absolute inset-0 rounded-[38px] shadow-inner shadow-white/20" />
       <div className="relative z-10">{children}</div>
     </motion.div>
@@ -53,7 +53,7 @@ function DarkIconCard({ icon, label, className = "", delay = 0 }: { icon: React.
 function InteractiveButton({ children, onClick, className = "" }: { children: React.ReactNode; onClick?: () => void; className?: string }) {
   return (
     <motion.button
-      className={`backdrop-blur-md bg-white/20 border border-white/30 px-6 py-3 rounded-[24px] text-sm font-medium text-black/80 hover:bg-white/30 hover:border-white/50 transition-all duration-300 font-['Inter',_sans-serif] tracking-[-0.7px] ${className}`}
+      className={`backdrop-blur-md bg-card/20 border border-border/30 px-6 py-3 rounded-[24px] text-sm font-medium text-foreground/80 hover:bg-card/30 hover:border-border/50 transition-all duration-300 font-['Inter',_sans-serif] tracking-[-0.7px] ${className}`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
@@ -125,7 +125,7 @@ function PortfolioHero() {
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+  <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Animated shader background */}
       <div className="absolute inset-0">
         <div className="absolute bg-center bg-cover bg-no-repeat inset-0" style={{
@@ -184,7 +184,7 @@ function PortfolioHero() {
 
       {/* Main portfolio button - EVEN LARGER */}
       <motion.div
-        className="relative backdrop-blur-lg bg-white/8 border border-white/15 shadow-2xl shadow-black/40 box-border content-stretch flex flex-col gap-8 items-center justify-center px-16 py-14 rounded-[56px] transition-all duration-300 hover:bg-white/12 hover:border-white/30 hover:shadow-3xl hover:shadow-black/50 hover:scale-105 active:scale-98 group overflow-visible z-20 will-change-transform cursor-pointer"
+        className="relative backdrop-blur-lg bg-card/8 border border-border/15 shadow-2xl shadow-black/40 box-border content-stretch flex flex-col gap-8 items-center justify-center px-16 py-14 rounded-[56px] transition-all duration-300 hover:bg-card/12 hover:border-border/30 hover:shadow-3xl hover:shadow-black/50 hover:scale-105 active:scale-98 group overflow-visible z-20 will-change-transform cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setIsActive(!isActive)}
@@ -196,8 +196,8 @@ function PortfolioHero() {
           transition: { duration: 0.3 }
         }}
       >
-        {/* Enhanced gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-white/5 to-white/10 rounded-[48px]" />
+  {/* Enhanced gradient overlay */}
+  <div className="absolute inset-0 bg-gradient-to-br from-card/15 via-card/5 to-card/10 rounded-[48px]" />
 
         {/* Pulsing glow effect */}
         <motion.div
@@ -291,12 +291,10 @@ function PortfolioHero() {
         </motion.div>
 
         {/* Content with Gabriel's information - SHARPER TEXT */}
-        <div className="flex flex-col font-['Inter',_sans-serif] font-normal justify-center leading-[0] not-italic relative shrink-0 text-center z-10">
+        <div className="relative flex flex-col font-['Inter',_sans-serif] font-normal justify-center leading-[0] not-italic relative shrink-0 text-center z-10">
           <motion.p
-            className="block leading-[1.1] text-[48px] font-bold mb-3 tracking-[-1.5px]"
+            className="block leading-[1.1] text-[48px] font-bold mb-3 tracking-[-1.5px] text-foreground"
             style={{
-              color: '#ffffff',
-              textShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.6), 0 0 60px rgba(255,255,255,0.4), 2px 2px 4px rgba(0,0,0,0.8)',
               fontFeatureSettings: '"kern" 1',
               WebkitFontSmoothing: 'antialiased',
               MozOsxFontSmoothing: 'grayscale'
@@ -308,10 +306,8 @@ function PortfolioHero() {
             Hi, I'm Gabriel
           </motion.p>
           <motion.p
-            className="block leading-[1.2] text-[28px] font-semibold mb-4 tracking-[-0.8px]"
+            className="block leading-[1.2] text-[28px] font-semibold mb-4 tracking-[-0.8px] text-foreground/90"
             style={{
-              color: 'rgba(255,255,255,0.95)',
-              textShadow: '0 0 15px rgba(255,255,255,0.9), 0 0 30px rgba(255,255,255,0.7), 1px 1px 3px rgba(0,0,0,0.7)',
               fontFeatureSettings: '"kern" 1',
               WebkitFontSmoothing: 'antialiased',
               MozOsxFontSmoothing: 'grayscale'
@@ -323,10 +319,8 @@ function PortfolioHero() {
             Full-Stack Developer
           </motion.p>
           <motion.p
-            className="block leading-[1.3] text-[20px] max-w-[400px] font-light"
+            className="block leading-[1.3] text-[20px] max-w-[400px] font-light text-muted-foreground"
             style={{
-              color: 'rgba(255,255,255,0.9)',
-              textShadow: '0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.6), 1px 1px 2px rgba(0,0,0,0.6)',
               fontFeatureSettings: '"kern" 1',
               WebkitFontSmoothing: 'antialiased',
               MozOsxFontSmoothing: 'grayscale'
@@ -347,7 +341,7 @@ function PortfolioHero() {
           transition={{ delay: 0.9, duration: 0.8 }}
         >
           <motion.button
-            className="backdrop-blur-md bg-white/20 border border-white/30 px-8 py-3 rounded-[32px] text-base font-semibold text-white hover:bg-white/30 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="backdrop-blur-md bg-card/20 border border-border/30 px-8 py-3 rounded-[32px] text-base font-semibold text-foreground hover:bg-card/30 hover:border-border/50 transition-all duration-300 shadow-lg hover:shadow-xl"
             whileHover={{
               scale: 1.05,
               backgroundColor: "rgba(255, 255, 255, 0.3)",
@@ -358,7 +352,7 @@ function PortfolioHero() {
             View Portfolio
           </motion.button>
           <motion.button
-            className="backdrop-blur-md bg-white/20 border border-white/30 px-8 py-3 rounded-[32px] text-base font-semibold text-white hover:bg-white/30 hover:border-white/50 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="backdrop-blur-md bg-card/20 border border-border/30 px-8 py-3 rounded-[32px] text-base font-semibold text-foreground hover:bg-card/30 hover:border-border/50 transition-all duration-300 shadow-lg hover:shadow-xl"
             whileHover={{
               scale: 1.05,
               backgroundColor: "rgba(255, 255, 255, 0.3)",
@@ -400,47 +394,35 @@ function AnimatedBackground({ variant = "default", isDark = false }: { variant?:
         backgroundImage: `url('/555c0dbdf8e4d07301d5ff5c75b2888e8dd02850.png')`,
         filter: isDark ? 'brightness(0.6) contrast(1.05)' : undefined
       }} />
-      {/* Moving shader overlay with different opacity for sections */}
-      <motion.div
-        className="absolute inset-0"
-        style={{
-          background: isDark
-            ? (variant === "hero"
-                ? "linear-gradient(45deg, rgba(0,0,0,0.6), rgba(12,12,20,0.6), rgba(20,8,10,0.6))"
-                : "linear-gradient(45deg, rgba(0,0,0,0.5), rgba(12,12,20,0.5), rgba(20,8,10,0.5))")
-            : (variant === "hero"
-                ? "linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1))"
-                : "linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2))")
-        }}
-        animate={{
-          background: isDark ? [
-            (variant === "hero"
-              ? "linear-gradient(45deg, rgba(0,0,0,0.6), rgba(12,12,20,0.6), rgba(20,8,10,0.6))"
-              : "linear-gradient(45deg, rgba(0,0,0,0.5), rgba(12,12,20,0.5), rgba(20,8,10,0.5))"),
-            (variant === "hero"
-              ? "linear-gradient(225deg, rgba(12,12,20,0.6), rgba(20,8,10,0.6), rgba(0,0,0,0.6))"
-              : "linear-gradient(225deg, rgba(12,12,20,0.5), rgba(20,8,10,0.5), rgba(0,0,0,0.5))"),
-            (variant === "hero"
-              ? "linear-gradient(45deg, rgba(20,8,10,0.6), rgba(0,0,0,0.6), rgba(12,12,20,0.6))"
-              : "linear-gradient(45deg, rgba(20,8,10,0.5), rgba(0,0,0,0.5), rgba(12,12,20,0.5))")
-          ] : [
-            (variant === "hero"
-              ? "linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1))"
-              : "linear-gradient(45deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.15))"),
-            (variant === "hero"
-              ? "linear-gradient(225deg, rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1), rgba(59, 130, 246, 0.1))"
-              : "linear-gradient(225deg, rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2), rgba(59, 130, 246, 0.2))"),
-            (variant === "hero"
-              ? "linear-gradient(45deg, rgba(236, 72, 153, 0.1), rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1))"
-              : "linear-gradient(45deg, rgba(236, 72, 153, 0.15), rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15))")
-          ]
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
+      {/* Moving shader overlay implemented as stacked static gradient layers.
+          Each layer animates opacity instead of changing `background` inline
+          so we avoid inline-style overrides and keep the same overlay across sections. */}
+      {(() => {
+        const duration = 8
+        const layers = isDark
+          ? [
+              // darker, subtle overlays
+              'bg-gradient-to-br from-black/35 via-transparent to-black/15',
+              'bg-gradient-to-br from-slate-900/35 via-slate-800/25 to-slate-900/20',
+              'bg-gradient-to-br from-slate-800/30 via-slate-700/20 to-transparent'
+            ]
+          : [
+              // light-mode overlays (kept consistent)
+              'bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20',
+              'bg-gradient-to-br from-purple-700/16 via-pink-700/16 to-blue-700/16',
+              'bg-gradient-to-br from-pink-600/12 via-purple-600/12 to-blue-600/12'
+            ]
+
+        return layers.map((cls, i) => (
+          <motion.div
+            key={i}
+            className={`absolute inset-0 ${cls}`}
+            initial={{ opacity: i === 0 ? 1 : 0 }}
+            animate={{ opacity: [0, 1, 0] }}
+            transition={{ duration, repeat: Infinity, ease: 'easeInOut', delay: (i * duration) / layers.length }}
+          />
+        ))
+      })()}
       {/* Floating particles with deterministic positions to avoid SSR/client hydration mismatch */}
       {(() => {
         const count = variant === "hero" ? 20 : 12
